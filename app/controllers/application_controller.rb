@@ -7,20 +7,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     set_flash_message(:notice, :success, :kind => provider_name) if is_navigational_format?
   end
 
-  def facebook
+  def spotify
     sign_in_with "Spotify"
-  end
-
-  def linkedin
-    sign_in_with "LinkedIn"
-  end
-
-  def twitter
-    sign_in_with "Twitter"
-  end
-
-  def google_oauth2
-    sign_in_with "Google"
   end
 
   def developer
