@@ -1,0 +1,12 @@
+<div class="signin-container">
+  <h2>Sign in with</h2>
+
+  <%- if devise_mapping.omniauthable? %>
+    <ul>
+      <%- resource_class.omniauth_providers.each do |provider| %>
+        <li><%= link_to "Sign in with #{provider.to_s.titleize}", omniauth_authorize_path(resource_name, provider) %>
+        </li>
+      <% end %>
+    </ul>
+  <% end -%>
+</div>
