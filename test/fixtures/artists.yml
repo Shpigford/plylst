@@ -1,0 +1,35 @@
+# == Schema Information
+#
+# Table name: artists
+#
+#  id         :bigint           not null, primary key
+#  name       :text
+#  spotify_id :text
+#  followers  :integer
+#  popularity :integer
+#  images     :text
+#  link       :text
+#  genres     :jsonb
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyText
+  spotify_id: MyText
+  followers: 1
+  popularity: 1
+  images: MyText
+  link: MyText
+  genres: 
+
+two:
+  name: MyText
+  spotify_id: MyText
+  followers: 1
+  popularity: 1
+  images: MyText
+  link: MyText
+  genres: 

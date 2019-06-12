@@ -1,3 +1,4 @@
+<% if current_user %>
 <% 
   @spotify = RSpotify::User.new(current_user.settings.to_hash)
 %>
@@ -16,3 +17,4 @@
   <li><%= RSpotify::Track.find(track[0]).name %></li>
   <% end %>
 </ul>
+<% end %>

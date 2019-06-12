@@ -9,10 +9,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       spotify_user = RSpotify::User.new(auth).to_hash
       @user.update_attribute(:settings, spotify_user)
       
-      #FollowSpotifyJob.perform_async(current_user.id)
-
       sign_in_and_redirect @user, :event => :authentication
       set_flash_message(:notice, :success, :kind => 'Spotify') if is_navigational_format?
+
+      FollowWorker.perform_async(@user.id)
     end
   end
 
