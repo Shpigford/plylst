@@ -15,4 +15,7 @@
 #
 
 class Artist < ApplicationRecord
+  has_many :albums
+
+  include Storext.model(genres: {})
 end

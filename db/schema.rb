@@ -10,10 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_12_135359) do
+ActiveRecord::Schema.define(version: 2019_06_12_191736) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "albums", force: :cascade do |t|
+    t.bigint "artist_id"
+    t.text "name"
+    t.text "image"
+    t.date "release_date"
+    t.text "spotify_id"
+    t.text "link"
+    t.integer "popularity"
+    t.string "album_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["artist_id"], name: "index_albums_on_artist_id"
+  end
 
   create_table "artists", force: :cascade do |t|
     t.text "name"
@@ -25,6 +39,45 @@ ActiveRecord::Schema.define(version: 2019_06_12_135359) do
     t.jsonb "genres"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "follows", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "track_id"
+    t.boolean "active", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "added_at"
+    t.datetime "last_played_at"
+    t.integer "plays"
+    t.index ["track_id"], name: "index_follows_on_track_id"
+    t.index ["user_id"], name: "index_follows_on_user_id"
+  end
+
+  create_table "streams", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "track_id"
+    t.datetime "played_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["track_id"], name: "index_streams_on_track_id"
+    t.index ["user_id"], name: "index_streams_on_user_id"
+  end
+
+  create_table "tracks", force: :cascade do |t|
+    t.bigint "album_id"
+    t.bigint "artist_id"
+    t.integer "duration"
+    t.boolean "explicit"
+    t.text "spotify_id"
+    t.text "link"
+    t.text "name"
+    t.integer "popularity"
+    t.text "preview_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["album_id"], name: "index_tracks_on_album_id"
+    t.index ["artist_id"], name: "index_tracks_on_artist_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -43,4 +96,11 @@ ActiveRecord::Schema.define(version: 2019_06_12_135359) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "albums", "artists"
+  add_foreign_key "follows", "tracks"
+  add_foreign_key "follows", "users"
+  add_foreign_key "streams", "tracks"
+  add_foreign_key "streams", "users"
+  add_foreign_key "tracks", "albums"
+  add_foreign_key "tracks", "artists"
 end

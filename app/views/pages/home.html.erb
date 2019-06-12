@@ -1,20 +1,5 @@
 <% if current_user %>
-<% 
-  @spotify = RSpotify::User.new(current_user.settings.to_hash)
-%>
 
-<%#= @spotify %>
+<%= current_user.tracks.size %>
 
-<%#= @spotify.playlists(limit:1) %>
-
-
-<% playlist = RSpotify::Playlist.find(@spotify.id, '4yCfru1Os84aOrAI4xNApj') %>
-<% @spotify.saved_tracks(limit: 50) %>
-<% tracks = @spotify.tracks_added_at %>
-
-<ul>
-  <% tracks.each do |track| %>
-  <li><%= RSpotify::Track.find(track[0]).name %></li>
-  <% end %>
-</ul>
 <% end %>

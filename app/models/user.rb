@@ -18,6 +18,11 @@
 #
 
 class User < ApplicationRecord
+  has_many :follows, dependent:  :destroy
+  has_many :tracks, through: :follows
+  has_many :albums, through: :tracks
+  has_many :artists, through: :tracks
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :rememberable, :trackable, :omniauthable, omniauth_providers: %i[spotify]
