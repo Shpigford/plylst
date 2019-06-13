@@ -18,6 +18,8 @@ Rails.application.routes.draw do
       get :search
     end
   end
+
+  resources :playlists
   
   root to: "pages#index"
 end

@@ -62,9 +62,7 @@
               </a>
             </li>
           </ul>
-          <a href="#modalDemo" class="btn btn-block btn-primary mb-4" data-toggle="modal">
-                <i class="fas fa-plus-circle"></i> Create a playlist
-              </a>
+          <%= link_to "<i class='fas fa-plus-circle'></i> Create a playlist".html_safe, new_playlist_path, class: 'btn btn-block btn-primary mb-4' %>
 
           <!-- Push content down -->
           <div class="mt-auto"></div>
