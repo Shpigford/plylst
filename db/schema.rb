@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_12_191736) do
+ActiveRecord::Schema.define(version: 2019_06_12_212103) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 2019_06_12_191736) do
     t.text "preview_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "audio_features"
     t.index ["album_id"], name: "index_tracks_on_album_id"
     t.index ["artist_id"], name: "index_tracks_on_artist_id"
   end

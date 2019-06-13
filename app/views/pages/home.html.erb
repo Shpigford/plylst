@@ -1,30 +1,38 @@
-<% if current_user %>
 
-<%= current_user.tracks.size %>
 
-<% tracks = current_user.tracks.where('added_at > ?', 8.days.ago).order('added_at DESC') %>
+<div class="main-content">
+  <div class="container-fluid">
+    <% if current_user %>
 
-<style type="text/css">
-  th {
-    text-align: left;
-  }
-</style>
-<table style="width:100%">
-  <tr>
-    <th>ID</th>
-    <th>Track</th>
-    <th>Artist</th>
-    <th>Album</th>
-  </tr>
-  
-<% tracks.each do |track| %>
-  <tr>
-    <td><%= track.id %></td>
-    <td><%= track.name %></td>
-    <td><%= track.artist.name %></td>
-    <td><%= track.album.name %></td>
-  </tr>
-<% end %>
-</table>
+    <%#= current_user.tracks.size %>
 
-<% end %>
+    <% tracks = current_user.tracks.where('added_at > ?', 10.days.ago).order('added_at DESC') %>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Track</th>
+          <th>Artist</th>
+          <th>Album</th>
+          <th>Features</th>
+          <th>Genres</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% tracks.each do |track| %>
+        <tr>
+          <td><%= track.id %></td>
+          <td><%= track.name %></td>
+          <td><%= track.artist.name %></td>
+          <td><%= track.album.name %></td>
+          <td><%= track.audio_features %></td>
+          <td><%= track.artist.genres %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+    <% end %>
+  </div>
+</div>

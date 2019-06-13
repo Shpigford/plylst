@@ -1,12 +1,20 @@
-<div class="signin-container">
-  <h2>Sign in with</h2>
-
-  <%- if devise_mapping.omniauthable? %>
-    <ul>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-5 col-xl-4 my-5">
+      
+      <!-- Heading -->
+      <h1 class="display-4 text-center mb-3">
+        Get Started
+      </h1>
+      
+      <!-- Subheading -->
+      <p class="text-muted text-center mb-5">
+        Sign up or sign in with Spotify
+      </p>
       <%- resource_class.omniauth_providers.each do |provider| %>
-        <li><%= link_to "Sign in with #{provider.to_s.titleize}", omniauth_authorize_path(resource_name, provider) %>
-        </li>
+        <%= link_to "<i class='fab fa-spotify'></i> Sign in with #{provider.to_s.titleize}".html_safe, omniauth_authorize_path(resource_name, provider), class: 'btn btn-lg btn-block btn-success mb-3' %>
       <% end %>
-    </ul>
-  <% end -%>
+      
+    </div>
+  </div> <!-- / .row -->
 </div>

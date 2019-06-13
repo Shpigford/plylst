@@ -61,5 +61,7 @@ class SaveTracksWorker
         end
       end
     end
+
+    AudioFeaturesWorker.perform_async(track_ids)
   end
 end
