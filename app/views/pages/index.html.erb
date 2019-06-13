@@ -1,7 +1,4 @@
 <% if current_user %>
-  <% @latest_streams.each do |track| %>
-
-  <% end %>
 <div class="main-content">
   <div class="container-fluid">
     <div class="row justify-content-center">
@@ -21,468 +18,47 @@
                 <h1 class="header-title">
                   Latest Streams
                 </h1>
-
+                <code>Test</code>
               </div>
             </div> <!-- / .row -->
           </div>
         </div>
 
 
-        <div class="card" data-toggle="lists" data-options="{&quot;valueNames&quot;: [&quot;orders-order&quot;, &quot;orders-product&quot;, &quot;orders-date&quot;, &quot;orders-total&quot;, &quot;orders-status&quot;, &quot;orders-method&quot;]}">
-          <div class="card-header">
-            <div class="row align-items-center">
-              <div class="col">
-
-                <!-- Search -->
-                <form class="row align-items-center">
-                  <div class="col-auto pr-0">
-                    <span class="fe fe-search text-muted"></span>
-                  </div>
-                  <div class="col">
-                      <input type="search" class="form-control form-control-flush search" placeholder="Search">
-                  </div>
-                </form>
-                
-              </div>
-              <div class="col-auto">
-                
-                <!-- Button -->
-
-                <div class="dropdown">
-                  <button class="btn btn-sm btn-white dropdown-toggle" type="button" id="bulkActionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Bulk action
-                  </button>
-                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="bulkActionDropdown">
-                    <a class="dropdown-item" href="#!">Action</a>
-                    <a class="dropdown-item" href="#!">Another action</a>
-                    <a class="dropdown-item" href="#!">Something else here</a>
-                  </div>
-                </div>
-
-              </div>
-            </div> <!-- / .row -->
-          </div>
+        <div class="card">
           <div class="table-responsive">
             <table class="table table-sm table-nowrap card-table">
               <thead>
                 <tr>
-                  <th>
-                    <div class="custom-control custom-checkbox table-checkbox">
-                      <input type="checkbox" class="custom-control-input" name="ordersSelect" id="ordersSelectAll">
-                      <label class="custom-control-label" for="ordersSelectAll">
-                        &nbsp;
-                      </label>
-                    </div>
-                  </th>
-                  <th>
-                    <a href="#" class="text-muted sort" data-sort="orders-order">
-                      Order
-                    </a>
-                  </th>
-                  <th>
-                    <a href="#" class="text-muted sort desc" data-sort="orders-product">
-                      Product
-                    </a>
-                  </th>
-                  <th>
-                    <a href="#" class="text-muted sort" data-sort="orders-date">
-                      Date
-                    </a>
-                  </th>
-                  <th>
-                    <a href="#" class="text-muted sort" data-sort="orders-total">
-                      Total
-                    </a>
-                  </th>
-                  <th>
-                    <a href="#" class="text-muted sort" data-sort="orders-status">
-                      Status
-                    </a>
-                  </th>
-                  <th colspan="2">
-                    <a href="#" class="text-muted sort" data-sort="orders-method">
-                      Payment method
-                    </a>
-                  </th>
+                  <th colspan="2">Song</th>
+                  <th>Artist</th>
+                  <th>Album</th>
+                  <th><i class="fal fa-calendar-alt"></i></th>
+                  <th><i class="fal fa-clock"></i></th>
                 </tr>
               </thead>
-              <tbody class="list"><tr>
+              <tbody class="list">
+                <% @latest_streams.each do |stream| %>
+                <tr>
+                  <td colspan="2">
+                    <div class="avatar avatar-xs mr-2"><%= image_tag stream.track.album.image, class: 'avatar-img rounded-sm' %></div>
+                    <span class="align-middle text-truncate d-inline-block" style="max-width:200px;"><%= stream.track.name %></span>
+                  </td>
                   <td>
-                    <div class="custom-control custom-checkbox table-checkbox">
-                      <input type="checkbox" class="custom-control-input" name="ordersSelect" id="ordersSelectTwo">
-                      <label class="custom-control-label" for="ordersSelectTwo">
-                        &nbsp;
-                      </label>
-                    </div>
+                    <%= stream.track.artist.name %>
                   </td>
-                  <td class="orders-order">
-                    #6521
-                  </td>
-                  <td class="orders-product">
-                    XL Logo Tee
-                  </td>
-                  <td class="orders-date">
-                    <time datetime="2018-07-30">07/30/18</time>
-                  </td>
-                  <td class="orders-total">
-                    $14.99
-                  </td>
-                  <td class="orders-status">
-                    <div class="badge badge-soft-success">
-                      Shipped
-                    </div>
-                  </td>
-                  <td class="orders-method">
-                    Paypal
-                  </td>
-                  <td class="text-right">
-                    <div class="dropdown">
-                      <a href="#" class="dropdown-ellipses dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fe fe-more-vertical"></i>
-                      </a>
-                      <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(49px, 25px, 0px);">
-                        <a href="#!" class="dropdown-item">
-                          Action
-                        </a>
-                        <a href="#!" class="dropdown-item">
-                          Another action
-                        </a>
-                        <a href="#!" class="dropdown-item">
-                          Something else here
-                        </a>
-                      </div>
-                    </div>
-                  </td>
-                </tr><tr>
                   <td>
-                    <div class="custom-control custom-checkbox table-checkbox">
-                      <input type="checkbox" class="custom-control-input" name="ordersSelect" id="ordersSelectOne">
-                      <label class="custom-control-label" for="ordersSelectOne">
-                        &nbsp;
-                      </label>
-                    </div>
+                    <%= stream.track.album.name %>
                   </td>
-                  <td class="orders-order">
-                    #6525
-                  </td>
-                  <td class="orders-product">
-                    Super Mug
-                  </td>
-                  <td class="orders-date">
-                    <time datetime="2018-07-22">07/22/18</time>
-                  </td>
-                  <td class="orders-total">
-                    $9.99
-                  </td>
-                  <td class="orders-status">
-                    <div class="badge badge-soft-success">
-                      Shipped
-                    </div>
-                  </td>
-                  <td class="orders-method">
-                    Mastercard
-                  </td>
-                  <td class="text-right">
-                    <div class="dropdown">
-                      <a href="#" class="dropdown-ellipses dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fe fe-more-vertical"></i>
-                      </a>
-                      <div class="dropdown-menu dropdown-menu-right">
-                        <a href="#!" class="dropdown-item">
-                          Action
-                        </a>
-                        <a href="#!" class="dropdown-item">
-                          Another action
-                        </a>
-                        <a href="#!" class="dropdown-item">
-                          Something else here
-                        </a>
-                      </div>
-                    </div>
-                  </td>
-                </tr><tr>
                   <td>
-                    <div class="custom-control custom-checkbox table-checkbox">
-                      <input type="checkbox" class="custom-control-input" name="ordersSelect" id="ordersSelectFour">
-                      <label class="custom-control-label" for="ordersSelectFour">
-                        &nbsp;
-                      </label>
-                    </div>
+                    <time><%= time_ago_in_words(stream.played_at).gsub('about','') %> ago</time>
                   </td>
-                  <td class="orders-order">
-                    #6523
-                  </td>
-                  <td class="orders-product">
-                    Reversible Hoodie
-                  </td>
-                  <td class="orders-date">
-                    <time datetime="2018-07-27">07/27/18</time>
-                  </td>
-                  <td class="orders-total">
-                    $64.99
-                  </td>
-                  <td class="orders-status">
-                    <div class="badge badge-soft-danger">
-                      Cancelled
-                    </div>
-                  </td>
-                  <td class="orders-method">
-                    Amex
-                  </td>
-                  <td class="text-right">
-                    <div class="dropdown">
-                      <a href="#" class="dropdown-ellipses dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fe fe-more-vertical"></i>
-                      </a>
-                      <div class="dropdown-menu dropdown-menu-right">
-                        <a href="#!" class="dropdown-item">
-                          Action
-                        </a>
-                        <a href="#!" class="dropdown-item">
-                          Another action
-                        </a>
-                        <a href="#!" class="dropdown-item">
-                          Something else here
-                        </a>
-                      </div>
-                    </div>
-                  </td>
-                </tr><tr>
                   <td>
-                    <div class="custom-control custom-checkbox table-checkbox">
-                      <input type="checkbox" class="custom-control-input" name="ordersSelect" id="ordersSelectTwo">
-                      <label class="custom-control-label" for="ordersSelectTwo">
-                        &nbsp;
-                      </label>
-                    </div>
+                    <%= format_ms(stream.track.duration) %>
                   </td>
-                  <td class="orders-order">
-                    #6526
-                  </td>
-                  <td class="orders-product">
-                    MD Pocket Tee
-                  </td>
-                  <td class="orders-date">
-                    <time datetime="2018-07-22">07/22/18</time>
-                  </td>
-                  <td class="orders-total">
-                    $19.99
-                  </td>
-                  <td class="orders-status">
-                    <div class="badge badge-soft-warning">
-                      Processing
-                    </div>
-                  </td>
-                  <td class="orders-method">
-                    Amex
-                  </td>
-                  <td class="text-right">
-                    <div class="dropdown">
-                      <a href="#" class="dropdown-ellipses dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fe fe-more-vertical"></i>
-                      </a>
-                      <div class="dropdown-menu dropdown-menu-right">
-                        <a href="#!" class="dropdown-item">
-                          Action
-                        </a>
-                        <a href="#!" class="dropdown-item">
-                          Another action
-                        </a>
-                        <a href="#!" class="dropdown-item">
-                          Something else here
-                        </a>
-                      </div>
-                    </div>
-                  </td>
-                </tr><tr>
-                  <td>
-                    <div class="custom-control custom-checkbox table-checkbox">
-                      <input type="checkbox" class="custom-control-input" name="ordersSelect" id="ordersSelectFive">
-                      <label class="custom-control-label" for="ordersSelectFive">
-                        &nbsp;
-                      </label>
-                    </div>
-                  </td>
-                  <td class="orders-order">
-                    #6524
-                  </td>
-                  <td class="orders-product">
-                    Geometric Print Shorts
-                  </td>
-                  <td class="orders-date">
-                    <time datetime="2018-07-25">07/25/18</time>
-                  </td>
-                  <td class="orders-total">
-                    $31.99
-                  </td>
-                  <td class="orders-status">
-                    <div class="badge badge-soft-success">
-                      Shipped
-                    </div>
-                  </td>
-                  <td class="orders-method">
-                    Paypal
-                  </td>
-                  <td class="text-right">
-                    <div class="dropdown">
-                      <a href="#" class="dropdown-ellipses dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fe fe-more-vertical"></i>
-                      </a>
-                      <div class="dropdown-menu dropdown-menu-right">
-                        <a href="#!" class="dropdown-item">
-                          Action
-                        </a>
-                        <a href="#!" class="dropdown-item">
-                          Another action
-                        </a>
-                        <a href="#!" class="dropdown-item">
-                          Something else here
-                        </a>
-                      </div>
-                    </div>
-                  </td>
-                </tr><tr>
-                  <td>
-                    <div class="custom-control custom-checkbox table-checkbox">
-                      <input type="checkbox" class="custom-control-input" name="ordersSelect" id="ordersSelectThree">
-                      <label class="custom-control-label" for="ordersSelectThree">
-                        &nbsp;
-                      </label>
-                    </div>
-                  </td>
-                  <td class="orders-order">
-                    #6522
-                  </td>
-                  <td class="orders-product">
-                    Flexfit Hat
-                  </td>
-                  <td class="orders-date">
-                    <time datetime="2018-07-28">07/28/18</time>
-                  </td>
-                  <td class="orders-total">
-                    $25.50
-                  </td>
-                  <td class="orders-sratus">
-                    <div class="badge badge-soft-warning">
-                      Processing
-                    </div>
-                  </td>
-                  <td class="orders-method">
-                    Visa
-                  </td>
-                  <td class="text-right">
-                    <div class="dropdown">
-                      <a href="#" class="dropdown-ellipses dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fe fe-more-vertical"></i>
-                      </a>
-                      <div class="dropdown-menu dropdown-menu-right">
-                        <a href="#!" class="dropdown-item">
-                          Action
-                        </a>
-                        <a href="#!" class="dropdown-item">
-                          Another action
-                        </a>
-                        <a href="#!" class="dropdown-item">
-                          Something else here
-                        </a>
-                      </div>
-                    </div>
-                  </td>
-                </tr><tr>
-                  <td>
-                    <div class="custom-control custom-checkbox table-checkbox">
-                      <input type="checkbox" class="custom-control-input" name="ordersSelect" id="ordersSelectThree">
-                      <label class="custom-control-label" for="ordersSelectThree">
-                        &nbsp;
-                      </label>
-                    </div>
-                  </td>
-                  <td class="orders-order">
-                    #6527
-                  </td>
-                  <td class="orders-product">
-                    Custom Coffee Blend
-                  </td>
-                  <td class="orders-date">
-                    <time datetime="2018-07-21">07/21/18</time>
-                  </td>
-                  <td class="orders-total">
-                    $11.99
-                  </td>
-                  <td class="orders-sratus">
-                    <div class="badge badge-soft-success">
-                      Shipped
-                    </div>
-                  </td>
-                  <td class="orders-method">
-                    Visa
-                  </td>
-                  <td class="text-right">
-                    <div class="dropdown">
-                      <a href="#" class="dropdown-ellipses dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fe fe-more-vertical"></i>
-                      </a>
-                      <div class="dropdown-menu dropdown-menu-right">
-                        <a href="#!" class="dropdown-item">
-                          Action
-                        </a>
-                        <a href="#!" class="dropdown-item">
-                          Another action
-                        </a>
-                        <a href="#!" class="dropdown-item">
-                          Something else here
-                        </a>
-                      </div>
-                    </div>
-                  </td>
-                </tr><tr>
-                  <td>
-                    <div class="custom-control custom-checkbox table-checkbox">
-                      <input type="checkbox" class="custom-control-input" name="ordersSelect" id="ordersSelectOne">
-                      <label class="custom-control-label" for="ordersSelectOne">
-                        &nbsp;
-                      </label>
-                    </div>
-                  </td>
-                  <td class="orders-order">
-                    #6520
-                  </td>
-                  <td class="orders-product">
-                    5' x 3' Wall Poster
-                  </td>
-                  <td class="orders-date">
-                    <time datetime="2018-07-30">07/30/18</time>
-                  </td>
-                  <td class="orders-total">
-                    $55.25
-                  </td>
-                  <td class="orders-status">
-                    <div class="badge badge-soft-success">
-                      Shipped
-                    </div>
-                  </td>
-                  <td class="orders-method">
-                    Mastercard
-                  </td>
-                  <td class="text-right">
-                    <div class="dropdown">
-                      <a href="#" class="dropdown-ellipses dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fe fe-more-vertical"></i>
-                      </a>
-                      <div class="dropdown-menu dropdown-menu-right">
-                        <a href="#!" class="dropdown-item">
-                          Action
-                        </a>
-                        <a href="#!" class="dropdown-item">
-                          Another action
-                        </a>
-                        <a href="#!" class="dropdown-item">
-                          Something else here
-                        </a>
-                      </div>
-                    </div>
-                  </td>
-                </tr></tbody>
+                </tr>
+                <% end %>
+              </tbody>
             </table>
           </div>
         </div>

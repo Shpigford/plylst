@@ -12,6 +12,12 @@ Rails.application.routes.draw do
     get 'sign_in', :to => 'devise/sessions#new', :as => :new_user_session
     delete 'sign_out', :to => 'devise/sessions#destroy', :as => :destroy_user_session
   end
+
+  resources :tracks do
+    collection do
+      get :search
+    end
+  end
   
   root to: "pages#index"
 end

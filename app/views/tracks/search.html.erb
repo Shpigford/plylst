@@ -1,0 +1,67 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12">
+
+        <div class="header mt-md-5">
+          <div class="header-body">
+            <div class="row align-items-center">
+              <div class="col">
+                
+                <!-- Pretitle -->
+                <h6 class="header-pretitle">
+                  Playlist
+                </h6>
+
+                <!-- Title -->
+                <h1 class="header-title">
+                  Builder
+                </h1>
+                <small>Variables: <code>days_ago, days_ago_filter, limit, bpm, bpm_filter, release_date_start, release_date_end</code></small>
+              </div>
+            </div> <!-- / .row -->
+          </div>
+        </div>
+
+
+        <div class="card">
+          <div class="table-responsive">
+            <table class="table table-sm table-nowrap card-table">
+              <thead>
+                <tr>
+                  <th colspan="2">Song</th>
+                  <th>Artist</th>
+                  <th>Album</th>
+                  <th><i class="fal fa-calendar-alt"></i></th>
+                  <th><i class="fal fa-clock"></i></th>
+                </tr>
+              </thead>
+              <tbody class="list">
+                <% @tracks.each do |track| %>
+                <tr>
+                  <td colspan="2">
+                    <div class="avatar avatar-xs mr-2"><%= image_tag track.album.image, class: 'avatar-img rounded-sm' %></div>
+                    <span class="align-middle text-truncate d-inline-block" style="max-width:200px;"><%= track.name %> </span>
+                  </td>
+                  <td>
+                    <%= track.artist.name %>
+                  </td>
+                  <td>
+                    <%= track.album.name %>
+                  </td>
+                  <td>
+                    <time><%= time_ago_in_words(track.follows.first.added_at).gsub('about','') %> ago</time>
+                  </td>
+                  <td>
+                    <%= format_ms(track.duration) %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
