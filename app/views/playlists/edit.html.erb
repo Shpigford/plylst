@@ -1,0 +1,65 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12">
+
+        <div class="header mt-md-5">
+          <div class="header-body">
+            <div class="row align-items-center">
+              <div class="col">
+                <h6 class="header-pretitle">Playlist</h6>
+                <h1 class="header-title"><%= @playlist.name %></h1>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <h2>Rules</h2>
+            <form class="form-inline">
+
+              <div class="input-group mb-2 mr-sm-2" style="width:250px">
+                <select class="form-control js-example-basic-single" data-toggle="select">
+                  <option>Added to Library</option>
+                  <option>Beats Per Minute</option>
+                  <option>Release Date</option>
+                </select>
+              </div>
+
+              <div class="input-group mb-2 mr-sm-2">
+                <input type="text" class="form-control" placeholder="5">
+                <div class="input-group-append">
+                  <div class="input-group-text">days ago</div>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary mb-2"><i class="fas fa-plus-square"></i></button>
+            </form>
+          </div>
+        </div>
+
+         <!-- <div class="card">
+          <div class="table-responsive">
+            <table class="table table-sm table-nowrap card-table">
+              <thead>
+                <tr>
+                  <th colspan="2">Song</th>
+                  <th>Artist</th>
+                  <th>Album</th>
+                  <th><i class="fal fa-calendar-alt"></i></th>
+                  <th><i class="fal fa-clock"></i></th>
+                </tr>
+              </thead>
+              <tbody class="list">
+                
+              </tbody>
+            </table>
+          </div>
+        </div> -->
+
+
+      </div>
+    </div>
+  </div>
+</div>

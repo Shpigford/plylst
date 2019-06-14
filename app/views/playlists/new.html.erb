@@ -23,7 +23,6 @@
 
                 <div class="card">
                   <div class="card-body">
-
                     <%= form_for @playlist, url: {action: "create"}, html: {class: "form-inline"} do |f| %>
                       <%= f.label :name, class: 'sr-only' %>
                       <%= f.text_field :name, class: 'form-control mb-2 mr-sm-2', placeholder: 'Playlist Name' %>
