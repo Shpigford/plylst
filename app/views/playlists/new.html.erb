@@ -24,12 +24,11 @@
                 <div class="card">
                   <div class="card-body">
 
-                    <form class="form-inline">
-                      <label class="sr-only" for="playlistname">Playlist Name</label>
-                      <input type="text" class="form-control mb-2 mr-sm-2" id="playlistname" placeholder="Playlist Name">
-
-                      <button type="submit" class="btn btn-primary mb-2">Submit</button>
-                    </form>
+                    <%= form_for @playlist, url: {action: "create"}, html: {class: "form-inline"} do |f| %>
+                      <%= f.label :name, class: 'sr-only' %>
+                      <%= f.text_field :name, class: 'form-control mb-2 mr-sm-2', placeholder: 'Playlist Name' %>
+                      <%= f.submit 'Submit', class: 'btn btn-primary mb-2' %>
+                    <% end %>
                   </div>
                 </div>
               </div>

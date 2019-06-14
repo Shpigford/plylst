@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 2019_06_13_184534) do
 
   create_table "playlists", force: :cascade do |t|
     t.bigint "user_id"
+    t.string "name"
     t.jsonb "variables"
     t.boolean "active", default: true
     t.datetime "created_at", null: false
