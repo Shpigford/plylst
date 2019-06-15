@@ -61,11 +61,11 @@
 
           <!-- Navigation -->
           <ul class="navbar-nav mb-md-4">
+            <% @all_playlists.each do |playlist| %>
             <li class="nav-item">
-              <a class="nav-link active" href="getting-started.html">
-                <i class="fe far fa-music"></i> Getting started
-              </a>
+              <%= link_to "<i class='fe far fa-music'></i> #{playlist.name}".html_safe, playlist_path(playlist), class: 'nav-link' %>
             </li>
+            <% end %>
           </ul>
           <%= link_to "<i class='fas fa-plus-circle'></i> Create a playlist".html_safe, new_playlist_path, class: 'btn btn-block btn-primary mb-4' %>
 
