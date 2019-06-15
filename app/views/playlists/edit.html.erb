@@ -17,9 +17,21 @@
         <div class="card">
           <div class="card-body">
             <h2>Rules</h2>
-            <form class="form-inline">
+            <code><%= @playlist.variables %></code>
+            <%= form_for @playlist, html: {class: 'form-inline'} do |f| %>
+              <div class="form-group">
+                <%= f.label :days_ago %>
+                <%= f.text_field :days_ago, class: 'form-control mx-sm-3' %>
+                <small class="text-muted">How many days ago was the song added?</small>
+              </div>
+              
+              <div class="form-group">
+                <%= f.label :days_ago_filter %>
+                <%= f.select(:days_ago_filter, options_for_select([['Less than', 'lt'], ['Greater than', 'gt']])) %>
+                <small class="text-muted">Days ago, less than or greater than?</small>
+              </div>
 
-              <div class="input-group mb-2 mr-sm-2" style="width:250px">
+              <!-- <div class="input-group mb-2 mr-sm-2" style="width:250px">
                 <select class="form-control js-example-basic-single" data-toggle="select">
                   <option>Added to Library</option>
                   <option>Beats Per Minute</option>
@@ -32,10 +44,10 @@
                 <div class="input-group-append">
                   <div class="input-group-text">days ago</div>
                 </div>
-              </div>
+              </div> -->
 
-              <button type="submit" class="btn btn-primary mb-2"><i class="fas fa-plus-square"></i></button>
-            </form>
+              <button type="submit" class="btn btn-primary mb-2">Update Rules</button>
+            <% end %>
           </div>
         </div>
 
