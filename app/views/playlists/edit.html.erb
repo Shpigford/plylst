@@ -18,17 +18,29 @@
           <div class="card-body">
             <h2>Rules</h2>
             <code><%= @playlist.variables %></code>
-            <%= form_for @playlist, html: {class: 'form-inline'} do |f| %>
-              <div class="form-group">
-                <%= f.label :days_ago %>
-                <%= f.text_field :days_ago, class: 'form-control mx-sm-3' %>
-                <small class="text-muted">How many days ago was the song added?</small>
+            <%= form_for @playlist, html: {class: ''} do |f| %>
+              <div class="form-group row">
+                <%= f.label :days_ago, class: 'col-sm-2 col-form-label' %>
+                <div class="col-sm-10">
+                  <%= f.text_field :days_ago, class: 'form-control mb-1' %>
+                  <small class="text-muted">How many days ago was the song added?</small>
+                </div>
               </div>
-              
-              <div class="form-group">
-                <%= f.label :days_ago_filter %>
-                <%= f.select(:days_ago_filter, options_for_select([['Less than', 'lt'], ['Greater than', 'gt']])) %>
-                <small class="text-muted">Days ago, less than or greater than?</small>
+
+              <div class="form-group row">
+                <%= f.label :days_ago_filter, class: 'col-sm-2 col-form-label' %>
+                <div class="col-sm-10">
+                  <%= f.select(:days_ago_filter, options_for_select([['Less than', 'lt'], ['Greater than', 'gt']]), {}, { class: 'custom-select custom-select-lg mb-1'}) %>
+                  <small class="text-muted">Days ago, less than or greater than?</small>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <%= f.label :limit, class: 'col-sm-2 col-form-label' %>
+                <div class="col-sm-10">
+                  <%= f.text_field :limit, class: 'form-control mb-1' %>
+                  <small class="text-muted">How many days ago was the song added?</small>
+                </div>
               </div>
 
               <!-- <div class="input-group mb-2 mr-sm-2" style="width:250px">

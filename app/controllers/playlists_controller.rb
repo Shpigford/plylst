@@ -73,6 +73,6 @@ class PlaylistsController < ApplicationController
 
   private
     def playlist_params
-      params.require(:playlist).permit(:name, :days_ago)
+      params.require(:playlist).permit(:name, :days_ago, :limit, :days_ago_filter)
     end
 end
