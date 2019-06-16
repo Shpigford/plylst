@@ -22,7 +22,7 @@ class BuildPlaylistsWorker
 
         existing_playlist.change_details!(description: playlist.variables.delete_if { |k, v| v.blank? }.to_s)
       else
-        existing_playlist = spotify.create_playlist!("PLYLST: #{playlist.name}", true, playlist.variables.delete_if { |k, v| v.blank? }.to_s)
+        existing_playlist = spotify.create_playlist!("PLYLST: #{playlist.name}")
       end
 
       tracks = playlist.filtered_tracks(user).pluck(:spotify_id)

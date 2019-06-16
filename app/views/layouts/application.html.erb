@@ -11,7 +11,7 @@
   </head>
 
   <body>
-    <% if user_signed_in? -%>
+    <% if user_signed_in? and (@all_playlists.present? or params[:action] == 'new') -%>
     <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light" id="sidebar">
        <div class="container-fluid">
 
@@ -20,10 +20,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <a class="navbar-brand" href="index.html">
-          <%= image_tag 'logo.svg', class: 'navbar-brand-img 
-              mx-auto' %>
-        </a>
+        <%= link_to image_tag('logo.svg', class: 'navbar-brand-img mx-auto'), root_path, class: 'navbar-brand' %>
 
         <!-- User (xs) -->
         <div class="navbar-user d-md-none">
@@ -52,13 +49,6 @@
 
         <!-- Collapse -->
         <div class="collapse navbar-collapse" id="sidebarCollapse">
-
-
-          <!-- Heading -->
-          <h6 class="navbar-heading">
-            Smart Playlists
-          </h6>
-
           <!-- Navigation -->
           <ul class="navbar-nav mb-md-4">
             <% @all_playlists.each do |playlist| %>
@@ -74,14 +64,6 @@
 
           
           <div class="navbar-user d-none d-md-flex" id="sidebarUser">
-                  
-                          <!-- Icon -->
-                          <a href="#sidebarModalActivity" class="navbar-user-link" data-toggle="modal">
-                            <span class="icon">
-                              <i class="far fa-bell"></i>
-                            </span>
-                          </a>
-
                           <!-- Dropup -->
                           <div class="dropup">
                     
@@ -94,20 +76,12 @@
 
                             <!-- Menu -->
                             <div class="dropdown-menu" aria-labelledby="sidebarIconCopy">
-                              <a href="profile-posts.html" class="dropdown-item">Profile</a>
                               <a href="settings.html" class="dropdown-item">Settings</a>
                               <hr class="dropdown-divider">
                               <%= link_to 'Sign out', destroy_user_session_path, :method => :delete, class: 'dropdown-item' %>
                             </div>
 
                           </div>
-
-                          <!-- Icon -->
-                          <a href="#sidebarModalSearch" class="navbar-user-link" data-toggle="modal">
-                            <span class="icon">
-                              <i class="fas fa-search"></i>
-                            </span>
-                          </a>
 
                         </div>
         </div> <!-- / .navbar-collapse -->
