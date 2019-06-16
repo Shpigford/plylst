@@ -3,6 +3,8 @@ class Playlist < ApplicationRecord
 
   validates :name, presence: true
 
+  after_save :build_spotify_playlist
+
   include Storext.model()
   store_attributes :variables do
     days_ago Integer
@@ -55,5 +57,9 @@ class Playlist < ApplicationRecord
     end
 
     tracks
+  end
+
+  def build_spotify_playlist
+    BuildPlaylistsWorker.perform_async(self.user.id)
   end
 end
