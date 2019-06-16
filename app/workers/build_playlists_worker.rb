@@ -19,8 +19,10 @@ class BuildPlaylistsWorker
         times_to_loop = (total.to_f / 100).ceil
 
         times_to_loop.times { existing_playlist.remove_tracks!(existing_playlist.tracks) }
+
+        existing_playlist.change_details!(description: playlist.variables.delete_if { |k, v| v.blank? }.to_s)
       else
-        existing_playlist = spotify.create_playlist!("PLYLST: #{playlist.name}")
+        existing_playlist = spotify.create_playlist!("PLYLST: #{playlist.name}", true, playlist.variables.delete_if { |k, v| v.blank? }.to_s)
       end
 
       tracks = playlist.filtered_tracks(user).pluck(:spotify_id)
