@@ -62,28 +62,29 @@
           <!-- Push content down -->
           <div class="mt-auto"></div>
 
+          <div class="text-center mb-5">
+            <a href="https://github.com/Shpigford/plylst" class="badge badge-secondary px-3 py-2"><i class="fab fa-github"></i> PLYLST is open source!</a>
+          </div>
           
           <div class="navbar-user d-none d-md-flex" id="sidebarUser">
-                          <!-- Dropup -->
-                          <div class="dropup">
-                    
-                            <!-- Toggle -->
-                            <a href="#" id="sidebarIconCopy" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <div class="avatar avatar-sm avatar-online">
-                                <%= image_tag gravatar_url(current_user.email, 250), alt: "", class: 'avatar-img rounded-circle' %>
-                              </div>
-                            </a>
+            <!-- Dropup -->
+            <div class="dropup">
+      
+              <!-- Toggle -->
+              <a href="#" id="sidebarIconCopy" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div class="avatar avatar-sm avatar-online">
+                  <%= image_tag gravatar_url(current_user.email, 250), alt: "", class: 'avatar-img rounded-circle' %>
+                </div>
+              </a>
 
-                            <!-- Menu -->
-                            <div class="dropdown-menu" aria-labelledby="sidebarIconCopy">
-                              <a href="settings.html" class="dropdown-item">Settings</a>
-                              <hr class="dropdown-divider">
-                              <%= link_to 'Sign out', destroy_user_session_path, :method => :delete, class: 'dropdown-item' %>
-                            </div>
+              <!-- Menu -->
+              <div class="dropdown-menu" aria-labelledby="sidebarIconCopy">
+                <%= link_to 'Sign out', destroy_user_session_path, :method => :delete, class: 'dropdown-item' %>
+              </div>
 
-                          </div>
+            </div>
 
-                        </div>
+          </div>
         </div> <!-- / .navbar-collapse -->
 
       </div>
