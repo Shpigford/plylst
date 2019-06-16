@@ -8,7 +8,7 @@
             <div class="row align-items-center">
               <div class="col">
                 <h6 class="header-pretitle">Playlist</h6>
-                <h1 class="header-title"><%= @playlist.name %> <small><%= link_to "Edit rules", edit_playlist_path(@playlist) %></small></h1>
+                <h1 class="header-title"><%= @playlist.name %> <small><%= link_to "Edit", edit_playlist_path(@playlist) %></small></h1>
               </div>
             </div>
           </div>
@@ -16,8 +16,8 @@
 
         <div class="card">
           <div class="card-body">
-            <h2>Rules</h2>
-            <code><%= @variables %></code>
+            <h2>Rules <small><%= link_to "Edit rules", edit_playlist_path(@playlist) %></small></h2>
+            <code><%= @playlist.variables.delete_if { |k, v| v.blank? } %></code>
           </div> 
         </div>
 
@@ -44,7 +44,7 @@
                     <%= track.artist.name %>
                   </td>
                   <td>
-                    <%= track.album.name %>
+                    <span class="align-middle text-truncate d-inline-block" style="max-width:200px;"><%= track.album.name %></span>
                   </td>
                   <td>
                     <time><%= time_ago_in_words(track.follows.first.added_at).gsub('about','') %> ago</time>

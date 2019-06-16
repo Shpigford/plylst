@@ -21,4 +21,8 @@
 
 $(document).ready(function() {
   $('[data-toggle="select"]').select2();
+
+  $(".date_picker").flatpickr({
+    dateFormat: "Y-m-d",
+  });
 });
