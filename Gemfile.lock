@@ -273,6 +273,8 @@ GEM
     selenium-webdriver (3.142.3)
       childprocess (>= 0.5, < 2.0)
       rubyzip (~> 1.2, >= 1.2.2)
+    sentry-raven (2.9.0)
+      faraday (>= 0.7.6, < 1.0)
     sidekiq (5.2.7)
       connection_pool (~> 2.2, >= 2.2.2)
       rack (>= 1.5.0)
@@ -364,6 +366,7 @@ DEPENDENCIES
   rspotify!
   sass-rails (~> 5.0)
   selenium-webdriver
+  sentry-raven
   sidekiq
   sidekiq-cron
   sidekiq-failures
