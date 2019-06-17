@@ -47,7 +47,7 @@
                 <%= f.label :bpm, 'BPM', class: 'col-sm-2 col-form-label' %>
                 <div class="col-sm-10">
                   <%= f.text_field :bpm, class: 'form-control mb-1' %>
-                  <small class="text-muted">How many days ago was the song added?</small>
+                  <small class="text-muted">What BPM (Beats Per Minute) do you like?</small>
                 </div>
               </div>
 
@@ -55,7 +55,7 @@
                 <%= f.label :bpm_filter, 'BPM Filter', class: 'col-sm-2 col-form-label' %>
                 <div class="col-sm-10">
                   <%= f.select(:bpm_filter, options_for_select([['',''], ['Less than', 'lt'], ['Greater than', 'gt']], @playlist.bpm_filter), {}, { class: 'custom-select custom-select-lg mb-1'}) %>
-                  <small class="text-muted">Days ago, less than or greater than?</small>
+                  <small class="text-muted">BPM, less than or greater than?</small>
                 </div>
               </div>
 
