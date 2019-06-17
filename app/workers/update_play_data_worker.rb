@@ -14,4 +14,4 @@ class UpdatePlayDataWorker
   end
 end
 
-# Sidekiq::Cron::Job.create(name: 'Play Data', cron: '0 */1 * * *', class: 'UpdatePlayDataWorker')
+# Sidekiq::Cron::Job.create(name: 'Play Data', cron: '*/45 * * * *', class: 'UpdatePlayDataWorker')
