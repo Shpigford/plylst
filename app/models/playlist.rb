@@ -23,6 +23,7 @@ class Playlist < ApplicationRecord
     duration_filter String
     key Integer
     danceability Integer
+    sort String
   end
 
   def filtered_tracks(current_user)
@@ -42,6 +43,7 @@ class Playlist < ApplicationRecord
     duration_filter = variables['duration_filter']
     key = variables['key']
     danceability = variables['danceability']
+    sort = variables['sort']
     
     tracks = current_user.tracks
 
@@ -128,6 +130,22 @@ class Playlist < ApplicationRecord
         final = 1.0
       end
       tracks = tracks.where("(audio_features ->> 'danceability')::numeric between ? and ?", start, final)
+    end
+
+    if sort.present?
+      Rails.logger.warn("LOGGER: #{sort}")
+      case sort
+      when 'random'
+        tracks = tracks.order("random()")
+      when 'most_often_played'
+        tracks = tracks.order("plays DESC NULLS LAST")
+      when 'least_often_played'
+        tracks = tracks.order("plays ASC NULLS LAST")
+      when 'most_recently_added'
+        tracks = tracks.order("added_at DESC NULLS LAST")
+      when 'least_recently_added'
+        tracks = tracks.order("added_at ASC NULLS LAST")
+      end
     end
 
     if limit.present?
