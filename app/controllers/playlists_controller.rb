@@ -1,4 +1,9 @@
 class PlaylistsController < ApplicationController
+
+  def index
+    @playlists = Playlist.where(:user_id => current_user.id)
+  end
+  
   def new
     @playlist = Playlist.new
   end
@@ -15,17 +20,17 @@ class PlaylistsController < ApplicationController
   end
 
   def show
-    @playlist = Playlist.where(id: params[:id]).first
+    @playlist = current_user.playlists.find(params[:id])
 
     @tracks = @playlist.filtered_tracks(current_user)
   end
 
   def edit
-    @playlist = Playlist.where(id: params[:id]).first
+    @playlist = current_user.playlists.find(params[:id])
   end
 
   def update
-    @playlist = Playlist.where(id: params[:id]).first
+    @playlist = current_user.playlists.find(params[:id])
 
     if @playlist.update_attributes(playlist_params)
       redirect_to playlist_path(@playlist)
@@ -36,6 +41,6 @@ class PlaylistsController < ApplicationController
 
   private
     def playlist_params
-      params.require(:playlist).permit(:name, :days_ago, :limit, :days_ago_filter, :bpm, :bpm_filter, :release_date_start, :release_date_end, :genres)
+      params.require(:playlist).permit(:name, :days_ago, :limit, :days_ago_filter, :bpm, :bpm_filter, :release_date_start, :release_date_end)
     end
 end
