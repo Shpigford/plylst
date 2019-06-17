@@ -1,3 +1,96 @@
+<% if current_user %>
+
+  <% if current_user and current_user.playlists.count == 0 %>
+    <div class="container">
+      <div class="card m-5">
+        <div class="card-body text-center p-5">
+          <div class="row justify-content-center">
+            <div class="col-12 col-xl-10">
+        
+              <%= link_to image_tag('logo.svg', class: 'img-fluid mt-n5 mb-4 pt-5', style: 'max-width:200px'), root_path, class: '' %>
+
+              <h2>
+                You're in! Get started by building your first playlist!
+              </h2>
+
+              <%= link_to "<i class='fas fa-plus-circle'></i> Create a playlist".html_safe, new_playlist_path, class: 'btn btn-lg btn-primary mb-4' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <div class="main-content">
+      <div class="container-fluid">
+        <div class="row justify-content-center">
+          <div class="col-12">
+
+            <div class="header mt-md-5">
+              <div class="header-body">
+                <div class="row align-items-center">
+                  <div class="col">
+                    
+                    <!-- Pretitle -->
+                    <h6 class="header-pretitle">
+                      Music
+                    </h6>
+
+                    <!-- Title -->
+                    <h1 class="header-title">
+                      Latest Streams
+                    </h1>
+                  </div>
+                </div> <!-- / .row -->
+              </div>
+            </div>
+
+
+            <div class="card">
+              <div class="table-responsive">
+                <table class="table table-sm table-nowrap card-table">
+                  <thead>
+                    <tr>
+                      <th colspan="2">Song</th>
+                      <th>Artist</th>
+                      <th>Album</th>
+                      <th><i class="fal fa-calendar-alt"></i></th>
+                      <th><i class="fal fa-clock"></i></th>
+                    </tr>
+                  </thead>
+                  <tbody class="list">
+                    <% @latest_streams.each do |stream| %>
+                    <tr>
+                      <td colspan="2">
+                        <div class="avatar avatar-xs mr-2"><%= image_tag stream.track.album.image, class: 'avatar-img rounded-sm' %></div>
+                        <span class="align-middle text-truncate d-inline-block" style="max-width:200px;"><%= stream.track.name %></span>
+                      </td>
+                      <td>
+                        <%= stream.track.artist.name %>
+                      </td>
+                      <td>
+                        <%= stream.track.album.name %>
+                      </td>
+                      <td>
+                        <time><%= time_ago_in_words(stream.played_at).gsub('about','') %> ago</time>
+                      </td>
+                      <td>
+                        <%= format_ms(stream.track.duration) %>
+                      </td>
+                    </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+
+<% else %>
+
 <div class="container">
   <div class="card m-5">
     <div class="card-body text-center p-5">
@@ -5,15 +98,6 @@
         <div class="col-12 col-xl-10">
       
           <%= link_to image_tag('logo.svg', class: 'img-fluid mt-n5 mb-4 pt-5', style: 'max-width:200px'), root_path, class: '' %>
-
-          <% if current_user %>
-          <h2>
-            You're in! Get started by building your first playlist!
-          </h2>
-
-          <%= link_to "<i class='fas fa-plus-circle'></i> Create a playlist".html_safe, new_playlist_path, class: 'btn btn-lg btn-primary mb-4' %>
-
-          <% else %>
            <h2>
               Create smart playlists for your Spotify library!
             </h2>
@@ -22,10 +106,10 @@
               Stop relying on fancy pants algorithms to organize your library and instead build up playlists the way <i>you</i> want them.
             </p>
             <%= link_to "<i class='fab fa-spotify'></i> Sign in with Spotify".html_safe, omniauth_authorize_path('user', 'spotify'), class: 'btn btn-lg btn-success mb-3' %>
-         
-          <% end %>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<% end %>
