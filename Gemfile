@@ -67,6 +67,7 @@ group :development do
   gem "foreman", require: false
   gem "annotate", require: false
   gem "better_errors"
+  gem 'bullet'
 end
 
 group :test do
