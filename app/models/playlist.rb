@@ -14,6 +14,7 @@ class Playlist < ApplicationRecord
     bpm_filter String
     release_date_start String
     release_date_end String
+    genres String
   end
 
   def filtered_tracks(current_user)
@@ -24,6 +25,7 @@ class Playlist < ApplicationRecord
     bpm_filter = variables['bpm_filter']
     release_date_start = variables['release_date_start']
     release_date_end = variables['release_date_end']
+    genres = variables['genres']
     
     tracks = current_user.tracks
 
