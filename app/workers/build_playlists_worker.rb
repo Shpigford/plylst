@@ -1,5 +1,6 @@
 class BuildPlaylistsWorker
   include Sidekiq::Worker
+  include ApplicationHelper
 
   def perform(user_id)
     user = User.find user_id
@@ -19,8 +20,7 @@ class BuildPlaylistsWorker
         times_to_loop = (total.to_f / 100).ceil
 
         times_to_loop.times { existing_playlist.remove_tracks!(existing_playlist.tracks) }
-
-        existing_playlist.change_details!(description: playlist.variables.delete_if { |k, v| v.blank? }.to_s)
+        existing_playlist.change_details!(description: human_readable(playlist.variables))
       else
         existing_playlist = spotify.create_playlist!("PLYLST: #{playlist.name}")
       end
