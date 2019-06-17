@@ -15,11 +15,5 @@ class ProcessAccountWorker
 
       SaveTracksWorker.perform_async(user.id, tracks_added_at.to_a, 'added')
     end
-
-    # track_ids = track_ids.uniq.compact.each_slice(50).to_a
-
-    # track_ids.each do |track_group|
-    #   SaveTracksWorker.perform_async(user.id, track_group)
-    # end
   end
 end
