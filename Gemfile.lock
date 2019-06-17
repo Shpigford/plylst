@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/Shpigford/rspotify
-  revision: e1e33b16835ff7415420ce4246e5f38748a0bcea
+  revision: 44c550a52a44e1e44c64a142613e54eefae1f290
   specs:
     rspotify (2.6.0)
       addressable (~> 2.5.2)
