@@ -21,5 +21,4 @@ class RecentlyStreamedWorker
   end
 end
 
-
 # Sidekiq::Cron::Job.create(name: 'Recently Streamed', cron: '0 */2 * * *', class: 'RecentlyStreamedWorker')
