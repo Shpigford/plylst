@@ -54,6 +54,11 @@ class Playlist < ApplicationRecord
        tracks = tracks.joins(:album).where('release_date <= ?', release_date_end)
     end
 
+    if genres
+      genres = genres.split(/\s*,\s*/)
+      tracks = tracks.joins(:artist).where("artists.genres ?| array[:genres]", genres: genres)
+    end
+
     if limit.present?
       tracks = tracks.limit(limit)
     end
