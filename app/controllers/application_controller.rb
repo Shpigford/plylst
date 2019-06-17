@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   def load_all_playlists
     if current_user
-      @all_playlists = current_user.playlists
+      @all_playlists = current_user.playlists.order('name ASC')
     end
   end
 
