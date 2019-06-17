@@ -19,6 +19,8 @@ class Playlist < ApplicationRecord
     plays_filter String
     last_played_days_ago Integer
     last_played_days_ago_filter String
+    duration Integer
+    duration_filter String
   end
 
   def filtered_tracks(current_user)
@@ -34,6 +36,8 @@ class Playlist < ApplicationRecord
     plays_filter = variables['plays_filter'] || 'gt'
     last_played_days_ago = variables['last_played_days_ago']
     last_played_days_ago_filter = variables['last_played_days_ago_filter']
+    duration = variables['duration']
+    duration_filter = variables['duration_filter']
     
     tracks = current_user.tracks
 
@@ -76,8 +80,13 @@ class Playlist < ApplicationRecord
       end
     end
 
-    if last_played_days_ago.present?
-
+    if duration.present?
+      duration = duration * 1000
+      if duration_filter.present? and duration_filter == 'gt'
+        tracks = tracks.where("duration > ?", duration)
+      elsif duration_filter == 'lt'
+        tracks = tracks.where("duration < ?", duration)
+      end
     end
 
     if last_played_days_ago.present?

@@ -42,6 +42,6 @@ class PlaylistsController < ApplicationController
 
   private
     def playlist_params
-      params.require(:playlist).permit(:name, :days_ago, :limit, :days_ago_filter, :bpm, :bpm_filter, :release_date_start, :release_date_end, :genres, :plays, :plays_filter, :last_played_days_ago, :last_played_days_ago_filter)
+      params.require(:playlist).permit(:name, :days_ago, :limit, :days_ago_filter, :bpm, :bpm_filter, :release_date_start, :release_date_end, :genres, :plays, :plays_filter, :last_played_days_ago, :last_played_days_ago_filter, :duration, :duration_filter)
     end
 end
