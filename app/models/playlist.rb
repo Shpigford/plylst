@@ -133,7 +133,6 @@ class Playlist < ApplicationRecord
     end
 
     if sort.present?
-      Rails.logger.warn("LOGGER: #{sort}")
       case sort
       when 'random'
         tracks = tracks.order("random()")
