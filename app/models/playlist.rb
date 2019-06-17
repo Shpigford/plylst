@@ -15,6 +15,10 @@ class Playlist < ApplicationRecord
     release_date_start String
     release_date_end String
     genres String
+    plays Integer
+    plays_filter String
+    last_played_days_ago Integer
+    last_played_days_ago_filter String
   end
 
   def filtered_tracks(current_user)
@@ -26,6 +30,10 @@ class Playlist < ApplicationRecord
     release_date_start = variables['release_date_start']
     release_date_end = variables['release_date_end']
     genres = variables['genres']
+    plays = variables['plays']
+    plays_filter = variables['plays_filter'] || 'gt'
+    last_played_days_ago = variables['last_played_days_ago']
+    last_played_days_ago_filter = variables['last_played_days_ago_filter']
     
     tracks = current_user.tracks
 
@@ -54,9 +62,31 @@ class Playlist < ApplicationRecord
        tracks = tracks.joins(:album).where('release_date <= ?', release_date_end)
     end
 
-    if genres
+    if genres.present?
       genres = genres.split(/\s*,\s*/)
       tracks = tracks.joins(:artist).where("artists.genres ?| array[:genres]", genres: genres)
+    end
+
+    if plays.present?
+      plays = plays.to_i
+      if plays_filter.present? and plays_filter == 'gt'
+        tracks = tracks.where("plays > ?", plays)
+      elsif plays_filter == 'lt'
+        tracks = tracks.where("plays < ?", plays)
+      end
+    end
+
+    if last_played_days_ago.present?
+
+    end
+
+    if last_played_days_ago.present?
+      last_played_days_ago = last_played_days_ago.to_i
+      if last_played_days_ago_filter.present? and last_played_days_ago_filter == 'gt'
+        tracks = tracks.where('last_played_at < ?', last_played_days_ago.days.ago).order('last_played_at ASC')
+      elsif last_played_days_ago_filter == 'lt'
+        tracks = tracks.where('last_played_at > ?', last_played_days_ago.days.ago).order('last_played_at DESC')
+      end
     end
 
     if limit.present?
