@@ -20,7 +20,7 @@ class BuildPlaylistsWorker
         times_to_loop = (total.to_f / 100).ceil
 
         times_to_loop.times { existing_playlist.remove_tracks!(existing_playlist.tracks) }
-        existing_playlist.change_details!(description: human_readable(playlist.variables))
+        existing_playlist.change_details!(description: "#{human_readable(playlist.variables)}. Created with PLYLST.app!")
       else
         existing_playlist = spotify.create_playlist!("PLYLST: #{playlist.name}")
       end
