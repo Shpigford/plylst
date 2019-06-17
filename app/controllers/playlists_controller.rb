@@ -1,4 +1,5 @@
 class PlaylistsController < ApplicationController
+  before_action :authenticate_user!
 
   def index
     @playlists = Playlist.where(:user_id => current_user.id)
