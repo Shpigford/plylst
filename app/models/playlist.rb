@@ -21,6 +21,7 @@ class Playlist < ApplicationRecord
     last_played_days_ago_filter String
     duration Integer
     duration_filter String
+    key Integer
   end
 
   def filtered_tracks(current_user)
@@ -38,6 +39,7 @@ class Playlist < ApplicationRecord
     last_played_days_ago_filter = variables['last_played_days_ago_filter']
     duration = variables['duration']
     duration_filter = variables['duration_filter']
+    key = variables['key']
     
     tracks = current_user.tracks
 
@@ -96,6 +98,10 @@ class Playlist < ApplicationRecord
       elsif last_played_days_ago_filter == 'lt'
         tracks = tracks.where('last_played_at > ?', last_played_days_ago.days.ago).order('last_played_at DESC')
       end
+    end
+
+    if key.present?
+      tracks = tracks.where("(audio_features ->> 'key')::numeric = ?", key)
     end
 
     if limit.present?
