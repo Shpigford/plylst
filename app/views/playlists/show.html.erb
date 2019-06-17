@@ -37,7 +37,7 @@
                 <% @tracks.each do |track| %>
                 <tr>
                   <td colspan="2">
-                    <div class="avatar avatar-xs mr-2"><%= image_tag track.album.image, class: 'avatar-img rounded-sm' %></div>
+                    <div class="avatar avatar-xs mr-2"><%= image_tag track.album.image, class: 'avatar-img rounded-sm' if track.album.image.present? %></div>
                     <span class="align-middle text-truncate d-inline-block" style="max-width:200px;"><%= track.name %> </span>
                   </td>
                   <td>
