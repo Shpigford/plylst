@@ -22,6 +22,7 @@ class Playlist < ApplicationRecord
     duration Integer
     duration_filter String
     key Integer
+    danceability Integer
   end
 
   def filtered_tracks(current_user)
@@ -40,6 +41,7 @@ class Playlist < ApplicationRecord
     duration = variables['duration']
     duration_filter = variables['duration_filter']
     key = variables['key']
+    danceability = variables['danceability']
     
     tracks = current_user.tracks
 
@@ -102,6 +104,30 @@ class Playlist < ApplicationRecord
 
     if key.present?
       tracks = tracks.where("(audio_features ->> 'key')::numeric = ?", key)
+    end
+
+    if danceability.present?
+      case danceability
+      when 0 # Not at all
+        start = 0.0
+        final = 0.199
+      when 1 # A little
+        start = 0.2
+        final = 0.399
+      when 2 # Somewhat
+        start = 0.4
+        final = 0.599
+      when 3 # Moderately
+        start = 0.6
+        final = 0.799
+      when 4 # Very
+        start = 0.8
+        final = 0.899
+      when 5 # Super
+        start = 0.9
+        final = 1.0
+      end
+      tracks = tracks.where("(audio_features ->> 'danceability')::numeric between ? and ?", start, final)
     end
 
     if limit.present?

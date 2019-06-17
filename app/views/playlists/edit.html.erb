@@ -153,6 +153,14 @@
                 </div>
               </div>
 
+              <div class="form-group row">
+                <%= f.label :danceability, class: 'col-sm-2 col-form-label' %>
+                <div class="col-sm-10">
+                  <%= f.select(:danceability, options_for_select([['',''], ['Not at all', 0], ['A little', 1], ['Somewhat', 2], ['Moderately', 3], ['Very', 4], ['Super', 5]], @playlist.danceability), {}, { class: 'custom-select custom-select-lg mb-1'}) %>
+                  <small class="text-muted">How danceable is the track?</small>
+                </div>
+              </div>
+
               <!-- <div class="input-group mb-2 mr-sm-2" style="width:250px">
                 <select class="form-control js-example-basic-single" data-toggle="select">
                   <option>Added to Library</option>
