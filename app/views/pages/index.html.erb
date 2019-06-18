@@ -90,14 +90,14 @@
 
 
 <% else %>
-
+<div class="vertical-center">
 <div class="container">
   <div class="card m-5">
-    <div class="card-body text-center p-5">
-      <div class="row justify-content-center">
-        <div class="col-12 col-xl-10">
-      
-          <%= link_to image_tag('logo.svg', class: 'img-fluid mt-n5 mb-4 pt-5', style: 'max-width:200px'), root_path, class: '' %>
+    <div class="card-body text-center p-4">
+      <div class="row justify-content-center p-4">
+        <div class="col-12 p-5">
+          <div><%= link_to image_tag('screenshot.png', class: 'img-fluid mb-4', style: 'max-width:750px'), root_path, class: '' %></div>
+          <%= link_to image_tag('logo-full.svg', class: 'img-fluid mt-1 mb-4', style: 'max-width:350px'), root_path, class: '' %>
            <h2>
               Create smart playlists for your Spotify library!
             </h2>
@@ -111,5 +111,5 @@
     </div>
   </div>
 </div>
-
+</div>
 <% end %>
