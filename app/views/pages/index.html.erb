@@ -98,14 +98,18 @@
         <div class="col-12 p-5">
           <div><%= link_to image_tag('screenshot.png', class: 'img-fluid mb-4', style: 'max-width:750px'), root_path, class: '' %></div>
           <%= link_to image_tag('logo-full.svg', class: 'img-fluid mt-1 mb-4', style: 'max-width:350px'), root_path, class: '' %>
-           <h2>
+           <h2 class="display-4">
               Create smart playlists for your Spotify library!
             </h2>
 
             <p class="text-muted">
               Stop relying on fancy pants algorithms to organize your library and instead build up playlists the way <i>you</i> want them.
             </p>
-            <%= link_to "<i class='fab fa-spotify'></i> Sign in with Spotify".html_safe, omniauth_authorize_path('user', 'spotify'), class: 'btn btn-lg btn-success mb-3' %>
+            <hr>
+            <h2>Build playlists with a variety of attributes!</h2>
+            <p><span class="badge badge-pill badge-primary">Days since added</span> <span class="badge badge-pill badge-primary">Release date</span> <span class="badge badge-pill badge-primary">Last played</span> <span class="badge badge-pill badge-primary">Beats Per Minute</span> <span class="badge badge-pill badge-primary">Genre</span> <span class="badge badge-pill badge-primary">Play count</span> <span class="badge badge-pill badge-primary">Duration</span> <span class="badge badge-pill badge-primary">Key</span> <span class="badge badge-pill badge-primary">Danceability</span></p>
+            <hr>
+            <%= link_to "<i class='fab fa-spotify'></i> Sign in with Spotify".html_safe, omniauth_authorize_path('user', 'spotify'), class: 'btn btn-lg btn-success mb-3 mt-5', style: 'font-size:1.5em;' %>
         </div>
       </div>
     </div>
