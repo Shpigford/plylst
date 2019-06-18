@@ -5,13 +5,16 @@
       <div class="card m-5">
         <div class="card-body text-center p-5">
           <div class="row justify-content-center">
-            <div class="col-12 col-xl-10">
-        
+            <div class="col-12">
+              
+              <div>
               <%= link_to image_tag('logo.svg', class: 'img-fluid mt-n5 mb-4 pt-5', style: 'max-width:200px'), root_path, class: '' %>
+              </div>
 
               <h2>
                 You're in! Get started by building your first playlist!
               </h2>
+              <p><small class="text-muted">(It may take a few minutes for all of your songs to start showing up)</small></p>
 
               <%= link_to "<i class='fas fa-plus-circle'></i> Create a playlist".html_safe, new_playlist_path, class: 'btn btn-lg btn-primary mb-4' %>
             </div>
