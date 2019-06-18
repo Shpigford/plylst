@@ -61,7 +61,7 @@
                     </tr>
                   </thead>
                   <tbody class="list">
-                    <% @latest_streams.find_each do |stream| %>
+                    <% @latest_streams.find do |stream| %>
                     <tr>
                       <td colspan="2">
                         <div class="avatar avatar-xs mr-2"><%= image_tag stream.track.album.image, class: 'avatar-img rounded-sm' %></div>
