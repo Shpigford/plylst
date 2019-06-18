@@ -9,7 +9,7 @@ class BuildPlaylistsWorker
 
     spotify_playlists = spotify.playlists(limit:50)
 
-    user.playlists.each do |playlist|
+    user.playlists.find_each do |playlist|
       existing_playlist = spotify_playlists.select{|key| key.name == "PLYLST: #{playlist.name}"}
 
       if existing_playlist.present?

@@ -38,7 +38,7 @@
                 </tr>
               </thead>
               <tbody class="list">
-                <% @tracks.each do |track| %>
+                <% @tracks.find_each do |track| %>
                 <tr>
                   <td colspan="2">
                     <div class="avatar avatar-xs mr-2"><%= image_tag track.album.image, class: 'avatar-img rounded-sm' if track.album.image.present? %></div>
