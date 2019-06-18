@@ -32,6 +32,7 @@ gem "sidekiq-failures"
 gem 'figaro'
 gem 'rspotify', git: 'https://github.com/Shpigford/rspotify'
 gem 'sentry-raven'
+gem 'scout_apm'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
