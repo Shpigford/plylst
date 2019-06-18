@@ -40,6 +40,12 @@ class PlaylistsController < ApplicationController
     end
   end
 
+  def destroy
+    @playlist = current_user.playlists.find(params[:id])
+    @playlist.destroy
+    redirect_to root_path, notice: "Deleted that for you!"
+  end
+
   private
     def playlist_params
       params.require(:playlist).permit(:name, :days_ago, :limit, :days_ago_filter, :bpm, :bpm_filter, :release_date_start, :release_date_end, :genres, :plays, :plays_filter, :last_played_days_ago, :last_played_days_ago_filter, :duration, :duration_filter, :key, :danceability, :sort)
