@@ -62,9 +62,9 @@ class Playlist < ApplicationRecord
     if days_ago.present?
       days_ago = days_ago.to_i
       if days_ago_filter.present? and days_ago_filter == 'gt'
-        tracks = tracks.where('added_at < ?', days_ago.days.ago).order('added_at ASC')
+        tracks = tracks.where('follows.added_at < ?', days_ago.days.ago).order('follows.added_at ASC')
       elsif days_ago_filter == 'lt'
-        tracks = tracks.where('added_at > ?', days_ago.days.ago).order('added_at DESC')
+        tracks = tracks.where('follows.added_at > ?', days_ago.days.ago).order('follows.added_at DESC')
       end
     end
 
@@ -153,9 +153,9 @@ class Playlist < ApplicationRecord
       when 'least_often_played'
         tracks = tracks.order("follows.plays ASC NULLS LAST")
       when 'most_recently_added'
-        tracks = tracks.order("added_at DESC NULLS LAST")
+        tracks = tracks.order("follows.added_at DESC NULLS LAST")
       when 'least_recently_added'
-        tracks = tracks.order("added_at ASC NULLS LAST")
+        tracks = tracks.order("follows.added_at ASC NULLS LAST")
       end
     end
 
