@@ -99,8 +99,11 @@
     <div class="card-body text-center p-4">
       <div class="row justify-content-center p-4">
         <div class="col-12 p-5">
-          <div><%= link_to image_tag('screenshot.png', class: 'img-fluid mb-4', style: 'max-width:750px'), root_path, class: '' %></div>
-          <%= link_to image_tag('logo-full.svg', class: 'img-fluid mt-1 mb-4', style: 'max-width:350px'), root_path, class: '' %>
+          <div>
+            <%= image_tag('screenshot.png', class: 'img-fluid mb-4') %>
+            
+            </div>
+          <%= image_tag('logo-full.svg', class: 'img-fluid mt-1 mb-4', style: 'max-width:350px') %>
            <h2 class="display-4">
               Create smart playlists for your Spotify library!
             </h2>
