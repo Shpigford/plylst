@@ -37,6 +37,10 @@
           <span class="navbar-toggler-icon"></span>
         </button>
 
+        <% flash.each do |name, msg| -%>
+          <%= content_tag :div, msg, class: name %>
+        <% end -%>
+
         <%= link_to image_tag('logo.svg', class: 'navbar-brand-img mx-auto'), root_path, class: 'navbar-brand' %>
 
         <!-- User (xs) -->

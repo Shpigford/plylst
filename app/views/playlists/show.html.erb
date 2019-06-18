@@ -10,6 +10,9 @@
                 <h6 class="header-pretitle">Playlist</h6>
                 <h1 class="header-title"><%= @playlist.name %> <small><%= link_to "Edit", edit_playlist_path(@playlist) %></small></h1>
               </div>
+              <div class="col">
+                <%= link_to 'Delete playlist', playlist_path(@playlist), :class => "btn btn-danger", :method => :delete, :data => {:confirm => 'Are you sure?'} %>
+              </div>
             </div>
           </div>
         </div>
