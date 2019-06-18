@@ -24,6 +24,8 @@ class Playlist < ApplicationRecord
     key Integer
     danceability Integer
     sort String
+    track_name String
+    artist_name String
   end
 
   def filtered_tracks(current_user)
@@ -44,8 +46,18 @@ class Playlist < ApplicationRecord
     key = variables['key']
     danceability = variables['danceability']
     sort = variables['sort']
+    track_name = variables['track_name']
+    artist_name = variables['artist_name']
     
     tracks = current_user.tracks
+
+    if track_name.present?
+      tracks = tracks.advanced_search(name: track_name)
+    end
+
+    if artist_name.present?
+      tracks = tracks.joins(:artist).where('artists.name ILIKE ?', '%' + artist_name + '%')
+    end
 
     if days_ago.present?
       days_ago = days_ago.to_i

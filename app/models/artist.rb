@@ -16,6 +16,7 @@
 
 class Artist < ApplicationRecord
   has_many :albums
+  has_many :tracks
 
   include Storext.model(genres: {})
 end

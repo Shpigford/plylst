@@ -22,11 +22,27 @@
               <%= f.label :name, class: 'col-sm-2 col-form-label' %>
               <div class="col-sm-10">
                 <%= f.text_field :name, class: 'form-control mb-1' %>
-                <small class="text-muted">Name that playlist!</small>
+                <small class="text-muted">Text the track name contains</small>
               </div>
             </div>
             <hr>
             <h2>Rules</h2>
+              <div class="form-group row">
+                <%= f.label :track_name, class: 'col-sm-2 col-form-label' %>
+                <div class="col-sm-10">
+                  <%= f.text_field :track_name, class: 'form-control mb-1' %>
+                  <small class="text-muted">Text the artist name contains</small>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <%= f.label :artist_name, class: 'col-sm-2 col-form-label' %>
+                <div class="col-sm-10">
+                  <%= f.text_field :artist_name, class: 'form-control mb-1' %>
+                  <small class="text-muted">How many days ago was the song added?</small>
+                </div>
+              </div>
+
               <div class="form-group row">
                 <%= f.label :days_ago, class: 'col-sm-2 col-form-label' %>
                 <div class="col-sm-10">
