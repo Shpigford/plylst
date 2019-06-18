@@ -92,9 +92,9 @@ class Playlist < ApplicationRecord
     if plays.present?
       plays = plays.to_i
       if plays_filter.present? and plays_filter == 'gt'
-        tracks = tracks.where("plays > ?", plays)
+        tracks = tracks.where("follows.plays > ?", plays)
       elsif plays_filter == 'lt'
-        tracks = tracks.where("plays < ?", plays)
+        tracks = tracks.where("follows.plays < ?", plays)
       end
     end
 
@@ -149,9 +149,9 @@ class Playlist < ApplicationRecord
       when 'random'
         tracks = tracks.order("random()")
       when 'most_often_played'
-        tracks = tracks.order("plays DESC NULLS LAST")
+        tracks = tracks.order("follows.plays DESC NULLS LAST")
       when 'least_often_played'
-        tracks = tracks.order("plays ASC NULLS LAST")
+        tracks = tracks.order("follows.plays ASC NULLS LAST")
       when 'most_recently_added'
         tracks = tracks.order("added_at DESC NULLS LAST")
       when 'least_recently_added'
