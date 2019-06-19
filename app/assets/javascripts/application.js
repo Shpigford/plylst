@@ -147,4 +147,8 @@ $(document).ready(function() {
     templates: template
   });
 
+  $('#builder').on('afterUpdateRuleValue.queryBuilder afterUpdateRuleFilter.queryBuilder afterUpdateRuleOperator.queryBuilder afterUpdateGroupCondition.queryBuilder', function(){
+    console.log(JSON.stringify($('#builder').queryBuilder('getRules', {skip_empty:  true}), null, 2));
+  });
+
 });
