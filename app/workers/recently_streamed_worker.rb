@@ -15,13 +15,15 @@ class RecentlyStreamedWorker
         user.update_attribute(:active, false)
       end
 
-      recent_track_ids = Array.new
+      if recent_tracks.present?
+        recent_track_ids = Array.new
 
-      recent_tracks.each do |track|
-        recent_track_ids.push([track.id, track.played_at])
+        recent_tracks.each do |track|
+          recent_track_ids.push([track.id, track.played_at])
+        end
+
+        SaveTracksWorker.perform_async(user.id, recent_track_ids, 'streamed')
       end
-
-      SaveTracksWorker.perform_async(user.id, recent_track_ids, 'streamed')
     end
   end
 end
