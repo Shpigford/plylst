@@ -7,7 +7,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     if @user
       auth = request.env["omniauth.auth"]
       spotify_user = RSpotify::User.new(auth).to_hash
-      @user.update_attribute(:settings, spotify_user)
+      @user.update_attributes(settings: spotify_user, active: true)
       
       sign_in_and_redirect @user, :event => :authentication
 
