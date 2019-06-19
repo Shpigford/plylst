@@ -77,6 +77,15 @@ class Playlist < ApplicationRecord
     end
 
     if release_date_start.present? && release_date_end.present?
+
+      if release_date_start.scan(/\D/).empty? and (1700..2100).include?(date_string.to_i)
+        release_date_start = "#{release_date_start}-01-01"
+      end
+
+      if release_date_end.scan(/\D/).empty? and (1700..2100).include?(date_string.to_i)
+        release_date_end = "#{release_date_end}-12-31"
+      end
+
       tracks = tracks.joins(:album).where('release_date >= ? AND release_date <= ?', release_date_start, release_date_end)
     elsif release_date_start.present?
        tracks = tracks.joins(:album).where('release_date >= ?', release_date_start)
