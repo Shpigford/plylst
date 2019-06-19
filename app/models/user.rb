@@ -25,6 +25,8 @@ class User < ApplicationRecord
   has_many :streams
   has_many :playlists
 
+  scope :active, -> {where(active:true)}
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :rememberable, :trackable, :omniauthable, omniauth_providers: %i[spotify]
