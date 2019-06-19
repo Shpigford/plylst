@@ -28,75 +28,165 @@ $(document).ready(function() {
     dateFormat: "Y-m-d",
   });
 
-var rules_basic = {
-  condition: 'AND',
-  rules: [{
-    id: 'price',
-    operator: 'less',
-    value: 10.25
-  }, {
-    condition: 'OR',
+  var rules_basic = {
+    condition: 'AND',
     rules: [{
-      id: 'category',
-      operator: 'equal',
-      value: 2
+      id: 'price',
+      operator: 'less',
+      value: 10.25
     }, {
-      id: 'category',
-      operator: 'equal',
-      value: 1
+      condition: 'OR',
+      rules: [{
+        id: 'category',
+        operator: 'equal',
+        value: 2
+      }, {
+        id: 'category',
+        operator: 'equal',
+        value: 1
+      }]
     }]
-  }]
-};
+  };
 
+  const template = {
+      group: '\
+      <div id="{{= it.group_id }}" class="rules-group-container"> \
+        <div class="rules-group-header"> \
+          <div class="btn-group pull-left group-actions"> \
+            <button type="button" class="btn btn-xs btn-primary" data-add="rule"> \
+              <i class="{{= it.icons.add_rule }}"></i> {{= it.translate("add_rule") }} \
+            </button> \
+            {{? it.settings.allow_groups===-1 || it.settings.allow_groups>=it.level }} \
+              <button type="button" class="btn btn-xs btn-success" data-add="group"> \
+                <i class="{{= it.icons.add_group }}"></i> {{= it.translate("add_group") }} \
+              </button> \
+            {{?}} \
+            {{? it.level>1 }} \
+              <button type="button" class="btn btn-xs btn-danger" data-delete="group"> \
+                <i class="{{= it.icons.remove_group }}"></i> {{= it.translate("delete_group") }} \
+              </button> \
+            {{?}} \
+          </div> \
+          {{? it.settings.display_errors }} \
+            <div class="error-container"><i class="{{= it.icons.error }}"></i></div> \
+          {{?}} \
+        </div> \
+        <div class=rules-group-body> \
+          <div class=rules-list></div> \
+        </div> \
+      </div>',
+      rule: '\
+        <div id="{{= it.rule_id }}" class="rule-container"> \
+          <div class="rule-header"> \
+            <div class="btn-group float-right rule-actions"> \
+              <button type="button" class="btn btn-xs btn-danger" data-delete="rule"> \
+                <i class="{{= it.icons.remove_rule }}"></i> \
+              </button> \
+            </div> \
+          </div> \
+          {{? it.settings.display_errors }} \
+            <div class="error-container"><i class="{{= it.icons.error }}"></i></div> \
+          {{?}} \
+          <div class="rule-filter-container"></div> \
+          <div class="rule-operator-container"></div> \
+          <div class="rule-value-container"></div> \
+        </div>'
+    }
+
+    // var options = {}
+    // options.templates = template
+    // options.filters = filters
+    // options.rules = rules
 
   $('#builder').queryBuilder({
-    filters: [{
-    id: 'name',
-    label: 'Name',
-    type: 'string'
-  }, {
-    id: 'category',
-    label: 'Category',
-    type: 'integer',
-    input: 'select',
-    values: {
-      1: 'Books',
-      2: 'Movies',
-      3: 'Music',
-      4: 'Tools',
-      5: 'Goodies',
-      6: 'Clothes'
+    filters: [
+      {
+        id: 'track_name',
+        label: 'Track Name',
+        type: 'string',
+        operators: ['contains']
+      }, 
+      {
+        id: 'artist_name',
+        label: 'Artist Name',
+        type: 'string',
+        operators: ['contains']
+      },
+      {
+        id: 'days_ago',
+        label: 'Days Ago',
+        type: 'integer',
+        operators: ['less','greater']
+      },
+      {
+        id: 'bpm',
+        label: 'BPM',
+        type: 'integer',
+        operators: ['less','greater']
+      },
+      {
+        id: 'release_date_start',
+        label: 'Release Date',
+        type: 'date',
+        operators: ['between']
+      },
+      {
+        id: 'category',
+        label: 'Category',
+        type: 'integer',
+        input: 'select',
+        values: {
+          1: 'Books',
+          2: 'Movies',
+          3: 'Music',
+          4: 'Tools',
+          5: 'Goodies',
+          6: 'Clothes'
+        },
+        operators: ['equal', 'not_equal', 'in', 'not_in', 'is_null', 'is_not_null']
+      }, 
+      {
+        id: 'in_stock',
+        label: 'In stock',
+        type: 'integer',
+        input: 'radio',
+        values: {
+          1: 'Yes',
+          0: 'No'
+        },
+        operators: ['equal']
+      }, 
+      {
+        id: 'price',
+        label: 'Price',
+        type: 'double',
+        validation: {
+          min: 0,
+          step: 0.01
+        }
+      }, 
+      {
+        id: 'id',
+        label: 'Identifier',
+        type: 'string',
+        placeholder: '____-____-____',
+        operators: ['equal', 'not_equal'],
+        validation: {
+          format: /^.{4}-.{4}-.{4}$/
+        }
+      }
+    ],
+    /*rules: rules_basic,*/
+    allow_groups: 0,
+    conditions: ['AND'],
+    icons: {
+      add_group: 'fas fa-plus-square',
+      add_rule: 'fas fa-plus',
+      remove_group: 'fas fa-minus-square',
+      remove_rule: 'far fa-trash-alt',
+      error: 'fas fa-exclamation-circle'
     },
-    operators: ['equal', 'not_equal', 'in', 'not_in', 'is_null', 'is_not_null']
-  }, {
-    id: 'in_stock',
-    label: 'In stock',
-    type: 'integer',
-    input: 'radio',
-    values: {
-      1: 'Yes',
-      0: 'No'
-    },
-    operators: ['equal']
-  }, {
-    id: 'price',
-    label: 'Price',
-    type: 'double',
-    validation: {
-      min: 0,
-      step: 0.01
-    }
-  }, {
-    id: 'id',
-    label: 'Identifier',
-    type: 'string',
-    placeholder: '____-____-____',
-    operators: ['equal', 'not_equal'],
-    validation: {
-      format: /^.{4}-.{4}-.{4}$/
-    }
-  }],
-
-  rules: rules_basic
+    templates: template
   });
+
 });
