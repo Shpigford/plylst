@@ -75,6 +75,12 @@ $(document).on('turbolinks:load', function() {
         </div>'
     }
 
+  if ($('#original_filters').val() === "{}") {
+    rules = null;
+  } else {
+    rules = JSON.parse($('#original_filters').val());
+  }
+
     // var options = {}
     // options.templates = template
     // options.filters = filters
@@ -86,32 +92,114 @@ $(document).on('turbolinks:load', function() {
         id: 'track_name',
         label: 'Track Name',
         type: 'string',
-        operators: ['contains']
+        operators: ['contains'],
+        unique: true,
+        description: 'Text the track name contains'
       }, 
       {
         id: 'artist_name',
         label: 'Artist Name',
         type: 'string',
-        operators: ['contains']
+        operators: ['contains'],
+        unique: true,
+        description: 'Text the artist name contains'
       },
       {
         id: 'days_ago',
         label: 'Days Ago',
         type: 'integer',
-        operators: ['less','greater']
+        operators: ['less','greater'],
+        unique: true,
+        description: 'How many days ago was the song added?'
       },
       {
         id: 'bpm',
         label: 'BPM',
         type: 'integer',
-        operators: ['less','greater']
+        operators: ['less','greater'],
+        unique: true,
+        description: 'What BPM (Beats Per Minute) do you like?'
       },
       {
-        id: 'release_date_start',
+        id: 'release_date',
         label: 'Release Date',
         type: 'date',
-        operators: ['between']
-      }
+        operators: ['between'],
+        unique: true,
+        description: 'When were the tracks released?'
+      },
+      {
+        id: 'genres',
+        label: 'Genres',
+        type: 'string',
+        operators: ['contains'],
+        unique: true,
+        description: 'Comma-separated genres you\'d like to limit to. <a href="http://everynoise.com/everynoise1d.cgi?scope=all&vector=popularity">Here\'s a useful list</a> of the 3000+ genres Spotify supports. 🤯'
+      },
+      {
+        id: 'plays',
+        label: 'Play Count',
+        type: 'integer',
+        operators: ['less','greater'],
+        unique: true,
+        description: 'How many plays does this song have? NOTE: This count only starts <b>after</b> you connect to PLYLST.'
+      },
+      {
+        id: 'duration',
+        label: 'Duration',
+        type: 'integer',
+        operators: ['less','greater'],
+        unique: true,
+        description: 'How long is the song?'
+      },
+      {
+        id: 'last_played_days_ago',
+        label: 'Days Since Last Played',
+        type: 'integer',
+        operators: ['less','greater'],
+        unique: true,
+        description: 'How many days ago was the song last played? NOTE: This data is only available for songs played <b>after</b> you connect to PLYLST.'
+      },
+      {
+        id: 'key',
+        label: 'Key',
+        type: 'integer',
+        input: 'select',
+        values: [
+          {'0': 'C'},
+          {'1': 'C♯, D♭'},
+          {'2': 'D'},
+          {'3': 'D♯, E♭'},
+          {'4': 'E'},
+          {'5': 'F'},
+          {'6': 'F♯, G♭'},
+          {'7': 'G'},
+          {'8': 'G♯, A♭'},
+          {'9': 'A'},
+          {'10': 'A♯, B♭'},
+          {'11': 'B'}
+        ],
+        operators: ['equal'],
+        unique: true,
+        description: 'The estimated key of the song'
+      },
+      {
+        id: 'danceability',
+        label: 'Danceability',
+        type: 'integer',
+        input: 'select',
+        values: [
+          {'0': 'Not at all'},
+          {'1': 'A little'},
+          {'2': 'Somewhat'},
+          {'3': 'Moderately'},
+          {'4': 'Very'},
+          {'5': 'Super'},
+        ],
+        operators: ['equal'],
+        unique: true,
+        description: 'How danceable is the track?'
+      },
     ],
     /*rules: rules_basic,*/
     allow_groups: 0,
@@ -126,8 +214,12 @@ $(document).on('turbolinks:load', function() {
       remove_rule: 'far fa-trash-alt',
       error: 'fas fa-exclamation-circle'
     },
+    plugins: {
+      'unique-filter': null,
+      'filter-description': { mode: 'inline'},
+    },
     templates: template,
-    rules: JSON.parse($('#original_filters').val())
+    rules: rules
   });
 
   $('#builder').on('afterUpdateRuleValue.queryBuilder afterUpdateRuleFilter.queryBuilder afterUpdateRuleOperator.queryBuilder afterUpdateGroupCondition.queryBuilder', function(){
