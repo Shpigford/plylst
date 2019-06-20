@@ -69,177 +69,180 @@ $(document).on('turbolinks:load', function() {
         </div>'
     }
 
-  if ($('#original_filters').val() === "{}") {
-    rules = null;
-  } else {
-    rules = JSON.parse($('#original_filters').val());
+  if ($('#original_filters').length > 0){
+    if ($('#original_filters').val() === "{}") {
+      rules = null;
+    } else {
+      rules = JSON.parse($('#original_filters').val());
+    }
   }
 
     // var options = {}
     // options.templates = template
     // options.filters = filters
     // options.rules = rules
-
-  $('#builder').queryBuilder({
-    filters: [
-      {
-        id: 'track_name',
-        label: 'Track Name',
-        type: 'string',
-        operators: ['contains'],
-        unique: true,
-        description: 'Text the track name contains'
-      }, 
-      {
-        id: 'artist_name',
-        label: 'Artist Name',
-        type: 'string',
-        operators: ['contains'],
-        unique: true,
-        description: 'Text the artist name contains'
-      },
-      {
-        id: 'days_ago',
-        label: 'Days Ago',
-        type: 'integer',
-        operators: ['less','greater'],
-        unique: true,
-        description: 'How many days ago was the song added?'
-      },
-      {
-        id: 'bpm',
-        label: 'BPM',
-        type: 'integer',
-        operators: ['less','greater'],
-        unique: true,
-        description: 'What BPM (Beats Per Minute) do you like?'
-      },
-      {
-        id: 'release_date',
-        label: 'Release Date',
-        type: 'date',
-        operators: ['between'],
-        unique: true,
-        description: 'When were the tracks released?',
-        plugin: 'datepicker',
-        plugin_config: {
-          format: 'yyyy-mm-dd',
-          assumeNearbyYear: true,
-          autoclose: true
+  if ($('#builder').length > 0){
+    $('#builder').queryBuilder({
+      filters: [
+        {
+          id: 'track_name',
+          label: 'Track Name',
+          type: 'string',
+          operators: ['contains'],
+          unique: true,
+          description: 'Text the track name contains'
+        }, 
+        {
+          id: 'artist_name',
+          label: 'Artist Name',
+          type: 'string',
+          operators: ['contains'],
+          unique: true,
+          description: 'Text the artist name contains'
+        },
+        {
+          id: 'days_ago',
+          label: 'Days Ago',
+          type: 'integer',
+          operators: ['less','greater'],
+          unique: true,
+          description: 'How many days ago was the song added?'
+        },
+        {
+          id: 'bpm',
+          label: 'BPM',
+          type: 'integer',
+          operators: ['less','greater'],
+          unique: true,
+          description: 'What BPM (Beats Per Minute) do you like?'
+        },
+        {
+          id: 'release_date',
+          label: 'Release Date',
+          type: 'date',
+          operators: ['between'],
+          unique: true,
+          description: 'When were the tracks released?',
+          plugin: 'datepicker',
+          plugin_config: {
+            format: 'yyyy-mm-dd',
+            assumeNearbyYear: true,
+            autoclose: true
+          }
+        },
+        {
+          id: 'genres',
+          label: 'Genres',
+          type: 'string',
+          operators: ['contains'],
+          unique: true,
+          description: 'Comma-separated genres you\'d like to limit to. <a href="http://everynoise.com/everynoise1d.cgi?scope=all&vector=popularity">Here\'s a useful list</a> of the 3000+ genres Spotify supports. 🤯'
+        },
+        {
+          id: 'plays',
+          label: 'Play Count',
+          type: 'integer',
+          operators: ['less','greater'],
+          unique: true,
+          description: 'How many plays does this song have? NOTE: This count only starts <b>after</b> you connect to PLYLST.'
+        },
+        {
+          id: 'duration',
+          label: 'Duration',
+          type: 'integer',
+          operators: ['less','greater'],
+          unique: true,
+          description: 'How long, in seconds, is the song?'
+        },
+        {
+          id: 'last_played_days_ago',
+          label: 'Days Since Last Played',
+          type: 'integer',
+          operators: ['less','greater'],
+          unique: true,
+          description: 'How many days ago was the song last played? NOTE: This data is only available for songs played <b>after</b> you connect to PLYLST.'
+        },
+        {
+          id: 'key',
+          label: 'Key',
+          type: 'integer',
+          input: 'select',
+          values: [
+            {'0': 'C'},
+            {'1': 'C♯, D♭'},
+            {'2': 'D'},
+            {'3': 'D♯, E♭'},
+            {'4': 'E'},
+            {'5': 'F'},
+            {'6': 'F♯, G♭'},
+            {'7': 'G'},
+            {'8': 'G♯, A♭'},
+            {'9': 'A'},
+            {'10': 'A♯, B♭'},
+            {'11': 'B'}
+          ],
+          operators: ['equal'],
+          plugin: 'selectpicker',
+          unique: true,
+          description: 'The estimated key of the song'
+        },
+        {
+          id: 'danceability',
+          label: 'Danceability',
+          type: 'integer',
+          input: 'select',
+          values: [
+            {'0': 'Not at all'},
+            {'1': 'A little'},
+            {'2': 'Somewhat'},
+            {'3': 'Moderately'},
+            {'4': 'Very'},
+            {'5': 'Super'},
+          ],
+          operators: ['equal'],
+          plugin: 'selectpicker',
+          unique: true,
+          description: 'How danceable is the track?'
+        },
+      ],
+      /*rules: rules_basic,*/
+      allow_groups: 0,
+      conditions: ['AND'],
+      sort_filters: true,
+      inputs_separator: '<span class="separator">and</span>',
+      select_placeholder: ' ',
+      display_errors: false,
+      lang: {
+        operators: {
+          less: 'less than',
+          greater: 'greater than',
+          equal: 'is',
         }
       },
-      {
-        id: 'genres',
-        label: 'Genres',
-        type: 'string',
-        operators: ['contains'],
-        unique: true,
-        description: 'Comma-separated genres you\'d like to limit to. <a href="http://everynoise.com/everynoise1d.cgi?scope=all&vector=popularity">Here\'s a useful list</a> of the 3000+ genres Spotify supports. 🤯'
+      icons: {
+        add_group: 'fas fa-plus-square',
+        add_rule: 'fas fa-plus',
+        remove_group: 'fas fa-minus-square',
+        remove_rule: 'far fa-trash-alt',
+        error: 'fas fa-exclamation-circle'
       },
-      {
-        id: 'plays',
-        label: 'Play Count',
-        type: 'integer',
-        operators: ['less','greater'],
-        unique: true,
-        description: 'How many plays does this song have? NOTE: This count only starts <b>after</b> you connect to PLYLST.'
+      plugins: {
+        'unique-filter': null,
+        'filter-description': { mode: 'inline'},
+        'bt-selectpicker': null
       },
-      {
-        id: 'duration',
-        label: 'Duration',
-        type: 'integer',
-        operators: ['less','greater'],
-        unique: true,
-        description: 'How long, in seconds, is the song?'
-      },
-      {
-        id: 'last_played_days_ago',
-        label: 'Days Since Last Played',
-        type: 'integer',
-        operators: ['less','greater'],
-        unique: true,
-        description: 'How many days ago was the song last played? NOTE: This data is only available for songs played <b>after</b> you connect to PLYLST.'
-      },
-      {
-        id: 'key',
-        label: 'Key',
-        type: 'integer',
-        input: 'select',
-        values: [
-          {'0': 'C'},
-          {'1': 'C♯, D♭'},
-          {'2': 'D'},
-          {'3': 'D♯, E♭'},
-          {'4': 'E'},
-          {'5': 'F'},
-          {'6': 'F♯, G♭'},
-          {'7': 'G'},
-          {'8': 'G♯, A♭'},
-          {'9': 'A'},
-          {'10': 'A♯, B♭'},
-          {'11': 'B'}
-        ],
-        operators: ['equal'],
-        plugin: 'selectpicker',
-        unique: true,
-        description: 'The estimated key of the song'
-      },
-      {
-        id: 'danceability',
-        label: 'Danceability',
-        type: 'integer',
-        input: 'select',
-        values: [
-          {'0': 'Not at all'},
-          {'1': 'A little'},
-          {'2': 'Somewhat'},
-          {'3': 'Moderately'},
-          {'4': 'Very'},
-          {'5': 'Super'},
-        ],
-        operators: ['equal'],
-        plugin: 'selectpicker',
-        unique: true,
-        description: 'How danceable is the track?'
-      },
-    ],
-    /*rules: rules_basic,*/
-    allow_groups: 0,
-    conditions: ['AND'],
-    sort_filters: true,
-    inputs_separator: '<span class="separator">and</span>',
-    select_placeholder: ' ',
-    display_errors: false,
-    lang: {
-      operators: {
-        less: 'less than',
-        greater: 'greater than',
-        equal: 'is',
-      }
-    },
-    icons: {
-      add_group: 'fas fa-plus-square',
-      add_rule: 'fas fa-plus',
-      remove_group: 'fas fa-minus-square',
-      remove_rule: 'far fa-trash-alt',
-      error: 'fas fa-exclamation-circle'
-    },
-    plugins: {
-      'unique-filter': null,
-      'filter-description': { mode: 'inline'},
-      'bt-selectpicker': null
-    },
-    templates: template,
-    rules: rules
-  });
+      templates: template,
+      rules: rules
+    });
 
-  $('#builder').on('afterUpdateRuleValue.queryBuilder afterUpdateRuleFilter.queryBuilder afterUpdateRuleOperator.queryBuilder afterUpdateGroupCondition.queryBuilder', function(){
-    $('#playlist_filters').val(
-      JSON.stringify($('#builder').queryBuilder(
-        'getRules', 
-        {skip_empty:  true}
-      ))
-    );
-  });
+    $('#builder').on('afterUpdateRuleValue.queryBuilder afterUpdateRuleFilter.queryBuilder afterUpdateRuleOperator.queryBuilder afterUpdateGroupCondition.queryBuilder', function(){
+      $('#playlist_filters').val(
+        JSON.stringify($('#builder').queryBuilder(
+          'getRules', 
+          {skip_empty:  true}
+        ))
+      );
+    });
+  }
 
 });
