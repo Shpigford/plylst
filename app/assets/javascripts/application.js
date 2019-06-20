@@ -130,11 +130,36 @@ $(document).on('turbolinks:load', function() {
             autoclose: true
           }
         },
+        // {
+        //   id: 'genres',
+        //   label: 'Genres',
+        //   type: 'string',
+        //   operators: ['contains'],
+        //   unique: true,
+        //   description: 'Comma-separated genres you\'d like to limit to. <a href="http://everynoise.com/everynoise1d.cgi?scope=all&vector=popularity">Here\'s a useful list</a> of the 3000+ genres Spotify supports. 🤯'
+        // },
         {
           id: 'genres',
           label: 'Genres',
           type: 'string',
+          input: 'select',
           operators: ['contains'],
+          plugin: 'selectpicker',
+          values: {
+              1: 'Books',
+              2: 'Movies',
+              3: 'Music',
+              4: 'Tools',
+              5: 'Goodies',
+              6: 'Clothes'
+          },
+          plugin_config: {
+              liveSearch: true,
+              width: 'auto',
+              selectedTextFormat: 'values',
+              liveSearchStyle: 'contains',
+          },
+          multiple: true,
           unique: true,
           description: 'Comma-separated genres you\'d like to limit to. <a href="http://everynoise.com/everynoise1d.cgi?scope=all&vector=popularity">Here\'s a useful list</a> of the 3000+ genres Spotify supports. 🤯'
         },
