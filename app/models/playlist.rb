@@ -28,7 +28,38 @@ class Playlist < ApplicationRecord
     artist_name String
   end
 
+
   def filtered_tracks(current_user)
+    tracks = current_user.tracks.limit(500)
+    rules = filters['rules']
+
+    if rules.find {|h| h['id'] == 'track_name'}.present?
+      track_name = rules.find {|h| h['id'] == 'track_name'}['value']
+
+      tracks = tracks.where('tracks.name ILIKE ?', '%' + track_name + '%')
+    end
+    
+    if rules.find {|h| h['id'] == 'artist_name'}.present?
+      artist_name = rules.find {|h| h['id'] == 'artist_name'}['value']
+
+      tracks = tracks.joins(:artist).where('artists.name ILIKE ?', '%' + artist_name + '%')
+    end
+
+    if rules.find {|h| h['id'] == 'bpm'}.present?
+      bpm = rules.find {|h| h['id'] == 'bpm'}['value']
+      bpm_filter = rules.find {|h| h['id'] == 'bpm'}['operator']
+
+      if bpm_filter == 'less'
+        tracks = tracks.where("(audio_features ->> 'tempo')::numeric < ?", bpm)
+      else
+        tracks = tracks.where("(audio_features ->> 'tempo')::numeric > ?", bpm)
+      end
+    end
+
+    tracks
+  end
+
+  def old_filtered_tracks(current_user)
     days_ago = variables['days_ago']
     days_ago_filter = variables['days_ago_filter'] || 'gt'
     limit = variables['limit'] || 200

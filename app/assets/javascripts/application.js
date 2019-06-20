@@ -21,7 +21,7 @@
 //= require_tree .
 
 
-$(document).ready(function() {
+$(document).on('turbolinks:load', function() {
   $('[data-toggle="select"]').select2();
 
   $(".date_picker").flatpickr({
@@ -144,11 +144,17 @@ $(document).ready(function() {
       remove_rule: 'far fa-trash-alt',
       error: 'fas fa-exclamation-circle'
     },
-    templates: template
+    templates: template,
+    rules: JSON.parse($('#original_filters').val())
   });
 
   $('#builder').on('afterUpdateRuleValue.queryBuilder afterUpdateRuleFilter.queryBuilder afterUpdateRuleOperator.queryBuilder afterUpdateGroupCondition.queryBuilder', function(){
-    console.log(JSON.stringify($('#builder').queryBuilder('getRules', {skip_empty:  true}), null, 2));
+    $('#playlist_filters').val(
+      JSON.stringify($('#builder').queryBuilder(
+        'getRules', 
+        {skip_empty:  true}
+      ))
+    );
   });
 
 });

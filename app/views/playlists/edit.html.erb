@@ -17,6 +17,8 @@
         <div class="card">
           <div class="card-body">
             <%= form_for @playlist, html: {class: ''} do |f| %>
+              <%= hidden_field_tag 'original_filters', @playlist.filters.to_json %>
+              <%= f.hidden_field :filters, value: @playlist.filters.to_json %>
             <h2>Details</h2>
             <div class="form-group row">
               <%= f.label :name, class: 'col-sm-2 col-form-label' %>
