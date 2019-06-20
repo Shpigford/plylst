@@ -1,4 +1,4 @@
 :concurrency: 15
 :queues:
+  - [critical, 2]
   - default
-  - artists
