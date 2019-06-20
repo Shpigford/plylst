@@ -125,7 +125,7 @@ class Playlist < ApplicationRecord
       tracks = tracks.where("(audio_features ->> 'danceability')::numeric between ? and ?", start, final)
     end
 
-    # LIMIT
+    # SORT
     if sort.present?
       case sort
       when 'random'
@@ -141,7 +141,7 @@ class Playlist < ApplicationRecord
       end
     end
 
-    # SORT
+    # LIMIT
     if limit.present?
       tracks = tracks.limit(limit)
     end

@@ -33,12 +33,9 @@ class PlaylistsController < ApplicationController
   def update
     @playlist = current_user.playlists.find(params[:id])
 
+    params[:playlist][:filters] = JSON.parse(params[:playlist][:filters])
+
     if @playlist.update_attributes(playlist_params)
-
-      # This is terrible form, but the stupid param permission bits wouldn't play nice and I have better things to do.
-      @playlist.filters = JSON.parse(params[:playlist][:filters])
-      @playlist.save
-
       redirect_to playlist_path(@playlist)
     else
       render 'edit'
@@ -53,6 +50,6 @@ class PlaylistsController < ApplicationController
 
   private
     def playlist_params
-      params.require(:playlist).permit(:name, :days_ago, :limit, :days_ago_filter, :bpm, :bpm_filter, :release_date_start, :release_date_end, :genres, :plays, :plays_filter, :last_played_days_ago, :last_played_days_ago_filter, :duration, :duration_filter, :key, :danceability, :sort, :track_name, :artist_name)
+      params.require(:playlist).permit(:name, :limit, :sort, filters: {})
     end
 end
