@@ -22,17 +22,14 @@
 
 
 $(document).on('turbolinks:load', function() {
-  $('[data-toggle="select"]').select2();
-
-  $(".date_picker").flatpickr({
-    dateFormat: "Y-m-d",
-  });
-
   var rules_basic = {};
 
   const template = {
       group: '\
       <div id="{{= it.group_id }}" class="rules-group-container"> \
+        <div class=rules-group-body> \
+          <div class=rules-list></div> \
+        </div> \
         <div class="rules-group-header"> \
           <div class="btn-group pull-left group-actions"> \
             <button type="button" class="btn btn-xs btn-primary" data-add="rule"> \
@@ -53,15 +50,12 @@ $(document).on('turbolinks:load', function() {
             <div class="error-container"><i class="{{= it.icons.error }}"></i></div> \
           {{?}} \
         </div> \
-        <div class=rules-group-body> \
-          <div class=rules-list></div> \
-        </div> \
       </div>',
       rule: '\
         <div id="{{= it.rule_id }}" class="rule-container"> \
           <div class="rule-header"> \
             <div class="btn-group float-right rule-actions"> \
-              <button type="button" class="btn btn-xs btn-danger" data-delete="rule"> \
+              <button type="button" class="btn btn-xs btn-link text-danger" data-delete="rule"> \
                 <i class="{{= it.icons.remove_rule }}"></i> \
               </button> \
             </div> \
@@ -126,7 +120,13 @@ $(document).on('turbolinks:load', function() {
         type: 'date',
         operators: ['between'],
         unique: true,
-        description: 'When were the tracks released?'
+        description: 'When were the tracks released?',
+        plugin: 'datepicker',
+        plugin_config: {
+          format: 'yyyy-mm-dd',
+          assumeNearbyYear: true,
+          autoclose: true
+        }
       },
       {
         id: 'genres',
@@ -150,7 +150,7 @@ $(document).on('turbolinks:load', function() {
         type: 'integer',
         operators: ['less','greater'],
         unique: true,
-        description: 'How long is the song?'
+        description: 'How long, in seconds, is the song?'
       },
       {
         id: 'last_played_days_ago',
@@ -180,6 +180,7 @@ $(document).on('turbolinks:load', function() {
           {'11': 'B'}
         ],
         operators: ['equal'],
+        plugin: 'selectpicker',
         unique: true,
         description: 'The estimated key of the song'
       },
@@ -197,6 +198,7 @@ $(document).on('turbolinks:load', function() {
           {'5': 'Super'},
         ],
         operators: ['equal'],
+        plugin: 'selectpicker',
         unique: true,
         description: 'How danceable is the track?'
       },
@@ -205,8 +207,16 @@ $(document).on('turbolinks:load', function() {
     allow_groups: 0,
     conditions: ['AND'],
     sort_filters: true,
-    inputs_separator: 'and',
+    inputs_separator: '<span class="separator">and</span>',
     select_placeholder: ' ',
+    display_errors: false,
+    lang: {
+      operators: {
+        less: 'less than',
+        greater: 'greater than',
+        equal: 'is',
+      }
+    },
     icons: {
       add_group: 'fas fa-plus-square',
       add_rule: 'fas fa-plus',
@@ -217,6 +227,7 @@ $(document).on('turbolinks:load', function() {
     plugins: {
       'unique-filter': null,
       'filter-description': { mode: 'inline'},
+      'bt-selectpicker': null
     },
     templates: template,
     rules: rules

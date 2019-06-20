@@ -6,27 +6,6 @@ class Playlist < ApplicationRecord
   after_save :build_spotify_playlist
 
   include Storext.model()
-  store_attributes :variables do
-    days_ago Integer
-    #limit Integer, default: 500
-    bpm Integer
-    days_ago_filter String, default: 'gt'
-    bpm_filter String
-    release_date_start String
-    release_date_end String
-    genres String
-    plays Integer
-    plays_filter String
-    last_played_days_ago Integer
-    last_played_days_ago_filter String
-    duration Integer
-    duration_filter String
-    key Integer
-    danceability Integer
-    #sort String
-    track_name String
-    artist_name String
-  end
 
   def find_rule(rules, rule_name)
     rules.find{|r| r['id'] == rule_name} if rules.present?
@@ -59,9 +38,9 @@ class Playlist < ApplicationRecord
     # DAYS AGO
     find_rule(rules, 'days_ago').try do |rule|
       if rule['operator'] == 'less'
-        tracks = tracks.where('follows.added_at < ?', rule['value'].days.ago).order('follows.added_at ASC')
-      else
         tracks = tracks.where('follows.added_at > ?', rule['value'].days.ago).order('follows.added_at ASC')
+      else
+        tracks = tracks.where('follows.added_at < ?', rule['value'].days.ago).order('follows.added_at ASC')
       end
     end
 
