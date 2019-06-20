@@ -34,6 +34,11 @@ class PlaylistsController < ApplicationController
     @playlist = current_user.playlists.find(params[:id])
 
     if @playlist.update_attributes(playlist_params)
+
+      # This is terrible form, but the stupid param permission bits wouldn't play nice and I have better things to do.
+      @playlist.filters = JSON.parse(params[:playlist][:filters])
+      @playlist.save
+
       redirect_to playlist_path(@playlist)
     else
       render 'edit'

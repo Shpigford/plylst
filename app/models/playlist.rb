@@ -6,77 +6,48 @@ class Playlist < ApplicationRecord
   after_save :build_spotify_playlist
 
   include Storext.model()
-  store_attributes :variables do
-    days_ago Integer
-    limit Integer, default: 500
-    bpm Integer
-    days_ago_filter String, default: 'gt'
-    bpm_filter String
-    release_date_start String
-    release_date_end String
-    genres String
-    plays Integer
-    plays_filter String
-    last_played_days_ago Integer
-    last_played_days_ago_filter String
-    duration Integer
-    duration_filter String
-    key Integer
-    danceability Integer
-    sort String
-    track_name String
-    artist_name String
+
+  def find_rule(rules, rule_name)
+    rules.find{|r| r['id'] == rule_name} if rules.present?
   end
 
+
   def filtered_tracks(current_user)
-    days_ago = variables['days_ago']
-    days_ago_filter = variables['days_ago_filter'] || 'gt'
-    limit = variables['limit'] || 200
-    bpm = variables['bpm']
-    bpm_filter = variables['bpm_filter']
-    release_date_start = variables['release_date_start']
-    release_date_end = variables['release_date_end']
-    genres = variables['genres']
-    plays = variables['plays']
-    plays_filter = variables['plays_filter'] || 'gt'
-    last_played_days_ago = variables['last_played_days_ago']
-    last_played_days_ago_filter = variables['last_played_days_ago_filter']
-    duration = variables['duration']
-    duration_filter = variables['duration_filter']
-    key = variables['key']
-    danceability = variables['danceability']
-    sort = variables['sort']
-    track_name = variables['track_name']
-    artist_name = variables['artist_name']
+    tracks = current_user.tracks.limit(500)
+    rules = filters['rules']
+
+    # TRACK NAME
+    find_rule(rules, 'track_name').try do |rule|
+      tracks = tracks.where('tracks.name ILIKE ?', '%' + rule['value'] + '%')
+    end
     
-    tracks = current_user.tracks
-
-    if track_name.present?
-      tracks = tracks.advanced_search(name: track_name)
+    # ARTIST NAME
+    find_rule(rules, 'artist_name').try do |rule|
+      tracks = tracks.joins(:artist).where('artists.name ILIKE ?', '%' + rule['value'] + '%')
     end
 
-    if artist_name.present?
-      tracks = tracks.joins(:artist).where('artists.name ILIKE ?', '%' + artist_name + '%')
-    end
-
-    if days_ago.present?
-      days_ago = days_ago.to_i
-      if days_ago_filter.present? and days_ago_filter == 'gt'
-        tracks = tracks.where('follows.added_at < ?', days_ago.days.ago).order('follows.added_at ASC')
-      elsif days_ago_filter == 'lt'
-        tracks = tracks.where('follows.added_at > ?', days_ago.days.ago).order('follows.added_at DESC')
-      end
-    end
-
-    if bpm.present?
-      if bpm_filter.present? and bpm_filter == 'lt'
-        tracks = tracks.where("(audio_features ->> 'tempo')::numeric < ?", bpm)
+    # BPM
+    find_rule(rules, 'bpm').try do |rule|
+      if rule['operator'] == 'less'
+        tracks = tracks.where("(audio_features ->> 'tempo')::numeric < ?", rule['value'])
       else
-        tracks = tracks.where("(audio_features ->> 'tempo')::numeric > ?", bpm)
+        tracks = tracks.where("(audio_features ->> 'tempo')::numeric > ?", rule['value'])
       end
     end
 
-    if release_date_start.present? && release_date_end.present?
+    # DAYS AGO
+    find_rule(rules, 'days_ago').try do |rule|
+      if rule['operator'] == 'less'
+        tracks = tracks.where('follows.added_at > ?', rule['value'].days.ago).order('follows.added_at ASC')
+      else
+        tracks = tracks.where('follows.added_at < ?', rule['value'].days.ago).order('follows.added_at ASC')
+      end
+    end
+
+    # RELEASE DATE
+    find_rule(rules, 'release_date').try do |rule|
+      release_date_start = rule['value'][0]
+      release_date_end = rule['value'][1]
 
       if release_date_start.scan(/\D/).empty? and (1700..2100).include?(release_date_start.to_i)
         release_date_start = "#{release_date_start}-01-01"
@@ -87,50 +58,51 @@ class Playlist < ApplicationRecord
       end
 
       tracks = tracks.joins(:album).where('release_date >= ? AND release_date <= ?', release_date_start, release_date_end)
-    elsif release_date_start.present?
-       tracks = tracks.joins(:album).where('release_date >= ?', release_date_start)
-    elsif release_date_end.present?
-       tracks = tracks.joins(:album).where('release_date <= ?', release_date_end)
     end
 
-    if genres.present?
-      genres = genres.split(/\s*,\s*/)
+    # GENRES
+    find_rule(rules, 'genres').try do |rule|
+      genres = rule['value'].split(/\s*,\s*/)
       tracks = tracks.joins(:artist).where("artists.genres ?| array[:genres]", genres: genres)
     end
 
-    if plays.present?
-      plays = plays.to_i
-      if plays_filter.present? and plays_filter == 'gt'
-        tracks = tracks.where("follows.plays > ?", plays)
-      elsif plays_filter == 'lt'
+    # PLAYS
+    find_rule(rules, 'plays').try do |rule|
+      plays = rule['value']
+      if rule['operator'] == 'less'
         tracks = tracks.where("follows.plays < ?", plays)
+      else
+        tracks = tracks.where("follows.plays > ?", plays)
       end
     end
 
-    if duration.present?
-      duration = duration * 1000
-      if duration_filter.present? and duration_filter == 'gt'
-        tracks = tracks.where("duration > ?", duration)
-      elsif duration_filter == 'lt'
+    # DURATION
+    find_rule(rules, 'duration').try do |rule|
+      duration = rule['value'] * 1000
+      if rule['operator'] == 'less'
         tracks = tracks.where("duration < ?", duration)
+      else
+        tracks = tracks.where("duration > ?", duration)
       end
     end
 
-    if last_played_days_ago.present?
-      last_played_days_ago = last_played_days_ago.to_i
-      if last_played_days_ago_filter.present? and last_played_days_ago_filter == 'gt'
-        tracks = tracks.where('last_played_at < ?', last_played_days_ago.days.ago).order('last_played_at ASC')
-      elsif last_played_days_ago_filter == 'lt'
-        tracks = tracks.where('last_played_at > ?', last_played_days_ago.days.ago).order('last_played_at DESC')
+    # DAYS SINCE LAST PLAYED
+    find_rule(rules, 'last_played_days_ago').try do |rule|
+      if rule['operator'] == 'less'
+        tracks = tracks.where('last_played_at < ?', rule['value'].days.ago).order('last_played_at ASC')
+      else
+        tracks = tracks.where('last_played_at > ?', rule['value'].days.ago).order('last_played_at DESC')
       end
     end
 
-    if key.present?
-      tracks = tracks.where("(audio_features ->> 'key')::numeric = ?", key)
+    # KEY
+    find_rule(rules, 'key').try do |rule|
+      tracks = tracks.where("(audio_features ->> 'key')::numeric = ?", rule['value'])
     end
 
-    if danceability.present?
-      case danceability
+    # DANCEABILITY
+    find_rule(rules, 'danceability').try do |rule|
+      case rule['value']
       when 0 # Not at all
         start = 0.0
         final = 0.199
@@ -153,6 +125,7 @@ class Playlist < ApplicationRecord
       tracks = tracks.where("(audio_features ->> 'danceability')::numeric between ? and ?", start, final)
     end
 
+    # LIMIT
     if sort.present?
       case sort
       when 'random'
@@ -168,6 +141,7 @@ class Playlist < ApplicationRecord
       end
     end
 
+    # SORT
     if limit.present?
       tracks = tracks.limit(limit)
     end

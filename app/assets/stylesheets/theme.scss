@@ -11228,26 +11228,29 @@ a.text-white:hover {
     width: auto;
     height: auto;
     border: none!important;
-    vertical-align: middle;
-    font-family: Feather;
-    content: "\e92e"
+    vertical-align: bottom;
+    margin-left: 5px;
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    content: "\f0dd";
+    display: none;
 }
 
 .dropup>.dropdown-toggle:after {
-    content: "\e931"
+    content: "\f0dd"
 }
 
 .dropright>.dropdown-toggle:after {
-    content: "\e930"
+    content: "\f0dd"
 }
 
 .dropleft>.dropdown-toggle:before {
-    content: "\e92f";
+    content: "\f0dd";
     width: auto;
     height: auto;
     border: none!important;
     vertical-align: middle;
-    font-family: Feather
+    font-family: 'Font Awesome 5 Free';
 }
 
 .dropdown-item.dropdown-toggle {

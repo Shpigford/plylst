@@ -20,7 +20,7 @@
         <div class="card">
           <div class="card-body">
             <h2>Rules <small><%= link_to "Edit rules", edit_playlist_path(@playlist) %></small></h2>
-            <code><%= human_readable(@playlist.variables) %></code>
+            <code><%= @playlist.filters['rules'] %></code>
           </div> 
         </div>
 

@@ -1,5 +1,6 @@
-@import "select2";
-@import "flatpickr";
+@import "bootstrap-select";
+@import "datepicker";
+@import "querybuilder";
 @import "theme";
 
 .vertical-center {
@@ -8,4 +9,71 @@
 
   display: flex;
   align-items: center;
+}
+
+.query-builder {
+  width: 100%!important;
+  display: block!important;
+  .rules-group-header {
+    margin-top: 20px;
+  }
+  .rules-group-container {
+    border: 0;
+    background: none;
+    padding: 0;
+  }
+  .hide {
+    display: none!important;
+  }
+  .rule-container {
+    //background: rgba(255,255,255,0.1)!important;
+    background: none;
+    border: 0;
+    border-radius: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding: 5px 0 10px 0;
+  }
+  .rule-value-container {
+    padding-left: 0;
+    border-left: 0;
+    input[type=number], input[type=text] {
+      padding: .5rem .75rem!important;
+    }
+  }
+  p.filter-description {
+    background: none;
+    border: 0;
+    color: #6e84a3 !important;
+  }
+  .rules-list {
+    padding-left: 0;
+  }
+  .rules-list > ::after, .rules-list > ::before {
+    display: none;
+  }
+  .separator {
+    margin: 0 10px;
+  }
+}
+
+.bootstrap-select {
+  background: none!important;
+
+  .btn {
+    background-color: #1e3a5c;
+    border-color: #1e3a5c;
+  }
+}
+
+.dropdown-menu {
+  .disabled {
+    color: rgba(255,255,255,0.1);
+  }
+}
+
+.dropdown-toggle {
+  .svg-inline--fa {
+    margin-left: 5px;
+    margin-top: -5px;
+  }
 }
