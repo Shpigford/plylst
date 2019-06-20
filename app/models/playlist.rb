@@ -28,31 +28,28 @@ class Playlist < ApplicationRecord
     artist_name String
   end
 
+  def find_rule(rules, rule_name)
+    rules.find{|r| r['id'] == rule_name}
+  end
+
 
   def filtered_tracks(current_user)
     tracks = current_user.tracks.limit(500)
     rules = filters['rules']
 
-    if rules.find {|h| h['id'] == 'track_name'}.present?
-      track_name = rules.find {|h| h['id'] == 'track_name'}['value']
-
-      tracks = tracks.where('tracks.name ILIKE ?', '%' + track_name + '%')
+    find_rule(rules, 'track_name').try do |rule|
+      tracks = tracks.where('tracks.name ILIKE ?', '%' + rule['value'] + '%')
     end
     
-    if rules.find {|h| h['id'] == 'artist_name'}.present?
-      artist_name = rules.find {|h| h['id'] == 'artist_name'}['value']
-
-      tracks = tracks.joins(:artist).where('artists.name ILIKE ?', '%' + artist_name + '%')
+    find_rule(rules, 'artist_name').try do |rule|
+      tracks = tracks.joins(:artist).where('artists.name ILIKE ?', '%' + rule['value'] + '%')
     end
 
-    if rules.find {|h| h['id'] == 'bpm'}.present?
-      bpm = rules.find {|h| h['id'] == 'bpm'}['value']
-      bpm_filter = rules.find {|h| h['id'] == 'bpm'}['operator']
-
-      if bpm_filter == 'less'
-        tracks = tracks.where("(audio_features ->> 'tempo')::numeric < ?", bpm)
+    find_rule(rules, 'bpm').try do |rule|
+      if rule['operator'] == 'less'
+        tracks = tracks.where("(audio_features ->> 'tempo')::numeric < ?", rule['value'])
       else
-        tracks = tracks.where("(audio_features ->> 'tempo')::numeric > ?", bpm)
+        tracks = tracks.where("(audio_features ->> 'tempo')::numeric > ?", rule['value'])
       end
     end
 

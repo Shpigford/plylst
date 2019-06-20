@@ -28,25 +28,7 @@ $(document).on('turbolinks:load', function() {
     dateFormat: "Y-m-d",
   });
 
-  var rules_basic = {
-    condition: 'AND',
-    rules: [{
-      id: 'price',
-      operator: 'less',
-      value: 10.25
-    }, {
-      condition: 'OR',
-      rules: [{
-        id: 'category',
-        operator: 'equal',
-        value: 2
-      }, {
-        id: 'category',
-        operator: 'equal',
-        value: 1
-      }]
-    }]
-  };
+  var rules_basic = {};
 
   const template = {
       group: '\
