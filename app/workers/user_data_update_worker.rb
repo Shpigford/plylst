@@ -1,14 +1,19 @@
 class UserDataUpdateWorker
   include Sidekiq::Worker
 
-  def perform
+  def perform(frequency = 'hourly')
     User.active.find_each do |user|
-      UpdatePlayDataWorker.perform_async(user.id)
-      RecentlyStreamedWorker.perform_async(user.id)
-      BuildUserGenresWorker.perform_async(user.id)
-      ProcessAccountWorker.perform_async(user.id) if user.updated_at < 1.day.ago
-      
-      user.touch
+
+      if frequency == 'hourly'
+        UpdatePlayDataWorker.perform_async(user.id)
+        RecentlyStreamedWorker.perform_async(user.id)
+        BuildUserGenresWorker.perform_async(user.id)
+      end
+
+      if frequency == 'daily'
+        ProcessAccountWorker.perform_async(user.id)
+        BuildPlaylistsWorker.perform_async(user.id)
+      end
     end
   end
 end
