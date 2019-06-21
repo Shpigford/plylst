@@ -72,6 +72,9 @@
 }
 
 .dropdown-toggle {
+  &:after {
+    display: none;
+  }
   .svg-inline--fa {
     margin-left: 5px;
     margin-top: -5px;

@@ -62,7 +62,12 @@ class Playlist < ApplicationRecord
 
     # GENRES
     find_rule(rules, 'genres').try do |rule|
-      genres = rule['value'].split(/\s*,\s*/)
+      genres = rule['value']
+      
+      unless genres.kind_of?(Array)
+        genres = genres.split(/\s*,\s*/)
+      end
+      
       tracks = tracks.joins(:artist).where("artists.genres ?| array[:genres]", genres: genres)
     end
 

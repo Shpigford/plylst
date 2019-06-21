@@ -11233,7 +11233,7 @@ a.text-white:hover {
     font-family: 'Font Awesome 5 Free';
     font-weight: 900;
     content: "\f0dd";
-    display: none;
+    display: none!important;
 }
 
 .dropup>.dropdown-toggle:after {

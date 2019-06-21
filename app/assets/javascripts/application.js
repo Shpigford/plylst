@@ -77,6 +77,14 @@ $(document).on('turbolinks:load', function() {
     }
   }
 
+  if ($('#user_genres').length > 0){
+    if ($('#user_genres').val() === "{}") {
+      user_genres = null;
+    } else {
+      user_genres = JSON.parse($('#user_genres').val());
+    }
+  }
+
     // var options = {}
     // options.templates = template
     // options.filters = filters
@@ -130,11 +138,29 @@ $(document).on('turbolinks:load', function() {
             autoclose: true
           }
         },
+        // {
+        //   id: 'genres',
+        //   label: 'Genres',
+        //   type: 'string',
+        //   operators: ['contains'],
+        //   unique: true,
+        //   description: 'Comma-separated genres you\'d like to limit to. <a href="http://everynoise.com/everynoise1d.cgi?scope=all&vector=popularity">Here\'s a useful list</a> of the 3000+ genres Spotify supports. 🤯'
+        // },
         {
           id: 'genres',
           label: 'Genres',
           type: 'string',
-          operators: ['contains'],
+          input: 'select',
+          operators: ['in'],
+          plugin: 'selectpicker',
+          values: user_genres,
+          plugin_config: {
+            liveSearch: true,
+            width: 'auto',
+            selectedTextFormat: 'values',
+            liveSearchStyle: 'contains',
+          },
+          multiple: true,
           unique: true,
           description: 'The genres you\'d like to limit to. Will include artist from all the genres selected.'
         },
@@ -235,14 +261,16 @@ $(document).on('turbolinks:load', function() {
       rules: rules
     });
 
-    $('#builder').on('afterUpdateRuleValue.queryBuilder afterUpdateRuleFilter.queryBuilder afterUpdateRuleOperator.queryBuilder afterUpdateGroupCondition.queryBuilder', function(){
-      $('#playlist_filters').val(
-        JSON.stringify($('#builder').queryBuilder(
-          'getRules', 
-          {skip_empty:  true}
-        ))
-      );
-    });
   }
+
+  $('#builder').on('afterUpdateRuleValue.queryBuilder afterUpdateRuleFilter.queryBuilder afterUpdateRuleOperator.queryBuilder afterUpdateGroupCondition.queryBuilder', function(){
+    console.log($('#builder').queryBuilder('getRules', {allow_invalid: true }));
+    $('#playlist_filters').val(
+      JSON.stringify($('#builder').queryBuilder(
+        'getRules', 
+        {skip_empty:  true}
+      ))
+    );
+  });
 
 });
