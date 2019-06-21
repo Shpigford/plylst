@@ -4,8 +4,8 @@ class BuildUserGenresWorker
   def perform(user_id)
     user = User.find user_id
 
-    if user.active?
-      genres = user.artists.pluck(:genres).flatten!.uniq.sort
+    if user.active? and user.artists.present?
+      genres = user.artists.pluck(:genres).flatten!.uniq.delete_if { |k| k.blank? }.sort
       user.update_attribute(:genres, genres)
     end
   end
