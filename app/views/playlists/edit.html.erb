@@ -18,6 +18,7 @@
           <div class="card-body">
             <%= form_for @playlist, html: {class: ''} do |f| %>
               <%= hidden_field_tag 'original_filters', @playlist.filters.to_json %>
+              <%= hidden_field_tag 'user_genres', current_user.genres.to_json if current_user.genres %>
               <%= f.hidden_field :filters, value: @playlist.filters.to_json %>
             <h2>Details</h2>
             <div class="form-group row">
