@@ -16,6 +16,8 @@ class ProcessAccountWorker
 
         SaveTracksWorker.perform_async(user.id, tracks_added_at.to_a, 'added')
       end
+
+      BuildUserGenresWorker.perform_async(user.id)
     end
   end
 end

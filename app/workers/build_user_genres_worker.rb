@@ -8,7 +8,5 @@ class BuildUserGenresWorker
       genres = user.artists.pluck(:genres).flatten!.uniq.sort
       user.update_attribute(:genres, genres)
     end
-
-
   end
 end

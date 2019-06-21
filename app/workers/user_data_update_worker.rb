@@ -5,6 +5,7 @@ class UserDataUpdateWorker
     User.active.find_each do |user|
       UpdatePlayDataWorker.perform_async(user.id)
       RecentlyStreamedWorker.perform_async(user.id)
+      BuildUserGenresWorker.perform_async(user.id)
     end
   end
 end
