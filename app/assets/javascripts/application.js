@@ -136,7 +136,7 @@ $(document).on('turbolinks:load', function() {
           type: 'string',
           operators: ['contains'],
           unique: true,
-          description: 'Comma-separated genres you\'d like to limit to. <a href="http://everynoise.com/everynoise1d.cgi?scope=all&vector=popularity">Here\'s a useful list</a> of the 3000+ genres Spotify supports. 🤯'
+          description: 'The genres you\'d like to limit to. Will include artist from all the genres selected.'
         },
         {
           id: 'plays',
