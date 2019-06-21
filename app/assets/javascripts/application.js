@@ -151,7 +151,7 @@ $(document).on('turbolinks:load', function() {
           label: 'Genres',
           type: 'string',
           input: 'select',
-          operators: ['contains'],
+          operators: ['in'],
           plugin: 'selectpicker',
           values: user_genres,
           plugin_config: {
