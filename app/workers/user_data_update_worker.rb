@@ -13,6 +13,7 @@ class UserDataUpdateWorker
       if frequency == 'daily'
         ProcessAccountWorker.perform_async(user.id)
         BuildPlaylistsWorker.perform_async(user.id)
+        CheckTracksWorker.perform_async(user.id)
       end
     end
   end

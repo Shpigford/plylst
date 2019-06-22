@@ -13,7 +13,7 @@ class Playlist < ApplicationRecord
 
 
   def filtered_tracks(current_user)
-    tracks = current_user.tracks.limit(500)
+    tracks = current_user.tracks.where('follows.active = ?', true).limit(500)
     rules = filters['rules']
 
     # TRACK NAME
