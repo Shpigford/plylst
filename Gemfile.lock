@@ -276,7 +276,6 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    scout_apm (2.5.0)
     selenium-webdriver (3.142.3)
       childprocess (>= 0.5, < 2.0)
       rubyzip (~> 1.2, >= 1.2.2)
@@ -377,7 +376,6 @@ DEPENDENCIES
   rails (~> 5.2.3)
   rspotify!
   sass-rails (~> 5.0)
-  scout_apm
   selenium-webdriver
   sentry-raven
   sidekiq
