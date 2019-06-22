@@ -10,10 +10,18 @@ class BuildPlaylistsWorker
       connection = user.settings.to_hash
       spotify = RSpotify::User.new(connection)
 
-      spotify_playlists = spotify.playlists(limit:50)
+      begin
+        spotify_playlists = spotify.playlists(limit:50)
+      rescue RestClient::NotFound => e
+      end
 
       user.playlists.find_each do |playlist|
-        existing_playlist = spotify_playlists.select{|key| key.name == "PLYLST: #{playlist.name}"}
+
+        if spotify_playlists.present?
+          existing_playlist = spotify_playlists.select{|key| key.name == "PLYLST: #{playlist.name}"}
+        else
+          existing_playlist = nil
+        end
 
         if existing_playlist.present?
           existing_playlist = RSpotify::Playlist.find(spotify.id, existing_playlist.first.id)
