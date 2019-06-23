@@ -123,6 +123,11 @@ class Playlist < ApplicationRecord
       tracks = tracks.where("(audio_features ->> 'key')::numeric = ?", rule['value'])
     end
 
+    # MODE
+    find_rule(rules, 'mode').try do |rule|
+      tracks = tracks.where("(audio_features ->> 'mode')::numeric = ?", rule['value'])
+    end
+
     # DANCEABILITY
     find_rule(rules, 'danceability').try do |rule|
       case rule['value']

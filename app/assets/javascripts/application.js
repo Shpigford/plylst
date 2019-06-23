@@ -230,6 +230,20 @@ $(document).on('turbolinks:load', function() {
           unique: true,
           description: 'How danceable is the track?'
         },
+        {
+          id: 'mode',
+          label: 'Mode',
+          type: 'integer',
+          input: 'select',
+          values: [
+            {'0': 'Minor'},
+            {'1': 'Major'},
+          ],
+          operators: ['equal'],
+          plugin: 'selectpicker',
+          unique: true,
+          description: 'Is the melody of the song in a major key or minor key?'
+        },
       ],
       /*rules: rules_basic,*/
       allow_groups: 0,
