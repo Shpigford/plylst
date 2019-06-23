@@ -85,11 +85,19 @@ class Playlist < ApplicationRecord
 
     # DURATION
     find_rule(rules, 'duration').try do |rule|
-      duration = rule['value'] * 1000
+      if rule['value'].kind_of?(Array)
+        duration_start = rule['value'][0] * 1000
+        duration_end = rule['value'][1] * 1000
+      else
+        duration = rule['value'] * 1000
+      end
+      
       if rule['operator'] == 'less'
         tracks = tracks.where("duration < ?", duration)
-      else
+      elsif rule['operator'] == 'greater'
         tracks = tracks.where("duration > ?", duration)
+      elsif rule['operator'] == 'between'
+        tracks = tracks.where("duration between ? and ?", duration_start, duration_end)
       end
     end
 

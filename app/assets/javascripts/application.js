@@ -176,7 +176,7 @@ $(document).on('turbolinks:load', function() {
           id: 'duration',
           label: 'Duration',
           type: 'integer',
-          operators: ['less','greater'],
+          operators: ['less','greater', 'between'],
           unique: true,
           description: 'How long, in seconds, is the song?'
         },
