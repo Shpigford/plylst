@@ -168,7 +168,7 @@ $(document).on('turbolinks:load', function() {
           id: 'plays',
           label: 'Play Count',
           type: 'integer',
-          operators: ['less','greater'],
+          operators: ['less','greater', 'between'],
           unique: true,
           description: 'How many plays does this song have? NOTE: This count only starts <b>after</b> you connect to PLYLST.'
         },
