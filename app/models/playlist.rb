@@ -153,6 +153,25 @@ class Playlist < ApplicationRecord
       tracks = tracks.where("(audio_features ->> 'danceability')::numeric between ? and ?", start, final)
     end
 
+    # DANCEABILITY
+    find_rule(rules, 'acousticness').try do |rule|
+      case rule['value']
+      when 0 # Not at all
+        start = 0.0
+        final = 0.250
+      when 1 # Somewhat
+        start = 0.251
+        final = 0.500
+      when 2 # Likely
+        start = 0.501
+        final = 0.750
+      when 3 # Very likely
+        start = 0.751
+        final = 1.0
+      end
+      tracks = tracks.where("(audio_features ->> 'acousticness')::numeric between ? and ?", start, final)
+    end
+
     # SORT
     if sort.present?
       case sort

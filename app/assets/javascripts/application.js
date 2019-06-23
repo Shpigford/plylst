@@ -244,6 +244,22 @@ $(document).on('turbolinks:load', function() {
           unique: true,
           description: 'Is the melody of the song in a major key or minor key?'
         },
+        {
+          id: 'acousticness',
+          label: 'Acoustic Likeliness',
+          type: 'integer',
+          input: 'select',
+          values: [
+            {'0': 'Not at all'},
+            {'1': 'Somewhat'},
+            {'2': 'Likely'},
+            {'3': 'Very likely'},
+          ],
+          operators: ['equal'],
+          plugin: 'selectpicker',
+          unique: true,
+          description: 'How likely is it the song is acoustic?'
+        },
       ],
       /*rules: rules_basic,*/
       allow_groups: 0,
