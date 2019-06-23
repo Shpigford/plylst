@@ -120,7 +120,7 @@ $(document).on('turbolinks:load', function() {
           id: 'bpm',
           label: 'BPM',
           type: 'integer',
-          operators: ['less','greater'],
+          operators: ['less','greater', 'between'],
           unique: true,
           description: 'What BPM (Beats Per Minute) do you like?'
         },

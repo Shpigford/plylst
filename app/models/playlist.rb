@@ -30,8 +30,10 @@ class Playlist < ApplicationRecord
     find_rule(rules, 'bpm').try do |rule|
       if rule['operator'] == 'less'
         tracks = tracks.where("(audio_features ->> 'tempo')::numeric < ?", rule['value'])
-      else
+      elsif rule['operator'] == 'greater'
         tracks = tracks.where("(audio_features ->> 'tempo')::numeric > ?", rule['value'])
+      elsif rule['operator'] == 'between'
+        tracks = tracks.where("(audio_features ->> 'tempo')::numeric between ? and ?", rule['value'][0], rule['value'][1])
       end
     end
 
