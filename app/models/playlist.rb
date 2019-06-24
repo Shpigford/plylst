@@ -218,6 +218,19 @@ class Playlist < ApplicationRecord
       tracks = tracks.where("(audio_features ->> 'speechiness')::numeric between ? and ?", start, final)
     end
 
+    # VALENCE
+    find_rule(rules, 'valence').try do |rule|
+      case rule['value']
+      when 0 # Not at all
+        start = 0.0
+        final = 0.5
+      when 1 # Somewhat
+        start = 0.51
+        final = 1.0
+      end
+      tracks = tracks.where("(audio_features ->> 'valence')::numeric between ? and ?", start, final)
+    end
+
     # SORT
     if sort.present?
       case sort

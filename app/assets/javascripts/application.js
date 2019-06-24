@@ -304,6 +304,20 @@ $(document).on('turbolinks:load', function() {
           unique: true,
           description: 'Is the track mostly spoken word (talk show, audiobook, podcast)?'
         },
+        {
+          id: 'valence',
+          label: 'Mood',
+          type: 'integer',
+          input: 'select',
+          values: [
+            {'0': 'Negative (sad, depressed, angry)'},
+            {'1': 'Positive (happy, cheerful, euphoric)'},
+          ],
+          operators: ['equal'],
+          plugin: 'selectpicker',
+          unique: true,
+          description: 'What\'s the overall mood of the track?'
+        },
       ],
       /*rules: rules_basic,*/
       allow_groups: 0,
