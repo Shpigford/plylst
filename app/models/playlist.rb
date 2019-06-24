@@ -192,6 +192,19 @@ class Playlist < ApplicationRecord
       tracks = tracks.where("(audio_features ->> 'energy')::numeric between ? and ?", start, final)
     end
 
+    # INSTRUMENTALNESS
+    find_rule(rules, 'instrumentalness').try do |rule|
+      case rule['value']
+      when 0 # Not at all
+        start = 0.0
+        final = 0.799
+      when 1 # Somewhat
+        start = 0.8
+        final = 1.0
+      end
+      tracks = tracks.where("(audio_features ->> 'instrumentalness')::numeric between ? and ?", start, final)
+    end
+
     # SORT
     if sort.present?
       case sort

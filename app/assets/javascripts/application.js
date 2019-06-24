@@ -276,6 +276,20 @@ $(document).on('turbolinks:load', function() {
           unique: true,
           description: 'How energetic is the song?'
         },
+        {
+          id: 'instrumentalness',
+          label: 'Instrumental',
+          type: 'integer',
+          input: 'select',
+          values: [
+            {'0': 'No'},
+            {'1': 'Yes'},
+          ],
+          operators: ['equal'],
+          plugin: 'selectpicker',
+          unique: true,
+          description: 'Is it an instrumental track?'
+        },
       ],
       /*rules: rules_basic,*/
       allow_groups: 0,
