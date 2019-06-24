@@ -174,7 +174,6 @@ class Playlist < ApplicationRecord
 
     # ENERGY
     find_rule(rules, 'energy').try do |rule|
-      Rails.logger.warn("LOGGER: #{rule['value']}")
       case rule['value']
       when 0 # Not at all
         start = 0.0
@@ -216,6 +215,11 @@ class Playlist < ApplicationRecord
         final = 1.0
       end
       tracks = tracks.where("(audio_features ->> 'speechiness')::numeric between ? and ?", start, final)
+    end
+
+    # EXPLICIT
+    find_rule(rules, 'explicit').try do |rule|
+      tracks = tracks.where('explicit = FALSE') if rule['value'] == 0
     end
 
     # VALENCE

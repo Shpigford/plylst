@@ -318,6 +318,20 @@ $(document).on('turbolinks:load', function() {
           unique: true,
           description: 'What\'s the overall mood of the track?'
         },
+        {
+          id: 'explicit',
+          label: 'Explicit',
+          type: 'integer',
+          input: 'select',
+          values: [
+            {'0': 'Excluded'},
+            {'1': 'Included'},
+          ],
+          operators: ['equal'],
+          plugin: 'selectpicker',
+          unique: true,
+          description: 'Should explicit tracks be excluded or included?'
+        },
       ],
       /*rules: rules_basic,*/
       allow_groups: 0,
