@@ -290,6 +290,20 @@ $(document).on('turbolinks:load', function() {
           unique: true,
           description: 'Is it an instrumental track?'
         },
+        {
+          id: 'speechiness',
+          label: 'Speech',
+          type: 'integer',
+          input: 'select',
+          values: [
+            {'0': 'No'},
+            {'1': 'Yes'},
+          ],
+          operators: ['equal'],
+          plugin: 'selectpicker',
+          unique: true,
+          description: 'Is the track mostly spoken word (talk show, audiobook, podcast)?'
+        },
       ],
       /*rules: rules_basic,*/
       allow_groups: 0,
