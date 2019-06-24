@@ -260,6 +260,22 @@ $(document).on('turbolinks:load', function() {
           unique: true,
           description: 'How likely is it the song is acoustic?'
         },
+        {
+          id: 'energy',
+          label: 'Energy',
+          type: 'integer',
+          input: 'select',
+          values: [
+            {'0': 'Low'},
+            {'1': 'Medium'},
+            {'2': 'High'},
+            {'3': 'Insane'},
+          ],
+          operators: ['equal'],
+          plugin: 'selectpicker',
+          unique: true,
+          description: 'How energetic is the song?'
+        },
       ],
       /*rules: rules_basic,*/
       allow_groups: 0,
