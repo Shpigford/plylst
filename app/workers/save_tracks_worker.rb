@@ -37,6 +37,8 @@ class SaveTracksWorker
         track.popularity = spotify_track.popularity
         track.preview_url = spotify_track.preview_url
         track.save
+
+        GetLyricsWorker.perform_async(track.id) if ENV['genius']
       end
 
       if kind == 'added'
