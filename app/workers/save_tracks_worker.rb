@@ -38,7 +38,7 @@ class SaveTracksWorker
         track.preview_url = spotify_track.preview_url
         track.save
 
-        GetLyricsWorker.perform_async(track.id)
+        GetLyricsWorker.perform_async(track.id) if ENV['genius']
       end
 
       if kind == 'added'

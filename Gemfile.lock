@@ -114,6 +114,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
+    colorize (0.8.1)
     concurrent-ruby (1.1.5)
     connection_pool (2.2.2)
     crass (1.0.4)
@@ -210,7 +211,7 @@ GEM
     orm_adapter (0.5.0)
     pg (1.1.4)
     popper_js (1.14.5)
-    public_suffix (3.1.0)
+    public_suffix (3.1.1)
     puma (3.12.1)
     puma_worker_killer (0.1.0)
       get_process_mem (~> 0.2)
@@ -296,7 +297,7 @@ GEM
       sidekiq (>= 4.2.1)
     sidekiq-failures (1.0.0)
       sidekiq (>= 4.0.0)
-    sidekiq-throttled (0.9.0)
+    sidekiq-throttled (0.10.0)
       concurrent-ruby
       redis-prescription
       sidekiq
@@ -367,6 +368,7 @@ DEPENDENCIES
   capybara (>= 2.15)
   chromedriver-helper
   coffee-rails (~> 4.2)
+  colorize
   devise
   figaro
   foreman
