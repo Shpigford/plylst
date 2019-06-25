@@ -1,0 +1,1 @@
+Genius.access_token = ENV['genius']
