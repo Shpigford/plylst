@@ -96,7 +96,7 @@ $(document).on('turbolinks:load', function() {
           id: 'track_name',
           label: 'Track Name',
           type: 'string',
-          operators: ['contains'],
+          operators: ['contains', 'not_contains'],
           unique: true,
           description: 'Text the track name contains'
         }, 
@@ -104,7 +104,7 @@ $(document).on('turbolinks:load', function() {
           id: 'artist_name',
           label: 'Artist Name',
           type: 'string',
-          operators: ['contains'],
+          operators: ['contains', 'not_contains'],
           unique: true,
           description: 'Text the artist name contains'
         },

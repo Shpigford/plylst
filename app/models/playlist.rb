@@ -18,12 +18,20 @@ class Playlist < ApplicationRecord
 
     # TRACK NAME
     find_rule(rules, 'track_name').try do |rule|
-      tracks = tracks.where('tracks.name ILIKE ?', '%' + rule['value'] + '%')
+      if rule['operator'] == 'contains'
+        tracks = tracks.where('tracks.name ILIKE ?', '%' + rule['value'] + '%')
+      elsif rule['operator'] == 'not_contains'
+        tracks = tracks.where('tracks.name NOT ILIKE ?', '%' + rule['value'] + '%')
+      end
     end
     
     # ARTIST NAME
     find_rule(rules, 'artist_name').try do |rule|
-      tracks = tracks.joins(:artist).where('artists.name ILIKE ?', '%' + rule['value'] + '%')
+      if rule['operator'] == 'contains'
+        tracks = tracks.joins(:artist).where('artists.name ILIKE ?', '%' + rule['value'] + '%')
+      elsif rule['operator'] == 'not_contains'
+        tracks = tracks.joins(:artist).where('artists.name NOT ILIKE ?', '%' + rule['value'] + '%')
+      end
     end
 
     # BPM
