@@ -365,12 +365,11 @@ $(document).on('turbolinks:load', function() {
 
   }
 
-  $('#builder').on('afterUpdateRuleValue.queryBuilder afterUpdateRuleFilter.queryBuilder afterUpdateRuleOperator.queryBuilder afterUpdateGroupCondition.queryBuilder', function(){
+  $('#builder').on('afterUpdateRuleValue.queryBuilder afterUpdateRuleFilter.queryBuilder afterUpdateRuleOperator.queryBuilder afterUpdateGroupCondition.queryBuilder afterDeleteRule.queryBuilder afterDeleteGroup.queryBuilder', function(){
     console.log($('#builder').queryBuilder('getRules', {allow_invalid: true }));
     $('#playlist_filters').val(
       JSON.stringify($('#builder').queryBuilder(
-        'getRules', 
-        {skip_empty:  true}
+        'getRules', {skip_empty:  true}
       ))
     );
   });
