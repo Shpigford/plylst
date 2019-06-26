@@ -19,9 +19,9 @@ class Playlist < ApplicationRecord
     # TRACK NAME
     find_rule(rules, 'track_name').try do |rule|
       if rule['operator'] == 'contains'
-        tracks = tracks.where('tracks.name ILIKE ?', '%' + rule['value'] + '%')
+        tracks = tracks.where('tracks.name ~* ?', rule['value'])
       elsif rule['operator'] == 'not_contains'
-        tracks = tracks.where('tracks.name NOT ILIKE ?', '%' + rule['value'] + '%')
+        tracks = tracks.where('tracks.name !~* ?', rule['value'])
       end
     end
     
