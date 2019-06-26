@@ -28,9 +28,9 @@ class Playlist < ApplicationRecord
     # ARTIST NAME
     find_rule(rules, 'artist_name').try do |rule|
       if rule['operator'] == 'contains'
-        tracks = tracks.joins(:artist).where('artists.name ILIKE ?', '%' + rule['value'] + '%')
+        tracks = tracks.joins(:artist).where('artists.name ~* ?', rule['value'])
       elsif rule['operator'] == 'not_contains'
-        tracks = tracks.joins(:artist).where('artists.name NOT ILIKE ?', '%' + rule['value'] + '%')
+        tracks = tracks.joins(:artist).where('artists.name !~* ?', rule['value'])
       end
     end
 
