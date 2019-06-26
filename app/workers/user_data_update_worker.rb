@@ -8,16 +8,16 @@ class UserDataUpdateWorker
         UpdatePlayDataWorker.perform_async(user.id)
         RecentlyStreamedWorker.perform_async(user.id)
         BuildUserGenresWorker.perform_async(user.id)
-
-        Track.where(lyrics: nil).find_each do |track|
-          GetLyricsWorker.perform_async(track.id)
-        end
       end
 
       if frequency == 'daily'
         ProcessAccountWorker.perform_async(user.id)
         BuildPlaylistsWorker.perform_async(user.id)
         CheckTracksWorker.perform_async(user.id)
+
+        Track.where(lyrics: nil).find_each do |track|
+          GetLyricsWorker.perform_async(track.id)
+        end
       end
     end
   end
