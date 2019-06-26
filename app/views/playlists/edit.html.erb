@@ -44,7 +44,7 @@
             <div class="form-group row">
               <%= f.label :sort, class: 'col-sm-2 col-form-label' %>
               <div class="col-sm-10">
-                <%= f.select(:sort, options_for_select([['Random','random'], ['Most Often Played', 'most_often_played'], ['Least Often Played', 'least_often_played'], ['Most Recently Added', 'most_recently_added'], ['Least Recently Added', 'least_recently_added']], @playlist.sort), {}, { class: 'custom-select custom-select-lg mb-1'}) %>
+                <%= f.select(:sort, options_for_select([['Random','random'], ['Most Popular', 'most_popular'], ['Least Popular', 'least_popular'], ['Most Played', 'most_often_played'], ['Least Played', 'least_often_played'], ['Most Recently Added', 'most_recently_added'], ['Least Recently Added', 'least_recently_added']], @playlist.sort), {}, { class: 'custom-select custom-select-lg mb-1'}) %>
                 <small class="text-muted">Combine with <b>limit</b> to curate how songs are selected</small>
               </div>
             </div>
