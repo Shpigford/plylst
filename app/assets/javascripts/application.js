@@ -109,6 +109,14 @@ $(document).on('turbolinks:load', function() {
           description: 'Text the artist name contains'
         },
         {
+          id: 'lyrics',
+          label: 'Lyrics',
+          type: 'string',
+          operators: ['contains', 'not_contains'],
+          unique: true,
+          description: 'What is in those lyrics?'
+        },
+        {
           id: 'days_ago',
           label: 'Days Ago',
           type: 'integer',

@@ -34,6 +34,15 @@ class Playlist < ApplicationRecord
       end
     end
 
+    # LYRICS
+    find_rule(rules, 'lyrics').try do |rule|
+      if rule['operator'] == 'contains'
+        tracks = tracks.where('lyrics ILIKE ?', '%' + rule['value'] + '%')
+      elsif rule['operator'] == 'not_contains'
+        tracks = tracks.where('lyrics NOT ILIKE ?', '%' + rule['value'] + '%')
+      end
+    end
+
     # BPM
     find_rule(rules, 'bpm').try do |rule|
       if rule['operator'] == 'less'
