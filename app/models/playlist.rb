@@ -258,9 +258,9 @@ class Playlist < ApplicationRecord
       when 'random'
         tracks = tracks.order("random()")
       when 'most_popular'
-        tracks = tracks.order("popularity DESC NULLS LAST")
+        tracks = tracks.order("tracks.popularity DESC NULLS LAST")
       when 'least_popular'
-        tracks = tracks.order("popularity ASC NULLS LAST")
+        tracks = tracks.order("tracks.popularity ASC NULLS LAST")
       when 'most_often_played'
         tracks = tracks.order("follows.plays DESC NULLS LAST")
       when 'least_often_played'
