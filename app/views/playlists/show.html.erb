@@ -44,7 +44,7 @@
                     <span class="align-middle text-truncate d-inline-block" style="max-width:200px;"><%= track.album.name %></span>
                   </td>
                   <td>
-                    <%= track.follows.first.plays.to_i %>
+                    <%= track.follows.first.plays.to_i if track.follows.first.plays.present? %>
                   </td>
                   <td>
                     <time><%= time_ago_in_words(track.follows.first.added_at).gsub('about','') %> ago</time>
