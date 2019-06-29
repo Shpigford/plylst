@@ -47,7 +47,7 @@
                     <%= track.follows.first.plays.to_i if track.follows.first.plays.present? %>
                   </td>
                   <td>
-                    <time><%= time_ago_in_words(track.follows.first.added_at).gsub('about','') %> ago</time>
+                    <time><% if track.follows.present? %><%= time_ago_in_words(track.follows.first.added_at).gsub('about','') %> ago<% end %></time>
                   </td>
                   <td>
                     <%= format_ms(track.duration) %>
