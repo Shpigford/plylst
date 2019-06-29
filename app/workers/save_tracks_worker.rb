@@ -2,8 +2,13 @@ class SaveTracksWorker
   include Sidekiq::Worker
 
   def perform(user_id, tracks_with_date, kind = 'added')
-    user = User.find user_id
-    track_ids = tracks_with_date.map(&:first)
+    user = User.find user_id if user_id.present?
+
+    if tracks_with_date.all? { |e| e.kind_of? Array }
+      track_ids = tracks_with_date.map(&:first)
+    else
+      track_ids = tracks_with_date
+    end
 
     spotify_tracks = RSpotify::Track.find(track_ids)
 
