@@ -6,7 +6,7 @@ class GetLyricsWorker
 
   sidekiq_throttle({
     :concurrency => { :limit => 5 },
-    :threshold => { :limit => 60, :period => 1.minute }
+    :threshold => { :limit => 120, :period => 1.minute }
   })
 
   def perform(track_id)
