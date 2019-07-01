@@ -5,7 +5,7 @@ class GetLyricsWorker
   sidekiq_options :queue => :lyrics
 
   sidekiq_throttle({
-    :concurrency => { :limit => 5 },
+    :concurrency => { :limit => 10 },
     :threshold => { :limit => 120, :period => 1.minute }
   })
 
