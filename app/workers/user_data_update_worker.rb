@@ -17,7 +17,7 @@ class UserDataUpdateWorker
         #GetMoreTracksWorker.perform_async
 
         Track.where(lyrics: nil).find_each do |track|
-          GetLyricsWorker.perform_async(track.id)
+          #GetLyricsWorker.perform_async(track.id)
         end
       end
     end
