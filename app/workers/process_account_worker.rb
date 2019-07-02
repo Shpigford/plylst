@@ -22,6 +22,8 @@ class ProcessAccountWorker
           break if tracks.size == 0
 
           SaveTracksWorker.perform_async(user.id, tracks_added_at.to_a, 'added')
+        else
+          break
         end
       end
 
