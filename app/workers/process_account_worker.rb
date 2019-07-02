@@ -10,7 +10,6 @@ class ProcessAccountWorker
       track_ids = Array.new
       
       (0..1000000000).step(50) do |n|
-        puts "OFFSET: #{n}"
         begin
           tracks = spotify.saved_tracks(limit: 50, offset: n)
         rescue RestClient::Forbidden => e
@@ -20,13 +19,10 @@ class ProcessAccountWorker
 
         if tracks.present?
           tracks_added_at = spotify.tracks_added_at
-          puts "TRACKS: #{tracks_added_at}"
-          puts "BREAK 1" if tracks.size == 0
           break if tracks.size == 0
 
           SaveTracksWorker.perform_async(user.id, tracks_added_at.to_a, 'added')
         else
-          puts "BREAK 2"
           break
         end
       end
