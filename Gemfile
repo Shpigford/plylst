@@ -12,6 +12,7 @@ gem 'storext'
 gem 'bootstrap'
 gem 'jquery-rails'
 gem 'textacular', '~> 5.0'
+gem 'with_advisory_lock'
 
 # Webserver
 gem "puma"
