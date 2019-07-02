@@ -16,11 +16,11 @@ class UserDataUpdateWorker
         CheckTracksWorker.perform_async(user.id)
         #GetMoreTracksWorker.perform_async
 
-        Track.where(lyrics: nil).find_each do |track|
-          Track.with_advisory_lock("#{track.id}") do
-            GetLyricsWorker.perform_async(track.id)
-          end
-        end
+        # Track.where(lyrics: nil).find_each do |track|
+        #   Track.with_advisory_lock("#{track.id}") do
+        #     GetLyricsWorker.perform_async(track.id)
+        #   end
+        # end
       end
     end
   end
