@@ -7,6 +7,7 @@ class GetMoreTracksWorker
     GetMoreCategoriesWorker.perform_async
     GetMoreFeaturedWorker.perform_async
     GetMoreNewReleasesWorker.perform_async
+    GetMoreArtistsWorker.perform_async
   end
 end
 
