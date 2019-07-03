@@ -1,4 +1,4 @@
 :queues:
-  - [critical, 4]
+  - [critical, 20]
   - [default, 2]
   - slow
