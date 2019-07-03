@@ -2,7 +2,7 @@ class GetLyricsWorker
   include Sidekiq::Worker
   include Sidekiq::Throttled::Worker
 
-  sidekiq_options :queue => :slow
+  sidekiq_options queue: :slow, lock: :while_executing
 
   # sidekiq_throttle({
   #   :concurrency => { :limit => 10 },

@@ -1,6 +1,8 @@
 class BuildArtistWorker
   include Sidekiq::Worker
 
+  sidekiq_options lock: :while_executing
+
   def perform(artist_id)
     artist = Artist.find artist_id
 
