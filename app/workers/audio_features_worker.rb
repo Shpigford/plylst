@@ -1,5 +1,7 @@
 class AudioFeaturesWorker
   include Sidekiq::Worker
+  
+  sidekiq_options queue: :slow
 
   def perform(track_ids)
     spotify_tracks = RSpotify::AudioFeatures.find(track_ids)
