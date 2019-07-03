@@ -78,11 +78,6 @@
             </li>
             <% end %>
           </ul>
-          <% if current_user.created_at < Date.today and current_user.playlists.count < 1 %>
-          <div class="alert alert-warning text-xs" style="line-height:15px;" role="alert">
-            <small>I had to delete all previous playlists to roll out a brand new rule builder. Sorry about that. :( Was a one-time thing and the new rule builder is amazing. #beta #sorry #iloveyou</small>
-          </div>
-          <% end %>
           <%= link_to "<i class='fas fa-plus-circle'></i> Create a playlist".html_safe, new_playlist_path, class: 'btn btn-block btn-primary mb-4' %>
 
           <!-- Push content down -->

@@ -29,7 +29,17 @@
               </div>
             </div>
             <hr>
+            <h2>Library</h2>
+            <div class="form-group row">
+              <%#= f.label :full_catalog, 'Full Full', class: 'col-sm-2 col-form-label' %>
+              <div class="col-sm-12">
+                <%= f.select(:full_catalog, options_for_select([['Only my library',false], ['Full Spotify catalog', true]], @playlist.full_catalog), {}, { class: 'custom-select custom-select-lg mb-1'}) %>
+                <small class="text-muted">Select songs from just your library or the full Spotify catalog?</small>
+              </div>
+            </div>
+            <hr>
               <h2>Rules</h2>
+
               <div id="builder"></div>
             <hr>
             <h2>Limit & Sort</h2>

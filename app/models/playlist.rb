@@ -13,7 +13,12 @@ class Playlist < ApplicationRecord
 
 
   def filtered_tracks(current_user)
-    tracks = current_user.tracks.where('follows.active = ?', true).limit(500)
+    if full_catalog.present?
+      tracks = Track.all
+    else
+      tracks = current_user.tracks.where('follows.active = ?', true)
+    end
+
     rules = filters['rules']
 
     # TRACK NAME
@@ -55,11 +60,13 @@ class Playlist < ApplicationRecord
     end
 
     # DAYS AGO
-    find_rule(rules, 'days_ago').try do |rule|
-      if rule['operator'] == 'less'
-        tracks = tracks.where('follows.added_at > ?', rule['value'].days.ago).order('follows.added_at ASC')
-      else
-        tracks = tracks.where('follows.added_at < ?', rule['value'].days.ago).order('follows.added_at ASC')
+    if full_catalog.blank?
+      find_rule(rules, 'days_ago').try do |rule|
+        if rule['operator'] == 'less'
+          tracks = tracks.where('follows.added_at > ?', rule['value'].days.ago).order('follows.added_at ASC')
+        else
+          tracks = tracks.where('follows.added_at < ?', rule['value'].days.ago).order('follows.added_at ASC')
+        end
       end
     end
 
@@ -91,20 +98,22 @@ class Playlist < ApplicationRecord
     end
 
     # PLAYS
-    find_rule(rules, 'plays').try do |rule|
-      if rule['value'].kind_of?(Array)
-        plays_start = rule['value'][0] * 1000
-        plays_end = rule['value'][1] * 1000
-      else
-        plays = rule['value'] * 1000
-      end
+    if full_catalog.blank?
+      find_rule(rules, 'plays').try do |rule|
+        if rule['value'].kind_of?(Array)
+          plays_start = rule['value'][0] * 1000
+          plays_end = rule['value'][1] * 1000
+        else
+          plays = rule['value'] * 1000
+        end
 
-      if rule['operator'] == 'less'
-        tracks = tracks.where("follows.plays < ?", plays)
-      elsif rule['operator'] == 'greater'
-        tracks = tracks.where("follows.plays > ?", plays)
-      elsif rule['operator'] == 'between'
-        tracks = tracks.where("follows.plays between ? and ?", plays_start, plays_end)
+        if rule['operator'] == 'less'
+          tracks = tracks.where("follows.plays < ?", plays)
+        elsif rule['operator'] == 'greater'
+          tracks = tracks.where("follows.plays > ?", plays)
+        elsif rule['operator'] == 'between'
+          tracks = tracks.where("follows.plays between ? and ?", plays_start, plays_end)
+        end
       end
     end
 
@@ -127,11 +136,13 @@ class Playlist < ApplicationRecord
     end
 
     # DAYS SINCE LAST PLAYED
-    find_rule(rules, 'last_played_days_ago').try do |rule|
-      if rule['operator'] == 'less'
-        tracks = tracks.where('last_played_at < ?', rule['value'].days.ago).order('last_played_at ASC')
-      else
-        tracks = tracks.where('last_played_at > ?', rule['value'].days.ago).order('last_played_at DESC')
+    if full_catalog.blank?
+      find_rule(rules, 'last_played_days_ago').try do |rule|
+        if rule['operator'] == 'less'
+          tracks = tracks.where('last_played_at < ?', rule['value'].days.ago).order('last_played_at ASC')
+        else
+          tracks = tracks.where('last_played_at > ?', rule['value'].days.ago).order('last_played_at DESC')
+        end
       end
     end
 
@@ -275,6 +286,8 @@ class Playlist < ApplicationRecord
     # LIMIT
     if limit.present?
       tracks = tracks.limit(limit)
+    else
+      tracks = tracks.limit(1000)
     end
 
     tracks

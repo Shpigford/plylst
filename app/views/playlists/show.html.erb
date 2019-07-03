@@ -26,7 +26,6 @@
                   <th>Artist</th>
                   <th>Album</th>
                   <th>Plays</th>
-                  <th><i class="fal fa-calendar-alt"></i></th>
                   <th><i class="fal fa-clock"></i></th>
                 </tr>
               </thead>
@@ -44,10 +43,7 @@
                     <span class="align-middle text-truncate d-inline-block" style="max-width:200px;"><%= track.album.name %></span>
                   </td>
                   <td>
-                    <%= track.follows.first.plays.to_i %>
-                  </td>
-                  <td>
-                    <time><% if track.follows.first.added_at.present? %><%= time_ago_in_words(track.follows.first.added_at).gsub('about','') %> ago<% end %></time>
+                    <%= track.follows.first.plays.to_i if @playlist.full_catalog.blank? %>
                   </td>
                   <td>
                     <%= format_ms(track.duration) %>
