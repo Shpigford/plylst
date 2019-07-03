@@ -4,6 +4,7 @@ class SaveTracksWorker
   def perform(user_id, tracks_with_date, kind = 'added')
     # Find user these tracks are associated with, if a user_id is passed
     user = User.find user_id if user_id.present?
+    audio_feature_ids = Array.new
 
     # Check if `tracks_with_date` is actually a multi-dimensional array (meaning it has dates)
     if tracks_with_date.all? { |e| e.kind_of? Array }
@@ -24,6 +25,7 @@ class SaveTracksWorker
       # If it's a new track record, do this
       if track.new_record?
         spotify_artist = spotify_track.artists.first
+        audio_feature_ids.push(spotify_track.id)
 
         # Search to see if the artist for the track already exists, if it does not, initialize a new object
         artist = Artist.where(spotify_id: spotify_artist.id).first_or_initialize(spotify_id: spotify_artist.id)
@@ -84,7 +86,7 @@ class SaveTracksWorker
       end
     end
 
-    # Build the "audio features" for the tracks
-    AudioFeaturesWorker.perform_async(track_ids)
+    # Build the "audio features" for new tracks
+    AudioFeaturesWorker.perform_async(audio_feature_ids)
   end
 end
