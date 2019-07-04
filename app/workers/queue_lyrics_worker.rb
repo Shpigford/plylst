@@ -5,9 +5,7 @@ class QueueLyricsWorker
 
   def perform
     Track.where(lyrics: nil).find_each do |track|
-      Track.with_advisory_lock("#{track.id}") do
         GetLyricsWorker.perform_async(track.id) if track.lyrics.blank?
-      end
     end
   end
 end
