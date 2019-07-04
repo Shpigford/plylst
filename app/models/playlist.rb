@@ -273,13 +273,13 @@ class Playlist < ApplicationRecord
       when 'least_popular'
         tracks = tracks.order("tracks.popularity ASC NULLS LAST")
       when 'most_often_played'
-        tracks = tracks.order("follows.plays DESC NULLS LAST")
+        tracks = tracks.order("follows.plays DESC NULLS LAST") if full_catalog.blank?
       when 'least_often_played'
-        tracks = tracks.order("follows.plays ASC NULLS LAST")
+        tracks = tracks.order("follows.plays ASC NULLS LAST") if full_catalog.blank?
       when 'most_recently_added'
-        tracks = tracks.order("follows.added_at DESC NULLS LAST")
+        tracks = tracks.order("follows.added_at DESC NULLS LAST") if full_catalog.blank?
       when 'least_recently_added'
-        tracks = tracks.order("follows.added_at ASC NULLS LAST")
+        tracks = tracks.order("follows.added_at ASC NULLS LAST") if full_catalog.blank?
       end
     end
 
