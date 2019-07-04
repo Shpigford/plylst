@@ -14,13 +14,6 @@ class UserDataUpdateWorker
         ProcessAccountWorker.perform_async(user.id)
         BuildPlaylistsWorker.perform_async(user.id)
         CheckTracksWorker.perform_async(user.id)
-        #GetMoreTracksWorker.perform_async
-
-        # Track.where(lyrics: nil).find_each do |track|
-        #   Track.with_advisory_lock("#{track.id}") do
-        #     GetLyricsWorker.perform_async(track.id) if track.lyrics.blank?
-        #   end
-        # end
       end
     end
   end
