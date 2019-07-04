@@ -13,6 +13,7 @@ class GetMoreCategoriesWorker
           GetMorePlaylistsWorker.perform_async(playlist.owner.id, playlist.id)
         end
       end
+      sleep(3.seconds)
     end
   end
 end
