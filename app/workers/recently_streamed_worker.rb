@@ -1,7 +1,7 @@
 class RecentlyStreamedWorker
   include Sidekiq::Worker
 
-  sidekiq_options queue: :slow, lock: :while_executing
+  sidekiq_options lock: :while_executing
 
   def perform(user_id)
     user = User.find user_id
