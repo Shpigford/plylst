@@ -15,7 +15,7 @@ class GetLyricsWorker
     if track.present? and track.lyrics == nil
       songs = Genius::Song.search("#{track.name} by #{track.artist.name}")
       if songs.present?
-        if songs.first.primary_artist.name == track.artist.name and songs.first.title == track.name
+        if songs.first.primary_artist.name.downcase == track.artist.name.downcase and songs.first.title.downcase == track.name.downcase
           page = Nokogiri::HTML(HTTParty.get(songs.first.url))
           lyrics = page.css('.lyrics').text.strip
 
