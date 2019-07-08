@@ -72,28 +72,28 @@ class SaveTracksWorker
           follow = Follow.where(user: user, track: track).first
           added_at = tracks_with_date.select{|(x, y)| x == spotify_track.id}.first[1].to_time
           follow.update_attribute(:added_at, added_at)
-
-        # If this track was created from the "RecentlyStreamedWorker" worker, be sure to add that stream
-        elsif kind == 'streamed'
-          follow = Follow.where(user: user, track: track).first
-
-          if follow
-            streams = tracks_with_date.select{|(x, y)| x == spotify_track.id}
-
-            streams.each do |stream|
-              time = stream[1].to_time
-              stream = Stream.where(user: user, track: track, played_at: time).first_or_initialize(played_at: time)
-
-              if stream.new_record?
-                stream.save
-              end
-            end
-          end
-        end
       end
 
       # Build the "audio features" for new tracks
       AudioFeaturesWorker.perform_async(audio_feature_ids)
+    end
+
+    # If this track was created from the "RecentlyStreamedWorker" worker, be sure to add that stream
+    if kind == 'streamed'
+      follow = Follow.where(user: user, track: track).first
+
+      if follow
+        streams = tracks_with_date.select{|(x, y)| x == spotify_track.id}
+
+        streams.each do |stream|
+          time = stream[1].to_time
+          stream = Stream.where(user: user, track: track, played_at: time).first_or_initialize(played_at: time)
+
+          if stream.new_record?
+            stream.save
+          end
+        end
+      end
     end
   end
 end
