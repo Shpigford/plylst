@@ -81,17 +81,23 @@ class SaveTracksWorker
 
     # If this track was created from the "RecentlyStreamedWorker" worker, be sure to add that stream
     if kind == 'streamed'
-      follow = Follow.where(user: user, track: track).first
+      # Make the Spotify API call to get all of the tracks
+      spotify_tracks = RSpotify::Track.find(track_ids)
 
-      if follow
-        streams = tracks_with_date.select{|(x, y)| x == spotify_track.id}
+      # Looop through the returned tracks
+      spotify_tracks.each do |spotify_track|
+        follow = Follow.where(user: user, track: track).first
 
-        streams.each do |stream|
-          time = stream[1].to_time
-          stream = Stream.where(user: user, track: track, played_at: time).first_or_initialize(played_at: time)
+        if follow
+          streams = tracks_with_date.select{|(x, y)| x == spotify_track.id}
 
-          if stream.new_record?
-            stream.save
+          streams.each do |stream|
+            time = stream[1].to_time
+            stream = Stream.where(user: user, track: track, played_at: time).first_or_initialize(played_at: time)
+
+            if stream.new_record?
+              stream.save
+            end
           end
         end
       end
