@@ -72,6 +72,7 @@ class SaveTracksWorker
           follow = Follow.where(user: user, track: track).first
           added_at = tracks_with_date.select{|(x, y)| x == spotify_track.id}.first[1].to_time
           follow.update_attribute(:added_at, added_at)
+        end
       end
 
       # Build the "audio features" for new tracks
