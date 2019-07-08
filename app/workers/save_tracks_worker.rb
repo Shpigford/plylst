@@ -86,17 +86,21 @@ class SaveTracksWorker
 
       # Looop through the returned tracks
       spotify_tracks.each do |spotify_track|
-        follow = Follow.where(user: user, track: track).first
+        track = Track.find_by(spotify_id: spotify_track.id)
 
-        if follow
-          streams = tracks_with_date.select{|(x, y)| x == spotify_track.id}
+        if track.present?
+          follow = Follow.where(user: user, track: track).first
 
-          streams.each do |stream|
-            time = stream[1].to_time
-            stream = Stream.where(user: user, track: track, played_at: time).first_or_initialize(played_at: time)
+          if follow
+            streams = tracks_with_date.select{|(x, y)| x == spotify_track.id}
 
-            if stream.new_record?
-              stream.save
+            streams.each do |stream|
+              time = stream[1].to_time
+              stream = Stream.where(user: user, track: track, played_at: time).first_or_initialize(played_at: time)
+
+              if stream.new_record?
+                stream.save
+              end
             end
           end
         end
