@@ -14,7 +14,7 @@ class RecentlyStreamedWorker
         recent_tracks = spotify.recently_played(limit: 50)
       rescue RestClient::Unauthorized => e
         # Deactivate user if we don't have the right permissions
-        user.update_attribute(:active, false)
+        # user.update_attribute(:active, false)
       end
 
       if recent_tracks.present?
