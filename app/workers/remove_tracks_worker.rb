@@ -12,6 +12,9 @@ class RemoveTracksWorker
       rescue RestClient::Forbidden => e
         # Deactivate user if we don't have the right permissions
         user.update_attribute(:active, false)
+      rescue RestClient::Unauthorized => e
+        # Deactivate user if we don't have the right permissions
+        user.update_attribute(:active, false)
       end
 
       if saved.present?
