@@ -64,7 +64,7 @@
                   <tbody class="list">
                     <% @latest_streams.each do |stream| %>
                     <tr>
-                      <td><%#= stream.track.id %><span tabindex="0" data-trigger="focus" data-toggle="popover"data-html="true" data-content="<% if stream.track.artist.genres.present? %><h3 class='popover-header'>Genres</h3><div class='popover-body'><%= stream.track.artist.genres.join(', ') %></div><br><% end %><% if stream.track.audio_features.present? %><h3 class='popover-header'>Audio Features</h3><div class='popover-body'><%= human_readable(stream.track.audio_features) %></div><% end %>"><i class="fas fa-info-circle"></i></span></td>
+                      <td><span tabindex="0" data-trigger="focus" data-toggle="popover"data-html="true" data-content="<% if stream.track.artist.genres.present? %><h3 class='popover-header'>Genres</h3><div class='popover-body'><%= stream.track.artist.genres.join(', ') %></div><br><% end %><% if stream.track.audio_features.present? %><h3 class='popover-header'>Audio Features</h3><div class='popover-body'><%= human_readable(stream.track.audio_features) %></div><% end %>"><i class="fas fa-info-circle"></i></span></td>
                       <td colspan="2">
                         <div class="avatar avatar-xs mr-2"><%= image_tag stream.track.album.image, class: 'avatar-img rounded-sm' if stream.track.album.image.present? %></div>
                         <span class="align-middle text-truncate d-inline-block" style="max-width:200px;"><%= stream.track.name %></span>

@@ -50,7 +50,7 @@ module ApplicationHelper
 
     valence_map = {
       0 => "Negative",
-      1 => "Positive",
+      1 => "Positive"
     }
 
     speech_map = {
@@ -84,12 +84,8 @@ module ApplicationHelper
       when "acousticness" then acoustic_map.fetch(acoustic_value(value))
       when "danceability" then danceability_map.fetch(danceability_value(value))
       when "instrumentalness" then instrumentalness_map.fetch(instrumentalness_value(value))
-      #when "days_ago_filter", "plays_filter", "bpm_filter", "duration_filter" then filter_map.fetch(value)
-      #when "danceability" then danceability_map.fetch(value)
-      #else value.to_s.split('_').map(&:capitalize).join(' ')
       end
-      #formatted_value = value.to_s.split('_').map(&:capitalize).join(' ')
-      "#{label}: #{formatted_value}" 
+      "<b>#{label}:</b> #{formatted_value}" 
     end.join(' - ')
 
     if output.blank?
@@ -131,7 +127,7 @@ module ApplicationHelper
   def valence_value(value)
     case value
     when 0.0..0.5 then 0
-    when 0.51..1.0 then 1
+    when 0.501..1.0 then 1
     end
   end
 
