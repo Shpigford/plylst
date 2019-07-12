@@ -5995,9 +5995,9 @@ a.close.disabled {
     line-break: auto;
     font-size: .8125rem;
     word-wrap: break-word;
-    background-color: #152e4d;
+    background-color: white;
     background-clip: padding-box;
-    border: 1px solid #12263f;
+    border: 1px solid white;
     border-radius: .5rem
 }
 
@@ -6063,14 +6063,14 @@ a.close.disabled {
 .bs-popover-right>.arrow:before {
     left: 0;
     border-width: .5rem .5rem .5rem 0;
-    border-right-color: #12263f
+    border-right-color: white
 }
 
 .bs-popover-auto[x-placement^=right]>.arrow:after,
 .bs-popover-right>.arrow:after {
     left: 1px;
     border-width: .5rem .5rem .5rem 0;
-    border-right-color: #152e4d
+    border-right-color: white
 }
 
 .bs-popover-auto[x-placement^=bottom],
@@ -6087,14 +6087,14 @@ a.close.disabled {
 .bs-popover-bottom>.arrow:before {
     top: 0;
     border-width: 0 .5rem .5rem;
-    border-bottom-color: #12263f
+    border-bottom-color: white
 }
 
 .bs-popover-auto[x-placement^=bottom]>.arrow:after,
 .bs-popover-bottom>.arrow:after {
     top: 1px;
     border-width: 0 .5rem .5rem;
-    border-bottom-color: #152e4d
+    border-bottom-color: white
 }
 
 .bs-popover-auto[x-placement^=bottom] .popover-header:before,
@@ -6106,7 +6106,7 @@ a.close.disabled {
     width: 1rem;
     margin-left: -.5rem;
     content: "";
-    border-bottom: 1px solid #152e4d
+    border-bottom: 1px solid white
 }
 
 .bs-popover-auto[x-placement^=left],
@@ -6126,22 +6126,23 @@ a.close.disabled {
 .bs-popover-left>.arrow:before {
     right: 0;
     border-width: .5rem 0 .5rem .5rem;
-    border-left-color: #12263f
+    border-left-color: white
 }
 
 .bs-popover-auto[x-placement^=left]>.arrow:after,
 .bs-popover-left>.arrow:after {
     right: 1px;
     border-width: .5rem 0 .5rem .5rem;
-    border-left-color: #152e4d
+    border-left-color: white
 }
 
 .popover-header {
     padding: 0;
     margin-bottom: 0;
+    color: #12263f;
     font-size: .9375rem;
-    background-color: #152e4d;
-    border-bottom: 1px solid #102239;
+    background-color: white;
+    border-bottom: 1px solid white;
     border-top-left-radius: calc(.5rem - 1px);
     border-top-right-radius: calc(.5rem - 1px)
 }

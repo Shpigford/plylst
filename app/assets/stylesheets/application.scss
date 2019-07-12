@@ -11,6 +11,22 @@
   align-items: center;
 }
 
+.popover {
+  max-width: 25%;
+}
+
+[data-toggle="popover"]{
+  .fa-info-circle {
+    opacity: 0.2;
+  }
+  &:hover {
+    cursor: pointer;
+    .fa-info-circle {
+      opacity: 1;
+    }
+  }
+}
+
 .query-builder {
   width: 100%!important;
   display: block!important;

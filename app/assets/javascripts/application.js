@@ -14,6 +14,7 @@
 //= require activestorage
 //= require turbolinks
 //= require jquery3
+//= require tooltip
 //= require popper
 //= require bootstrap-sprockets
 //= require extendext
@@ -22,6 +23,12 @@
 
 
 $(document).on('turbolinks:load', function() {
+  $(function () {
+    $('[data-toggle="popover"]').popover({
+      
+    })
+  })
+
   var rules_basic = {};
 
   const template = {
