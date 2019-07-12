@@ -29,6 +29,25 @@ module ApplicationHelper
       11 => "B",
     }
 
+    mode_map = {
+      0 => "Minor",
+      1 => "Major",
+    }
+
+    energy_map = {
+      0 => "Low",
+      1 => "Medium",
+      2 => "High",
+      3 => "Insane",
+    }
+
+    valence_map = {
+      0 => "Negative",
+      1 => "Positive",
+      2 => "NIL"
+    }
+
+
     danceability_map = {
       0 => "Not at all",
       1 => "A little",
@@ -39,13 +58,18 @@ module ApplicationHelper
     }
 
     output = variable_hash.delete_if { |k, v| v.blank? }.map do |key, value| 
-      label = "#{key.split('_').map(&:capitalize).join(' ')}"
+      label = "#{key.split('_').map(&:capitalize).join(' ').gsub('Tempo', 'BPM').gsub('Valence', 'Mood')}"
       formatted_value = case key
-      when "days_ago_filter", "plays_filter", "bpm_filter", "duration_filter" then filter_map.fetch(value)
       when "key" then musical_key_map.fetch(value)
-      when "danceability" then danceability_map.fetch(value)
-      else value.to_s.split('_').map(&:capitalize).join(' ')
+      when "mode" then mode_map.fetch(value)
+      when "tempo" then value.to_i
+      when "energy" then energy_map.fetch(energy_value(value))
+      when "valence" then valence_map.fetch(valence_value(value))
+      #when "days_ago_filter", "plays_filter", "bpm_filter", "duration_filter" then filter_map.fetch(value)
+      #when "danceability" then danceability_map.fetch(value)
+      #else value.to_s.split('_').map(&:capitalize).join(' ')
       end
+      #formatted_value = value.to_s.split('_').map(&:capitalize).join(' ')
       "#{label}: #{formatted_value}" 
     end.join(' - ')
 
@@ -53,6 +77,23 @@ module ApplicationHelper
       output = "No variables set"
     else
       output
+    end
+  end
+
+  def energy_value(value)
+    case value
+    when 0.0..0.250 then 0
+    when 0.251..0.500 then 1
+    when 0.501..0.750 then 2
+    when 0.751..1.0 then 3
+    end
+  end
+
+  def valence_value(value)
+    case value
+    when 0.0..0.5 then 0
+    when 0.51..1.0 then 1
+    else 2
     end
   end
 end
