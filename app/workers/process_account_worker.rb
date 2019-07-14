@@ -15,7 +15,7 @@ class ProcessAccountWorker
           tracks = spotify.saved_tracks(limit: 50, offset: n)
         rescue RestClient::Forbidden => e
           # Deactivate user if we don't have the right permissions
-          user.update_attribute(:active, false)
+          # user.update_attribute(:active, false)
         end
 
         if tracks.present?
