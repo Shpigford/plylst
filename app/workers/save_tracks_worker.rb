@@ -24,7 +24,6 @@ class SaveTracksWorker
 
       # Looop through the returned tracks
       spotify_tracks.each do |spotify_track|
-
         # Search to see if the track already exists, if it does not, initialize a new object based on the Spotify ID
         track = Track.where(spotify_id: spotify_track.id).first_or_initialize(spotify_id: spotify_track.id)
 
@@ -64,20 +63,32 @@ class SaveTracksWorker
           track.preview_url = spotify_track.preview_url
           track.save
         end
+      end
 
-        # If this worker was called with 'added', we're adding these tracks to the User's library as a track they have saved/followed
-        # So, we need to check for that in the Follow table and update accordingly
-        if kind == 'added'
+      # Build the "audio features" for new tracks
+      AudioFeaturesWorker.perform_async(audio_feature_ids)
+    end
+
+
+    # If this worker was called with 'added', we're adding these tracks to the User's library as a track they have saved/followed
+    # So, we need to check for that in the Follow table and update accordingly
+    if kind == 'added'
+      # Make the Spotify API call to get all of the tracks
+      spotify_tracks = RSpotify::Track.find(track_ids)
+
+      # Looop through the returned tracks
+      spotify_tracks.each do |spotify_track|
+        track = Track.find_by(spotify_id: spotify_track.id)
+
+        if track.present?
           user.tracks << track unless Follow.where(user: user, track: track).present?
           follow = Follow.where(user: user, track: track).first
           added_at = tracks_with_date.select{|(x, y)| x == spotify_track.id}.first[1].to_time
           follow.update_attribute(:added_at, added_at)
         end
       end
-
-      # Build the "audio features" for new tracks
-      AudioFeaturesWorker.perform_async(audio_feature_ids)
     end
+
 
     # If this track was created from the "RecentlyStreamedWorker" worker, be sure to add that stream
     if kind == 'streamed'
