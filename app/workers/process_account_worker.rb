@@ -11,12 +11,12 @@ class ProcessAccountWorker
       track_ids = Array.new
       
       (0..1000000000).step(50) do |n|
-        begin
+        #begin
           tracks = spotify.saved_tracks(limit: 50, offset: n)
-        rescue RestClient::Forbidden => e
+        #rescue RestClient::Forbidden => e
           # Deactivate user if we don't have the right permissions
           # user.update_attribute(:active, false)
-        end
+        #end
 
         if tracks.present?
           tracks_added_at = spotify.tracks_added_at
