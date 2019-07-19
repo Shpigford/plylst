@@ -25,7 +25,8 @@ class RemoveTracksWorker
         removed_tracks.each do |removed_track|
           track = Track.find_by(spotify_id: removed_track[0])
           
-          user.follows.find_by(track: track).update_attribute(:active, false)
+          followed_track = user.follows.find_by(track: track)
+          followed_track.update_attribute(:active, false) if followed_track.present?
         end
       end
     end
