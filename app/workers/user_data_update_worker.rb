@@ -22,4 +22,4 @@ end
 
 # Sidekiq::Cron::Job.create(name: 'Update User Data: Regularly', cron: '*/30 * * * *', class: 'UserDataUpdateWorker', args: ['hourly'])
 
-# Sidekiq::Cron::Job.create(name: 'Update User Data: Daily', cron: '0 18 * * *', class: 'UserDataUpdateWorker', args: ['daily'])
+# Sidekiq::Cron::Job.create(name: 'Update User Data: Daily', cron: '0 */2 * * *', class: 'UserDataUpdateWorker', args: ['daily'])
