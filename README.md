@@ -44,4 +44,4 @@ But almost any contribution will be beneficial at this point.
 If you've got an improvement, just send in a pull request. If you've got feature ideas, simply [open a new issues](https://github.com/Shpigford/plylst/issues/new)!
 
 ## License & Copyright
-Released under the MIT license, see the [LICENSE](./LICENSE) file. Copyright (c) Sabotage Media LLC. 
+Released under the MIT license, see the [LICENSE](./LICENSE) file. Copyright (c) Sabotage Media LLC.
