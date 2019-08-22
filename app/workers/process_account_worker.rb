@@ -12,7 +12,7 @@ class ProcessAccountWorker
       
       (0..1000000000).step(50) do |n|
         begin
-            tracks = spotify.saved_tracks(limit: 50, offset: n)
+          tracks = spotify.saved_tracks(limit: 50, offset: n)
         rescue RestClient::BadGateway => e
           break
         end
