@@ -280,6 +280,10 @@ class Playlist < ApplicationRecord
         tracks = tracks.order("follows.added_at DESC NULLS LAST") if full_catalog.blank?
       when 'least_recently_added'
         tracks = tracks.order("follows.added_at ASC NULLS LAST") if full_catalog.blank?
+      when 'release_date_desc'
+        tracks = tracks.joins(:album).order("albums.release_date DESC")
+      when 'release_date_asc'
+        tracks = tracks.joins(:album).order("albums.release_date ASC")
       end
     end
 
