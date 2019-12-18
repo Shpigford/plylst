@@ -8,14 +8,14 @@ namespace :maintenance do
   end
 
   desc "Pull lyrics: 0 3 * * *"
-  task :get_tracks => :environment do
+  task :get_lyrics => :environment do
     Track.where(lyrics: nil).find_each do |track|
       GetLyricsWorker.set(queue: :slow).perform_async(track.id) if track.lyrics.blank?
     end
   end
 
   desc "Update user data regularly: */30 * * * *"
-  task :get_tracks => :environment do
+  task :update_data_regular => :environment do
     User.active.find_each do |user|
       UpdatePlayDataWorker.set(queue: :slow).perform_async(user.id)
       RecentlyStreamedWorker.set(queue: :slow).perform_async(user.id)
@@ -24,7 +24,7 @@ namespace :maintenance do
   end
 
   desc "Update user data daily: 0 */2 * * *"
-  task :get_tracks => :environment do
+  task :update_data_daily => :environment do
     User.active.find_each do |user|
       ProcessAccountWorker.set(queue: :slow).perform_async(user.id)
       BuildPlaylistsWorker.set(queue: :slow).perform_async(user.id)
