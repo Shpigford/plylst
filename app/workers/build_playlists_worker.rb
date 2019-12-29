@@ -18,12 +18,14 @@ class BuildPlaylistsWorker
 
       user.playlists.find_each do |playlist|
 
-        if playlist.auto_update.present?
+        
           if spotify_playlists.present?
             existing_playlist = spotify_playlists.select{|key| key.name == "PLYLST: #{playlist.name}"}
           else
             existing_playlist = nil
           end
+
+          total = 0
 
           if existing_playlist.present?
             existing_playlist = RSpotify::Playlist.find(spotify.id, existing_playlist.first.id)
@@ -32,7 +34,9 @@ class BuildPlaylistsWorker
             total = existing_playlist.total
             times_to_loop = (total.to_f / 100).ceil
 
-            times_to_loop.times { existing_playlist.remove_tracks!(existing_playlist.tracks) }
+            if total <= 0 or playlist.auto_update.present?
+              times_to_loop.times { existing_playlist.remove_tracks!(existing_playlist.tracks) }
+            end
             existing_playlist.change_details!(description: "Created with PLYLST.app!")
           else
             existing_playlist = spotify.create_playlist!("PLYLST: #{playlist.name}")
@@ -41,13 +45,12 @@ class BuildPlaylistsWorker
           tracks = playlist.filtered_tracks(user).pluck(:spotify_id)
           tracks_formatted = tracks.map{|x| x.prepend('spotify:track:')}
 
-          # Divide tracks in to groups of 100, due to Spotify API limit
-          tracks_formatted.each_slice(100) do |group|
-            existing_playlist.add_tracks!(group)
+          if total <= 0 or playlist.auto_update.present?
+            # Divide tracks in to groups of 100, due to Spotify API limit
+            tracks_formatted.each_slice(100) do |group|
+              existing_playlist.add_tracks!(group)
+            end
           end
-        end
-
-
       end
     end
   end
