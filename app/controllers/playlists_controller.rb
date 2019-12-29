@@ -50,6 +50,6 @@ class PlaylistsController < ApplicationController
 
   private
     def playlist_params
-      params.require(:playlist).permit(:name, :limit, :sort, :full_catalog, filters: {})
+      params.require(:playlist).permit(:name, :limit, :sort, :full_catalog, :auto_update, filters: {})
     end
 end
