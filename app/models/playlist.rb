@@ -423,7 +423,17 @@ class Playlist < ApplicationRecord
     when "release_date"
       "#{value[0].to_date.strftime("%b %d, %Y")} and #{value[1].to_date.strftime("%b %d, %Y")}"
     when "duration"
-      "#{value[0]} and #{value[1]} seconds"
+      if value[0] && value[1]
+        "#{value[0]} and #{value[1]} seconds"
+      else
+        value
+      end
+    when "bpm"
+      if value[0] && value[1]
+        "#{value[0]} and #{value[1]}"
+      else
+        value
+      end
     when "explicit"
       case value
       when 0
