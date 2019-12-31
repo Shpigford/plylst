@@ -139,9 +139,9 @@ class Playlist < ApplicationRecord
     if full_catalog.blank?
       find_rule(rules, 'last_played_days_ago').try do |rule|
         if rule['operator'] == 'less'
-          tracks = tracks.where('last_played_at < ?', rule['value'].days.ago).order('last_played_at ASC')
+          tracks = tracks.where('follows.last_played_at < ?', rule['value'].days.ago).order('follows.last_played_at ASC')
         else
-          tracks = tracks.where('last_played_at > ?', rule['value'].days.ago).order('last_played_at DESC')
+          tracks = tracks.where('follows.last_played_at > ?', rule['value'].days.ago).order('follows.last_played_at DESC')
         end
       end
     end
@@ -299,5 +299,153 @@ class Playlist < ApplicationRecord
 
   def build_spotify_playlist
     BuildPlaylistsWorker.perform_async(self.user.id)
+  end
+
+  def translated_rules
+    filters['rules'].to_a.map { |item| "#{translate_field(item['field'])} #{translate_operator(item['operator'])} #{translate_value(item['field'], item['value'])}" }.join(", ")
+  end
+
+  def translate_field(field)
+    if field == 'bpm'
+      "BPM"
+    else
+      field = field.gsub("_", " ")
+      field.titleize
+    end
+  end
+
+  def translate_operator(operator)
+    case operator
+    when "equal"
+      "is"
+    when "between"
+      "is between"
+    when "less"
+      "is less than"
+    when "greater"
+      "is greater than"
+    when "in"
+      "include"
+    else
+      operator
+    end
+  end
+
+  def translate_value(field, value)
+    case field
+    when "acousticness"
+      case value
+      when 0 # Not at all
+        "Not at all"
+      when 1 # Somewhat
+        "Somewhat"
+      when 2 # Likely
+        "Likely"
+      when 3 # Very likely
+        "Very likely"
+      end
+    when "danceability"
+      case value
+      when 0 # Not at all
+        "Not at all"
+      when 1 # A little
+        "A little"
+      when 2 # Somewhat
+        "Somewhat"
+      when 3 # Moderately
+        "Moderately"
+      when 4 # Very
+        "Very"
+      when 5 # Super
+        "Super"
+      end
+    when "key"
+      case value
+      when 0
+        "C"
+      when 1
+        "C♯, D♭"
+      when 2
+        "D"
+      when 3
+        "D♯, E♭"
+      when 4
+        "E"
+      when 5
+        "F"
+      when 6
+        "F♯, G♭"
+      when 7
+        "G"
+      when 8
+        "G♯, A♭"
+      when 9
+        "A"
+      when 10
+        "A♯, B♭"
+      when 11
+        "B"
+      end
+    when "valence"
+      case value
+      when 0 
+        "Negative (sad, depressed, angry)"
+      when 1
+        "Positive (happy, cheerful, euphoric)"
+      end
+    when "energy"
+      case value
+      when 0 
+        "Low"
+      when 1
+        "Medium"
+      when 2
+        "High"
+      when 3 
+        "Insane"
+      end
+    when "instrumentalness"
+      case value
+      when 0 
+        "No"
+      when 1
+        "Yes"
+      end
+    when "speechiness"
+      case value
+      when 0 
+        "No"
+      when 1
+        "Yes"
+      end
+    when "release_date"
+      "#{value[0].to_date.strftime("%b %d, %Y")} and #{value[1].to_date.strftime("%b %d, %Y")}"
+    when "duration"
+      "#{value[0]} and #{value[1]} seconds"
+    when "explicit"
+      case value
+      when 0
+        "excluded"
+      when 1
+        "included"
+      end
+    when "mode"
+      case value
+      when 0
+        "Minor"
+      when 1
+        "Major"
+      end
+    when "artist_name"
+      "'#{value}'"
+    when "lyrics"
+      "'#{value}'"
+    when "track_name"
+      "'#{value}'"
+    when "genres"
+      "'#{value.join(', ')}'"
+    else
+      value
+    end
   end
 end

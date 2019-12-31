@@ -37,7 +37,7 @@ class BuildPlaylistsWorker
             if total <= 0 or playlist.auto_update.present?
               times_to_loop.times { existing_playlist.remove_tracks!(existing_playlist.tracks) }
             end
-            existing_playlist.change_details!(description: "Created with PLYLST.app!", public: playlist.public)
+            existing_playlist.change_details!(description: "Created with PLYLST.app! #{playlist.translated_rules}.", public: playlist.public)
           else
             existing_playlist = spotify.create_playlist!("PLYLST: #{playlist.name}", public: playlist.public)
           end
