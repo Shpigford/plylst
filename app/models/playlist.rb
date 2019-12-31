@@ -421,7 +421,7 @@ class Playlist < ApplicationRecord
         "Yes"
       end
     when "release_date"
-      "#{value[0].to_date.strftime("%b %d, %Y")} and #{value[1].to_date.strftime("%b %d, %Y")}"
+      "#{value[0].to_date.strftime("%b %-d, %Y")} and #{value[1].to_date.strftime("%b %-d, %Y")}"
     when "duration"
       if value[0] && value[1]
         "#{value[0]} and #{value[1]} seconds"
