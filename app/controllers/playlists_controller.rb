@@ -23,7 +23,11 @@ class PlaylistsController < ApplicationController
   def show
     @playlist = current_user.playlists.find(params[:id])
 
-    @tracks = @playlist.filtered_tracks(current_user).includes(:album, :artist, :follows).limit(250)
+    @tracks = @playlist.filtered_tracks(current_user).includes(:album, :artist, :follows)
+
+    if @playlist.limit.to_i > 250 or @playlist.limit.to_i === 0
+      @tracks = @tracks.limit(250)
+    end
   end
 
   def edit
