@@ -439,7 +439,7 @@ class Playlist < ApplicationRecord
         "Major"
       end
     when "artist_name"
-      "'#{value}'"
+      "'#{value.gsub("|", " or ")}'"
     when "lyrics"
       "'#{value}'"
     when "track_name"
