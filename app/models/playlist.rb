@@ -326,6 +326,8 @@ class Playlist < ApplicationRecord
       "is greater than"
     when "in"
       "include"
+    when "not_contains"
+      "does not contain"
     else
       operator
     end
