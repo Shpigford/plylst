@@ -288,7 +288,7 @@ class Playlist < ApplicationRecord
     end
 
     # LIMIT
-    if limit.present?
+    if limit.present? and limit < 10000
       tracks = tracks.limit(limit)
     else
       tracks = tracks.limit(1000)
