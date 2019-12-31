@@ -423,13 +423,13 @@ class Playlist < ApplicationRecord
     when "release_date"
       "#{value[0].to_date.strftime("%b %-d, %Y")} and #{value[1].to_date.strftime("%b %-d, %Y")}"
     when "duration"
-      if value.is_a?
+      if value.is_a?(Array)
         "#{value[0]} and #{value[1]} seconds"
       else
         value
       end
     when "bpm"
-      if value.is_a?
+      if value.is_a?(Array)
         "#{value[0]} and #{value[1]}"
       else
         value
