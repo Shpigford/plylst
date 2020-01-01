@@ -6,19 +6,19 @@
         <div class="header mt-md-5">
           <div class="header-body">
             <div class="row align-items-center">
-              <div class="col-10">
+              <div class="col-12">
                 <h6 class="header-pretitle">Playlist</h6>
-                <h1 class="header-title"><%= @playlist.name %> <small><%= link_to "Edit", edit_playlist_path(@playlist) %> </small></h1>
+                <h1 class="header-title"><%= @playlist.name %> <small class="actions"><%= link_to "Edit", edit_playlist_path(@playlist), class: 'btn btn-sm btn-primary' %> <%= link_to 'Delete', playlist_path(@playlist), :class => "btn-danger btn btn-sm", :method => :delete, :data => {:confirm => 'Are you sure you want to delete this playlist?'} %> </small></h1>
                 <% if @playlist.translated_rules.present? %>
                 <h4><%= @playlist.translated_rules %></h4>
                 <% end %>
               </div>
-              <div class="col-2 text-right">
-                <small><%= link_to 'Delete playlist', playlist_path(@playlist), :class => "text-danger", :method => :delete, :data => {:confirm => 'Are you sure?'} %></small>
-              </div>
             </div>
           </div>
         </div>
+
+
+
 
         <div class="card">
           <div class="table-responsive">
