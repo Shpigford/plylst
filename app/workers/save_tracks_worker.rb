@@ -100,15 +100,26 @@ class SaveTracksWorker
     if kind == 'streamed'
       # Make the Spotify API call to get all of the tracks
       spotify_tracks = RSpotify::Track.find(track_ids)
-      follows = Follow.where(user: user, track: Track.where(spotify_id: spotify_tracks.map(&:id)))
+      follows = Follow.includes(:tracks).where(user: user, track: Track.where(spotify_id: spotify_tracks.map(&:id)))
 
-      # Looop through the follows
-      follows.each do |follow|
-        streams = tracks_with_date.select{|(x, y)| x == track.spotify_id}
-        streams.each do |stream|
+      # build a values list for our insert
+      now = Time.now
+      values = follows.map do |follow|
+        streams = tracks_with_date.select{|(x, y)| x == follow.track.spotify_id}
+        streams.map do |stream|
           time = stream[1].to_time
-          Stream.find_or_create_by(user: user, track: track, played_at: time)
+          "(#{user.id}, #{follow.track.id}, '#{time}', '#{now}', '#{now}')"
         end
+      end.flatten
+
+      insert_query = """
+        INSERT INTO streams (user_id, follow_id, played_at, created_at, updated_at)
+        VALUES #{values.join(',')}
+        ON CONFLICT DO NOTHING
+      """
+
+      ActiveRecord::Base.connection_pool.with_connection do |conn|
+        conn.exec_sql(insert_query)
       end
     end
   end
