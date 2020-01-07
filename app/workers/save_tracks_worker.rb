@@ -80,10 +80,11 @@ class SaveTracksWorker
         track = tracks.find{|a| a.spotify_id == spotify_track.id}
 
         if track.present?
-          user.tracks << track unless Follow.where(user: user, track: track).present?
-          follow = Follow.where(user: user, track: track).first
-          added_at = tracks_with_date.select{|(x, y)| x == spotify_track.id}.first[1].to_time
-          follow.update_attribute(:added_at, added_at)
+          begin
+            added_at = tracks_with_date.select{|(x, y)| x == spotify_track.id}.first[1].to_time
+            Follow.create(user: user, track: track, added_at: added_at)
+          rescue
+          end
         end
       end
     end
