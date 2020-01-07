@@ -8,7 +8,7 @@ class CheckTracksWorker
       track_ids = user.tracks.where('follows.active = ?', true).pluck(:spotify_id)
 
       track_ids.each_slice(50) do |slice|
-        RemoveTracksWorker.perform_async(user_id, slice)
+        RemoveTracksWorker.set(queue: :slow).perform_async(user_id, slice)
       end
     end
   end
