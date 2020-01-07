@@ -14,8 +14,17 @@ class SaveTracksWorker
     end
 
     # Let's do a quick call to see what tracks already exist so we don't unecessarily process existing tracks
-    existing_ids = Track.where(spotify_id: track_ids).pluck(:spotify_id)
-    missing_ids = (track_ids - existing_ids).uniq
+    spotify_id_values = track_ids.map {|t| "('#{t}')"}.join(',')
+    missing_ids = ActiveRecord::Base.connection_pool.with_connection do |conn|
+      conn.execute("""
+        SELECT
+          track_id
+        FROM
+          (VALUES #{spotify_id_values}) AS track_ids(track_id)
+        WHERE
+          track_id NOT IN (SELECT spotify_id FROM tracks)
+      """).map {|row| row['track_id']}
+    end
 
     # If there are no missing IDs, STOP THAT JUNK
     if missing_ids.present?
@@ -25,7 +34,7 @@ class SaveTracksWorker
       # Looop through the returned tracks
       spotify_tracks.each do |spotify_track|
         # Search to see if the track already exists, if it does not, initialize a new object based on the Spotify ID
-        track = Track.where(spotify_id: spotify_track.id).first_or_initialize(spotify_id: spotify_track.id)
+        track = Track.first_or_initialize(spotify_id: spotify_track.id)
 
         # If it's a new track record, do this
         if track.new_record?
@@ -76,16 +85,13 @@ class SaveTracksWorker
       # Make the Spotify API call to get all of the tracks
       spotify_tracks = RSpotify::Track.find(track_ids)
 
-      # Looop through the returned tracks
-      spotify_tracks.each do |spotify_track|
-        track = Track.find_by(spotify_id: spotify_track.id)
+      tracks = Track.where(spotify_id: spotify_tracks.map(&:id))
 
-        if track.present?
-          user.tracks << track unless Follow.where(user: user, track: track).present?
-          follow = Follow.where(user: user, track: track).first
-          added_at = tracks_with_date.select{|(x, y)| x == spotify_track.id}.first[1].to_time
-          follow.update_attribute(:added_at, added_at)
-        end
+      # Looop through the returned tracks
+      tracks.each do |track|
+        follow = user.follows.find_or_create_by(track: track)
+        added_at = tracks_with_date.select{|(x, y)| x == track.spotify_id}.first[1].to_time
+        follow.update_attribute(:added_at, added_at)
       end
     end
 
@@ -94,26 +100,14 @@ class SaveTracksWorker
     if kind == 'streamed'
       # Make the Spotify API call to get all of the tracks
       spotify_tracks = RSpotify::Track.find(track_ids)
+      follows = Follow.where(user: user, track: Track.where(spotify_id: spotify_tracks.map(&:id)))
 
-      # Looop through the returned tracks
-      spotify_tracks.each do |spotify_track|
-        track = Track.find_by(spotify_id: spotify_track.id)
-
-        if track.present?
-          follow = Follow.where(user: user, track: track).first
-
-          if follow
-            streams = tracks_with_date.select{|(x, y)| x == spotify_track.id}
-
-            streams.each do |stream|
-              time = stream[1].to_time
-              stream = Stream.where(user: user, track: track, played_at: time).first_or_initialize(played_at: time)
-
-              if stream.new_record?
-                stream.save
-              end
-            end
-          end
+      # Looop through the follows
+      follows.each do |follow|
+        streams = tracks_with_date.select{|(x, y)| x == track.spotify_id}
+        streams.each do |stream|
+          time = stream[1].to_time
+          Stream.find_or_create_by(user: user, track: track, played_at: time)
         end
       end
     end
