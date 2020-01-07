@@ -105,11 +105,7 @@ class SaveTracksWorker
 
           streams.each do |stream|
             time = stream[1].to_time
-            stream = Stream.where(user: user, track: track, played_at: time).first_or_initialize(played_at: time)
-
-            if stream.new_record?
-              stream.save
-            end
+            Stream.create(user: user, track: track, played_at: time)
           end
         end
       end
