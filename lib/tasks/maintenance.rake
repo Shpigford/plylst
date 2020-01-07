@@ -18,8 +18,14 @@ namespace :maintenance do
   task :update_data_regular => :environment do
     User.active.find_each do |user|
       UpdatePlayDataWorker.set(queue: :slow).perform_async(user.id)
-      RecentlyStreamedWorker.set(queue: :slow).perform_async(user.id)
       BuildUserGenresWorker.set(queue: :slow).perform_async(user.id)
+    end
+  end
+
+  desc "Update user data every 2 hours: 0 */2 * * *"
+  task :update_data_2_hours => :environment do
+    User.active.find_each do |user|
+      RecentlyStreamedWorker.set(queue: :slow).perform_async(user.id)
     end
   end
 
