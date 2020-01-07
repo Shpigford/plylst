@@ -24,45 +24,43 @@ class SaveTracksWorker
 
       # Looop through the returned tracks
       spotify_tracks.each do |spotify_track|
-        # Search to see if the track already exists, if it does not, initialize a new object based on the Spotify ID
-        track = Track.where(spotify_id: spotify_track.id).first_or_initialize(spotify_id: spotify_track.id)
+        # Initialize a new object based on the Spotify ID
+        track = Track.new(spotify_id: spotify_track.id)
+        
+        spotify_artist = spotify_track.artists.first
+        audio_feature_ids.push(spotify_track.id)
 
-        # If it's a new track record, do this
-        if track.new_record?
-          spotify_artist = spotify_track.artists.first
-          audio_feature_ids.push(spotify_track.id)
+        # Search to see if the artist for the track already exists, if it does not, initialize a new object
+        artist = Artist.where(spotify_id: spotify_artist.id).first_or_initialize(spotify_id: spotify_artist.id)
 
-          # Search to see if the artist for the track already exists, if it does not, initialize a new object
-          artist = Artist.where(spotify_id: spotify_artist.id).first_or_initialize(spotify_id: spotify_artist.id)
-
-          # If it's a new artist record, save the initialized new object and spin off a separate worker to build the artist
-          if artist.new_record?
-            artist.save
-            BuildArtistWorker.perform_async(artist.id)
-          end
-
-          # Search to see if the album for the track already exists, if it does not, initialize a new object
-          spotify_album = spotify_track.album
-          album = Album.where(spotify_id: spotify_album.id).first_or_initialize(spotify_id: spotify_album.id)
-
-          # If it's a new album record, save the initialized new object and spin off a separate worker to build the album
-          if album.new_record?
-            album.artist = artist
-            album.save
-            BuildAlbumWorker.perform_async(album.id)
-          end
-
-          # Fill in the data for the track and save it
-          track.artist = artist
-          track.album = album
-          track.duration = spotify_track.duration_ms
-          track.explicit = spotify_track.explicit
-          track.link = spotify_track.external_urls['spotify']
-          track.name = spotify_track.name
-          track.popularity = spotify_track.popularity
-          track.preview_url = spotify_track.preview_url
-          track.save
+        # If it's a new artist record, save the initialized new object and spin off a separate worker to build the artist
+        if artist.new_record?
+          artist.save
+          BuildArtistWorker.perform_async(artist.id)
         end
+
+        # Search to see if the album for the track already exists, if it does not, initialize a new object
+        spotify_album = spotify_track.album
+        album = Album.where(spotify_id: spotify_album.id).first_or_initialize(spotify_id: spotify_album.id)
+
+        # If it's a new album record, save the initialized new object and spin off a separate worker to build the album
+        if album.new_record?
+          album.artist = artist
+          album.save
+          BuildAlbumWorker.perform_async(album.id)
+        end
+
+        # Fill in the data for the track and save it
+        track.artist = artist
+        track.album = album
+        track.duration = spotify_track.duration_ms
+        track.explicit = spotify_track.explicit
+        track.link = spotify_track.external_urls['spotify']
+        track.name = spotify_track.name
+        track.popularity = spotify_track.popularity
+        track.preview_url = spotify_track.preview_url
+        track.save
+
       end
 
       # Build the "audio features" for new tracks
@@ -75,10 +73,11 @@ class SaveTracksWorker
     if kind == 'added'
       # Make the Spotify API call to get all of the tracks
       spotify_tracks = RSpotify::Track.find(track_ids)
+      tracks = Track.where(spotify_id: track_ids)
 
       # Looop through the returned tracks
       spotify_tracks.each do |spotify_track|
-        track = Track.find_by(spotify_id: spotify_track.id)
+        track = tracks.find{|a| a.spotify_id == spotify_track.id}
 
         if track.present?
           user.tracks << track unless Follow.where(user: user, track: track).present?
@@ -94,10 +93,11 @@ class SaveTracksWorker
     if kind == 'streamed'
       # Make the Spotify API call to get all of the tracks
       spotify_tracks = RSpotify::Track.find(track_ids)
+      tracks = Track.where(spotify_id: track_ids)
 
       # Looop through the returned tracks
       spotify_tracks.each do |spotify_track|
-        track = Track.find_by(spotify_id: spotify_track.id)
+        track = tracks.find{|a| a.spotify_id == spotify_track.id}
 
         if track.present?
           follow = Follow.where(user: user, track: track).first
