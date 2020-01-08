@@ -13,6 +13,11 @@ class ProcessAccountWorker
       (0..1000000000).step(50) do |n|
         begin
           tracks = spotify.saved_tracks(limit: 50, offset: n)
+        rescue RestClient::Unauthorized => e
+          user.increment!(:authorization_fails)
+
+          # Deactivate user if we don't have the right permissions and if their authorization has failed a crap ton of times
+          # user.update_attribute(:active, false) if user.authorization_fails > 10
         rescue RestClient::BadGateway => e
           break
         end

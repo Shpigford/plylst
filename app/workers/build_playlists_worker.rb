@@ -14,6 +14,11 @@ class BuildPlaylistsWorker
       begin
         spotify_playlists = spotify.playlists(limit:50)
       rescue RestClient::NotFound => e
+      rescue RestClient::Unauthorized => e
+        user.increment!(:authorization_fails)
+
+        # Deactivate user if we don't have the right permissions and if their authorization has failed a crap ton of times
+        # user.update_attribute(:active, false) if user.authorization_fails > 10
       end
 
       user.playlists.find_each do |playlist|
