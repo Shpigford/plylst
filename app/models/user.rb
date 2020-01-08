@@ -29,7 +29,7 @@ class User < ApplicationRecord
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :rememberable, :trackable, :omniauthable, omniauth_providers: %i[spotify]
+  devise :rememberable, :trackable, :omniauthable, :timeoutable, omniauth_providers: %i[spotify]
 
   serialize :settings
 
