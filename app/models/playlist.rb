@@ -24,18 +24,18 @@ class Playlist < ApplicationRecord
     # TRACK NAME
     find_rule(rules, 'track_name').try do |rule|
       if rule['operator'] == 'contains'
-        tracks = tracks.where('tracks.name ~* ?', rule['value'])
+        tracks = tracks.where('tracks.name ~* ?', rule['value'].gsub('$', '\$'))
       elsif rule['operator'] == 'not_contains'
-        tracks = tracks.where('tracks.name !~* ?', rule['value'])
+        tracks = tracks.where('tracks.name !~* ?', rule['value'].gsub('$', '\$'))
       end
     end
     
     # ARTIST NAME
     find_rule(rules, 'artist_name').try do |rule|
       if rule['operator'] == 'contains'
-        tracks = tracks.joins(:artist).where('artists.name ~* ?', rule['value'])
+        tracks = tracks.joins(:artist).where('artists.name ~* ?', rule['value'].gsub('$', '\$'))
       elsif rule['operator'] == 'not_contains'
-        tracks = tracks.joins(:artist).where('artists.name !~* ?', rule['value'])
+        tracks = tracks.joins(:artist).where('artists.name !~* ?', rule['value'].gsub('$', '\$'))
       end
     end
 
