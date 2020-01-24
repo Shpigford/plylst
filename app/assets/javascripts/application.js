@@ -102,7 +102,14 @@ $(document).on("turbolinks:load", function() {
           id: "track_name",
           label: "Track Name",
           type: "string",
-          operators: ["equal", "not_equal", "contains", "not_contains"],
+          operators: [
+            "equal",
+            "not_equal",
+            "contains",
+            "not_contains",
+            "begins_with",
+            "ends_with"
+          ],
           unique: true,
           description: "Text the track name contains"
         },
@@ -110,7 +117,14 @@ $(document).on("turbolinks:load", function() {
           id: "artist_name",
           label: "Artist Name",
           type: "string",
-          operators: ["equal", "not_equal", "contains", "not_contains"],
+          operators: [
+            "equal",
+            "not_equal",
+            "contains",
+            "not_contains",
+            "begins_with",
+            "ends_with"
+          ],
           unique: true,
           description: "Text the artist name contains"
         },

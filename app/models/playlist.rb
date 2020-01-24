@@ -28,9 +28,13 @@ class Playlist < ApplicationRecord
       elsif rule['operator'] == 'not_contains'
         tracks = tracks.where('tracks.name !~* ?', rule['value'].gsub('$', '\$'))
       elsif rule['operator'] == 'equal'
-        tracks = tracks.joins(:artist).where('tracks.name = ?', rule['value'].gsub('$', '\$'))
+        tracks = tracks.where('tracks.name = ?', rule['value'].gsub('$', '\$'))
       elsif rule['operator'] == 'not_equal'
-        tracks = tracks.joins(:artist).where('tracks.name != ?', rule['value'].gsub('$', '\$'))
+        tracks = tracks.where('tracks.name != ?', rule['value'].gsub('$', '\$'))
+      elsif rule['operator'] == 'begins_with'
+        tracks = tracks.where('tracks.name ILIKE ?', rule['value'].gsub('$', '\$') + '%')
+      elsif rule['operator'] == 'ends_with'
+        tracks = tracks.where('tracks.name ILIKE ?', '%' + rule['value'].gsub('$', '\$'))
       end
     end
     
@@ -44,6 +48,10 @@ class Playlist < ApplicationRecord
         tracks = tracks.joins(:artist).where('artists.name = ?', rule['value'].gsub('$', '\$'))
       elsif rule['operator'] == 'not_equal'
         tracks = tracks.joins(:artist).where('artists.name != ?', rule['value'].gsub('$', '\$'))
+      elsif rule['operator'] == 'begins_with'
+        tracks = tracks.joins(:artist).where('artists.name ILIKE ?', rule['value'].gsub('$', '\$') + '%')
+      elsif rule['operator'] == 'ends_with'
+        tracks = tracks.joins(:artist).where('artists.name ILIKE ?', '%' + rule['value'].gsub('$', '\$'))
       end
     end
 
@@ -336,6 +344,10 @@ class Playlist < ApplicationRecord
       "include"
     when "not_contains"
       "does not contain"
+    when "begins_with"
+      "begins with"
+    when "ends_with"
+      "ends with"
     else
       operator
     end
