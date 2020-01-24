@@ -27,6 +27,10 @@ class Playlist < ApplicationRecord
         tracks = tracks.where('tracks.name ~* ?', rule['value'].gsub('$', '\$'))
       elsif rule['operator'] == 'not_contains'
         tracks = tracks.where('tracks.name !~* ?', rule['value'].gsub('$', '\$'))
+      elsif rule['operator'] == 'equal'
+        tracks = tracks.joins(:artist).where('tracks.name = ?', rule['value'].gsub('$', '\$'))
+      elsif rule['operator'] == 'not_equal'
+        tracks = tracks.joins(:artist).where('tracks.name != ?', rule['value'].gsub('$', '\$'))
       end
     end
     
@@ -36,6 +40,10 @@ class Playlist < ApplicationRecord
         tracks = tracks.joins(:artist).where('artists.name ~* ?', rule['value'].gsub('$', '\$'))
       elsif rule['operator'] == 'not_contains'
         tracks = tracks.joins(:artist).where('artists.name !~* ?', rule['value'].gsub('$', '\$'))
+      elsif rule['operator'] == 'equal'
+        tracks = tracks.joins(:artist).where('artists.name = ?', rule['value'].gsub('$', '\$'))
+      elsif rule['operator'] == 'not_equal'
+        tracks = tracks.joins(:artist).where('artists.name != ?', rule['value'].gsub('$', '\$'))
       end
     end
 
