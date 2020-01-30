@@ -38,4 +38,18 @@ class User < ApplicationRecord
       user.email = auth.info.email
     end
   end
+
+  def combined_genres
+    if self.genres.present?
+      Rails.cache.fetch("combined_genres-#{self}", expires_in: 24.hours) do
+        pop_genres = Artist.pluck(:genres).reject!(&:empty?).flatten.group_by(&:itself).map { |k,v| [k, v.count] }.to_h.sort_by{|k,v| v}.reverse.first(500).map{|a| a.first}
+        (self.genres + pop_genres).uniq.sort_by(&:downcase)
+      end
+    else
+      Rails.cache.fetch("pop_genres", expires_in: 24.hours) do
+        pop_genres = Artist.pluck(:genres).reject!(&:empty?).flatten.group_by(&:itself).map { |k,v| [k, v.count] }.to_h.sort_by{|k,v| v}.reverse.first(500).map{|a| a.first}
+        pop_genres.uniq.sort_by(&:downcase)
+      end
+    end
+  end
 end

@@ -397,17 +397,6 @@ $(document).on("turbolinks:load", function() {
           $("#builder").queryBuilder("getRules", { skip_empty: true })
         )
       );
-      console.log(rule);
-      console.log("RULE OP: " + rule.operator.type);
-      console.log("RULE FILTER: " + rule.filter.id);
-      if (rule.filter.id == "genres" && rule.operator.type == "contains") {
-        // rule.filter.input = "text";
-        // var $input = rule.$el.find(
-        //   $.fn.queryBuilder.constructor.selectors.rule_value
-        // );
-        // ensure cleanup of previous plugin applied
-        // apply new plugin
-      }
     }
   );
 });
