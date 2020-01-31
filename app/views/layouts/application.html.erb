@@ -83,7 +83,7 @@
           <!-- Navigation -->
           <ul class="navbar-nav mb-md-4">
             <% @all_playlists.each do |playlist| %>
-            <li class="nav-item">
+            <li class="nav-item <% if playlist.id.to_s == params[:id] %> active<% end %>">
               <%= link_to "<i class='fe far fa-music'></i> #{playlist.name}".html_safe, playlist_path(playlist), class: 'nav-link' %>
             </li>
             <% end %>
