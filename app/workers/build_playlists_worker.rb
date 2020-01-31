@@ -40,7 +40,10 @@ class BuildPlaylistsWorker
             times_to_loop = (total.to_f / 100).ceil
 
             if total <= 0 or playlist.auto_update.present?
-              times_to_loop.times { existing_playlist.remove_tracks!(existing_playlist.tracks) }
+              begin
+                times_to_loop.times { existing_playlist.remove_tracks!(existing_playlist.tracks) }
+              rescue RestClient::BadRequest => e
+              end
             end
             existing_playlist.change_details!(description: "Created with PLYLST.app! #{playlist.translated_rules}.", public: playlist.public)
           else
