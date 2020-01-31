@@ -39,7 +39,7 @@
 
   <body>
     <% if user_signed_in? and (@all_playlists.present? or params[:action] == 'new') -%>
-    <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light" id="sidebar">
+    <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-dark navbar-vibrant" id="sidebar">
        <div class="container-fluid">
 
         <!-- Toggler -->
@@ -88,13 +88,13 @@
             </li>
             <% end %>
           </ul>
-          <%= link_to "<i class='fas fa-plus-circle'></i> Create a playlist".html_safe, new_playlist_path, class: 'btn btn-block btn-primary mb-4' %>
+          <%= link_to "<i class='fas fa-plus-circle'></i> Create a playlist".html_safe, new_playlist_path, class: 'btn btn-block btn-dark mb-4' %>
 
           <!-- Push content down -->
           <div class="mt-auto"></div>
 
           <div class="text-center mb-5">
-            <a href="https://github.com/Shpigford/plylst" class="badge badge-secondary px-3 py-2"><b><i class="fab fa-github mr-1"></i> PLYLST is open source!</b></a>
+            <a href="https://github.com/Shpigford/plylst" class="btn btn-sm btn-outline-dark px-3 py-2"><b><i class="fab fa-github mr-1"></i> PLYLST is open source!</b></a>
           </div>
           
           <div class="navbar-user d-none d-md-flex" id="sidebarUser">

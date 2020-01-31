@@ -4,7 +4,7 @@
 @import "theme";
 
 .vertical-center {
-  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100%; /* Fallback for browsers do NOT support vh unit */
   min-height: 100vh; /* These two lines are counted as one :-)       */
   display: flex;
   align-items: center;
@@ -14,7 +14,7 @@
   max-width: 25%;
 }
 
-[data-toggle="popover"]{
+[data-toggle="popover"] {
   .fa-info-circle {
     opacity: 0.2;
   }
@@ -37,13 +37,13 @@
     margin-right: 5px;
   }
   .btn {
-    padding: .03rem .4rem 0 .4rem;
+    padding: 0.03rem 0.4rem 0 0.4rem;
   }
 }
 
 .query-builder {
-  width: 100%!important;
-  display: block!important;
+  width: 100% !important;
+  display: block !important;
   .rules-group-header {
     margin-top: 20px;
   }
@@ -53,21 +53,22 @@
     padding: 0;
   }
   .hide {
-    display: none!important;
+    display: none !important;
   }
   .rule-container {
     //background: rgba(255,255,255,0.1)!important;
     background: none;
     border: 0;
     border-radius: 0;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     padding: 5px 0 10px 0;
   }
   .rule-value-container {
     padding-left: 0;
     border-left: 0;
-    input[type=number], input[type=text] {
-      padding: .5rem .75rem!important;
+    input[type="number"],
+    input[type="text"] {
+      padding: 0.5rem 0.75rem !important;
     }
   }
   p.filter-description {
@@ -78,7 +79,8 @@
   .rules-list {
     padding-left: 0;
   }
-  .rules-list > ::after, .rules-list > ::before {
+  .rules-list > ::after,
+  .rules-list > ::before {
     display: none;
   }
   .separator {
@@ -87,17 +89,17 @@
 }
 
 .bootstrap-select {
-  background: none!important;
+  background: none !important;
 
   .btn {
-    background-color: #1e3a5c;
-    border-color: #1e3a5c;
+    background-color: #fff;
+    border-color: #d2ddec;
   }
 }
 
 .dropdown-menu {
   .disabled {
-    color: rgba(255,255,255,0.1);
+    color: rgba(255, 255, 255, 0.1);
   }
 }
 
