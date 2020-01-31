@@ -10,28 +10,14 @@ class ProcessAccountWorker
       spotify = RSpotify::User.new(connection)
       track_ids = Array.new
       
-      (0..1000000000).step(50) do |n|
-        begin
-          tracks = spotify.saved_tracks(limit: 50, offset: n)
-        rescue RestClient::Unauthorized => e
-          user.increment!(:authorization_fails)
+      spotify.saved_tracks
+      
+      total_tracks = spotify.total
 
-          # Deactivate user if we don't have the right permissions and if their authorization has failed a crap ton of times
-          user.update_attribute(:active, false) if user.authorization_fails > 10
-        rescue RestClient::BadGateway => e
-          break
-        end
-
-        if tracks.present?
-          tracks_added_at = spotify.tracks_added_at
-          break if tracks.size == 0
-
-          SaveTracksWorker.perform_async(user.id, tracks_added_at.to_a, 'added')
-        else
-          break
-        end
+      (0..total_tracks+50).step(50) do |n|
+        ProcessTracksWorker.perform_async(user.id, n)
       end
-
+      
       BuildUserGenresWorker.perform_in(30.seconds, user.id)
       UpdatePlayDataWorker.perform_in(60.seconds, user.id)
       RecentlyStreamedWorker.perform_in(60.seconds, user.id)
