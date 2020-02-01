@@ -5,7 +5,9 @@ class QueueLyricsWorker
 
   def perform
     Track.where(lyrics: nil).find_each do |track|
-      GetLyricsWorker.perform_async(track.id) if track.lyrics.blank?
+      if track.lyrics.blank?
+        GetLyricsWorker.perform_async(track.id) if track.lyrics_last_checked_at.blank? or track.lyrics_last_checked_at < 90.days.ago
+      end
     end
   end
 end

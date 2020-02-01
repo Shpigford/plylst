@@ -11,7 +11,8 @@ class GetLyricsWorker
 
   def perform(track_id)
     track = Track.find(track_id)
-
+    track.touch(:lyrics_last_checked_at)
+    
     if track.present? and track.lyrics == nil and track.artist.name.present?
       songs = Genius::Song.search("#{track.name} by #{track.artist.name}")
       if songs.present?
