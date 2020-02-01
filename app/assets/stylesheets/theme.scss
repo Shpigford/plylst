@@ -33,7 +33,7 @@
     --breakpoint-md:768px;
     --breakpoint-lg:992px;
     --breakpoint-xl:1200px;
-    --font-family-sans-serif:"Cerebri Sans",sans-serif;
+    --font-family-sans-serif:"CeraPro-Regular",sans-serif;
     --font-family-monospace:SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
     }
     
@@ -54,7 +54,7 @@
     
     body {
     margin: 0;
-    font-family: "Cerebri Sans",sans-serif;
+    font-family: "CeraPro-Regular",sans-serif;
     font-size: .9375rem;
     font-weight: 400;
     line-height: 1.5;
@@ -346,7 +346,7 @@
     
     .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
     margin-bottom: 1.125rem;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 1.1;
     }
     
@@ -15628,7 +15628,7 @@
     }
     
     .display-1, .display-2, .display-3, .display-4, .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5 {
-    letter-spacing: -.02em;
+    letter-spacing: -.06em;
     }
     
     h6 {

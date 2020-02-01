@@ -1,3 +1,23 @@
+@import url("//hello.myfonts.net/count/3aee98");
+
+@font-face {
+  font-family: 'CeraPRO-Bold';
+  src: font-url('cerapro/3AEE98_0_0.eot');
+  src: font-url('cerapro/3AEE98_0_0.eot?#iefix') format('embedded-opentype'),font-url('cerapro/3AEE98_0_0.woff2') format('woff2'),font-url('cerapro/3AEE98_0_0.woff') format('woff'),font-url('cerapro/3AEE98_0_0.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal
+}
+ 
+  
+@font-face {font-family: 'CeraPro-BlackItalic';src: font-url('cerapro/3AEE98_1_0.eot');src: font-url('cerapro/3AEE98_1_0.eot?#iefix') format('embedded-opentype'),font-url('cerapro/3AEE98_1_0.woff2') format('woff2'),font-url('cerapro/3AEE98_1_0.woff') format('woff'),font-url('cerapro/3AEE98_1_0.ttf') format('truetype');}
+ 
+  
+@font-face {font-family: 'CeraPro-Regular';src: font-url('cerapro/3AEE98_2_0.eot');src: font-url('cerapro/3AEE98_2_0.eot?#iefix') format('embedded-opentype'),font-url('cerapro/3AEE98_2_0.woff2') format('woff2'),font-url('cerapro/3AEE98_2_0.woff') format('woff'),font-url('cerapro/3AEE98_2_0.ttf') format('truetype');}
+ 
+  
+@font-face {font-family: 'CeraPro-RegularItalic';src: font-url('cerapro/3AEE98_3_0.eot');src: font-url('cerapro/3AEE98_3_0.eot?#iefix') format('embedded-opentype'),font-url('cerapro/3AEE98_3_0.woff2') format('woff2'),font-url('cerapro/3AEE98_3_0.woff') format('woff'),font-url('cerapro/3AEE98_3_0.ttf') format('truetype');}
+
+
 @import "bootstrap-select";
 @import "datepicker";
 @import "querybuilder";
