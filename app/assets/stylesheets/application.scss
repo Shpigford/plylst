@@ -126,3 +126,10 @@
   background-attachment: fixed;
   background-blend-mode: overlay;
 }
+
+.nav-item a:hover, .nav-item.active {
+    background: rgba(255,255,255,0.1);
+}
+ .navbar-vibrant {
+   box-shadow: inset -5px 0 8px rgba(0,0,0,0.1);
+ }
