@@ -1,4 +1,5 @@
 :queues:
-  - [critical, 20]
-  - [default, 2]
-  - slow
+  - [critical, 40]
+  - [default, 20]
+  - [slow, 10]
+  - lyrics
