@@ -1,22 +1,114 @@
-@import url("//hello.myfonts.net/count/3aee98");
+@import url("//hello.myfonts.net/count/3aeee0");
 
 @font-face {
-  font-family: 'CeraPRO-Bold';
-  src: font-url('cerapro/3AEE98_0_0.eot');
-  src: font-url('cerapro/3AEE98_0_0.eot?#iefix') format('embedded-opentype'),font-url('cerapro/3AEE98_0_0.woff2') format('woff2'),font-url('cerapro/3AEE98_0_0.woff') format('woff'),font-url('cerapro/3AEE98_0_0.ttf') format('truetype');
-  font-weight: 500;
-  font-style: normal
+  font-family: "Cera Pro";
+  src: font-url("cerapro/3AEEE0_1_0.eot");
+  src: font-url("cerapro/3AEEE0_1_0.eot?#iefix") format("embedded-opentype"),
+    font-url("cerapro/3AEEE0_1_0.woff2") format("woff2"),
+    font-url("cerapro/3AEEE0_1_0.woff") format("woff"),
+    font-url("cerapro/3AEEE0_1_0.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
 }
- 
-  
-@font-face {font-family: 'CeraPro-BlackItalic';src: font-url('cerapro/3AEE98_1_0.eot');src: font-url('cerapro/3AEE98_1_0.eot?#iefix') format('embedded-opentype'),font-url('cerapro/3AEE98_1_0.woff2') format('woff2'),font-url('cerapro/3AEE98_1_0.woff') format('woff'),font-url('cerapro/3AEE98_1_0.ttf') format('truetype');}
- 
-  
-@font-face {font-family: 'CeraPro-Regular';src: font-url('cerapro/3AEE98_2_0.eot');src: font-url('cerapro/3AEE98_2_0.eot?#iefix') format('embedded-opentype'),font-url('cerapro/3AEE98_2_0.woff2') format('woff2'),font-url('cerapro/3AEE98_2_0.woff') format('woff'),font-url('cerapro/3AEE98_2_0.ttf') format('truetype');}
- 
-  
-@font-face {font-family: 'CeraPro-RegularItalic';src: font-url('cerapro/3AEE98_3_0.eot');src: font-url('cerapro/3AEE98_3_0.eot?#iefix') format('embedded-opentype'),font-url('cerapro/3AEE98_3_0.woff2') format('woff2'),font-url('cerapro/3AEE98_3_0.woff') format('woff'),font-url('cerapro/3AEE98_3_0.ttf') format('truetype');}
 
+@font-face {
+  font-family: "Cera Pro";
+  src: font-url("cerapro/3AEEE0_3_0.eot");
+  src: font-url("cerapro/3AEEE0_3_0.eot?#iefix") format("embedded-opentype"),
+    font-url("cerapro/3AEEE0_3_0.woff2") format("woff2"),
+    font-url("cerapro/3AEEE0_3_0.woff") format("woff"),
+    font-url("cerapro/3AEEE0_3_0.ttf") format("truetype");
+  font-weight: 900;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Cera Pro";
+  src: font-url("cerapro/3AEEE0_4_0.eot");
+  src: font-url("cerapro/3AEEE0_4_0.eot?#iefix") format("embedded-opentype"),
+    font-url("cerapro/3AEEE0_4_0.woff2") format("woff2"),
+    font-url("cerapro/3AEEE0_4_0.woff") format("woff"),
+    font-url("cerapro/3AEEE0_4_0.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Cera Pro";
+  src: font-url("cerapro/3AEEE0_5_0.eot");
+  src: font-url("cerapro/3AEEE0_5_0.eot?#iefix") format("embedded-opentype"),
+    font-url("cerapro/3AEEE0_5_0.woff2") format("woff2"),
+    font-url("cerapro/3AEEE0_5_0.woff") format("woff"),
+    font-url("cerapro/3AEEE0_5_0.ttf") format("truetype");
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Cera Pro";
+  src: font-url("cerapro/3AEEE0_6_0.eot");
+  src: font-url("cerapro/3AEEE0_6_0.eot?#iefix") format("embedded-opentype"),
+    font-url("cerapro/3AEEE0_6_0.woff2") format("woff2"),
+    font-url("cerapro/3AEEE0_6_0.woff") format("woff"),
+    font-url("cerapro/3AEEE0_6_0.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Cera Pro";
+  src: font-url("cerapro/3AEEE0_7_0.eot");
+  src: font-url("cerapro/3AEEE0_7_0.eot?#iefix") format("embedded-opentype"),
+    font-url("cerapro/3AEEE0_7_0.woff2") format("woff2"),
+    font-url("cerapro/3AEEE0_7_0.woff") format("woff"),
+    font-url("cerapro/3AEEE0_7_0.ttf") format("truetype");
+  font-weight: 700;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Cera Pro";
+  src: font-url("cerapro/3AEEE0_8_0.eot");
+  src: font-url("cerapro/3AEEE0_8_0.eot?#iefix") format("embedded-opentype"),
+    font-url("cerapro/3AEEE0_8_0.woff2") format("woff2"),
+    font-url("cerapro/3AEEE0_8_0.woff") format("woff"),
+    font-url("cerapro/3AEEE0_8_0.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Cera Pro";
+  src: font-url("cerapro/3AEEE0_9_0.eot");
+  src: font-url("cerapro/3AEEE0_9_0.eot?#iefix") format("embedded-opentype"),
+    font-url("cerapro/3AEEE0_9_0.woff2") format("woff2"),
+    font-url("cerapro/3AEEE0_9_0.woff") format("woff"),
+    font-url("cerapro/3AEEE0_9_0.ttf") format("truetype");
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Cera Pro";
+  src: font-url("cerapro/3AEEE0_A_0.eot");
+  src: font-url("cerapro/3AEEE0_A_0.eot?#iefix") format("embedded-opentype"),
+    font-url("cerapro/3AEEE0_A_0.woff2") format("woff2"),
+    font-url("cerapro/3AEEE0_A_0.woff") format("woff"),
+    font-url("cerapro/3AEEE0_A_0.ttf") format("truetype");
+  font-weight: 100;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Cera Pro";
+  src: font-url("cerapro/3AEEE0_B_0.eot");
+  src: font-url("cerapro/3AEEE0_B_0.eot?#iefix") format("embedded-opentype"),
+    font-url("cerapro/3AEEE0_B_0.woff2") format("woff2"),
+    font-url("cerapro/3AEEE0_B_0.woff") format("woff"),
+    font-url("cerapro/3AEEE0_B_0.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+}
 
 @import "bootstrap-select";
 @import "datepicker";
@@ -80,7 +172,7 @@
     background: none;
     border: 0;
     border-radius: 0;
-    border-bottom: 1px solid rgba(#232A33, 0.1);
+    border-bottom: 1px solid rgba(#232a33, 0.1);
     padding: 12px 0;
   }
   .rule-value-container {
@@ -119,7 +211,7 @@
 
 .dropdown-menu {
   .disabled {
-    color: rgba(#232A33, 0.3);
+    color: rgba(#232a33, 0.3);
   }
 }
 
@@ -147,9 +239,10 @@
   background-blend-mode: overlay;
 }
 
-.nav-item a:hover, .nav-item.active {
-    background: rgba(255,255,255,0.1);
+.nav-item a:hover,
+.nav-item.active {
+  background: rgba(255, 255, 255, 0.1);
 }
- .navbar-vibrant {
-   box-shadow: inset -5px 0 8px rgba(0,0,0,0.1);
- }
+.navbar-vibrant {
+  box-shadow: inset -5px 0 8px rgba(0, 0, 0, 0.1);
+}
