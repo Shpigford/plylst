@@ -1,10 +1,10 @@
 ## About
-I've been a longtime iTunes user and, despite its shortcomings, the ability to build complex, dynamic playlists has yet to be matched by the other streaming services.
+I ([@Shpigford](https://twitter.com/Shpigford)) have been a longtime iTunes user and, despite its shortcomings, the ability to build complex, dynamic playlists has yet to be matched by the other streaming services.
 
 I desperately want that ability in Spotify, so PLYLST is my attempt at building the thing I think it's missing most: that ability to put together dynamic playlists based on many different attributes.
 
 ## Codebase
-The codebase is vanilla [Rails](https://rubyonrails.org/), [Sidekiq](https://sidekiq.org/) w/ [Redis](https://redis.io/), [Puma](http://puma.io/), [Postgres](https://www.postgresql.org/). Quite a simple setup.
+The codebase is vanilla [Rails](https://rubyonrails.org/), [Sidekiq](https://sidekiq.org/) w/ [Redis](https://redis.io/), [Puma](http://puma.io/), and [Postgres](https://www.postgresql.org/). Quite a simple setup.
 
 ## How to start
 

@@ -254,3 +254,15 @@
   padding: 6px 10px;
   font-size: 0.8125rem;
 }
+
+.footer-bottom {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+@media (max-width: 1200px) {
+  .footer-bottom {
+    margin-bottom: -250px;
+  }
+}
