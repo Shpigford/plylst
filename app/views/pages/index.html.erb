@@ -98,7 +98,6 @@
   <div class="row align-items-center">
     <div class="col-12 col-xl-6 offset-xl-1 order-2 mb-5 mb-md-0">
 
-      <!-- Image -->
       <div class="card p-3">
         <%= image_tag('screenshot2.png', class: 'img-fluid') %>
       </div>
@@ -108,28 +107,24 @@
           
       <div class="text-center">
           
-        <!-- Preheading -->
         <h6 class="text-uppercase text-muted mb-4">
           <%= image_tag('logo-full.svg', class: 'img-fluid mt-1 mb-4', style: 'max-width:350px') %>
         </h6>
 
-        <!-- Heading -->
         <h1 class="display-4 mb-3">
           Create smart playlists for your Spotify library!
         </h1>
 
-        <!-- Subheading -->
         <p class="text-muted mb-4">
           Stop relying on fancy pants algorithms to organize your library and instead build up playlists the way <i>you</i> want them.
         </p>
 
-        <!-- Button -->
         <%= link_to "<i class='fab fa-spotify'></i> Sign in with Spotify".html_safe, omniauth_authorize_path('user', 'spotify'), class: 'btn btn-lg btn-success mb-5 font-weight-bolder', style: 'font-size:1.5em;' %>
           
-          <p class="badges"><span class="badge badge-pill badge-primary">Track name</span> <span class="badge badge-pill badge-primary">Artist name</span> <span class="badge badge-pill badge-primary">Days since added</span> <span class="badge badge-pill badge-primary">Release date</span> <span class="badge badge-pill badge-primary">Last played</span> <span class="badge badge-pill badge-primary">Beats Per Minute</span> <span class="badge badge-pill badge-primary">Genres</span> <span class="badge badge-pill badge-primary">Play count</span> <span class="badge badge-pill badge-primary">Duration</span> <span class="badge badge-pill badge-primary">Key</span> <span class="badge badge-pill badge-primary">Danceability</span> <span class="badge badge-pill badge-primary">Mode</span> <span class="badge badge-pill badge-primary">Acousticness</span> <span class="badge badge-pill badge-primary">Instrumentalness</span> <span class="badge badge-pill badge-primary">Speech</span> <span class="badge badge-pill badge-primary">Valence (Mood)</span> <span class="badge badge-pill badge-primary">Explicitness</span> <span class="badge badge-pill badge-primary">Lyrics</span></p>
+          <p class="badges"><span class="badge badge-pill badge-primary">Track Name</span> <span class="badge badge-pill badge-primary">Artist Name</span> <span class="badge badge-pill badge-primary">Days Since Added</span> <span class="badge badge-pill badge-primary">Release date</span> <span class="badge badge-pill badge-primary">Last Played</span> <span class="badge badge-pill badge-primary">Beats Per Minute</span> <span class="badge badge-pill badge-primary">Genres</span> <span class="badge badge-pill badge-primary">Play Count</span> <span class="badge badge-pill badge-primary">Duration</span> <span class="badge badge-pill badge-primary">Key</span> <span class="badge badge-pill badge-primary">Danceability</span> <span class="badge badge-pill badge-primary">Mode</span> <span class="badge badge-pill badge-primary">Acousticness</span> <span class="badge badge-pill badge-primary">Instrumentalness</span> <span class="badge badge-pill badge-primary">Speech</span> <span class="badge badge-pill badge-primary">Valence (Mood)</span> <span class="badge badge-pill badge-primary">Explicitness</span> <span class="badge badge-pill badge-primary">Lyrics</span> <span class="badge badge-pill badge-primary">Energy</span></p>
       </div>
 
     </div>
-  </div> <!-- / .row -->
+  </div>
 </div>
 <% end %>
