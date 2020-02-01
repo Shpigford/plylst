@@ -67,10 +67,7 @@
             </a>
 
             <!-- Menu -->
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="sidebarIcon">
-              <a href="profile-posts.html" class="dropdown-item">Profile</a>
-              <a href="settings.html" class="dropdown-item">Settings</a>
-              <hr class="dropdown-divider">
+            <div class="dropdown-menu" aria-labelledby="sidebarIcon">
               <%= link_to 'Sign out', destroy_user_session_path, :method => :delete, class: 'dropdown-item' %>
             </div>
 
@@ -109,7 +106,7 @@
               </a>
 
               <!-- Menu -->
-              <div class="dropdown-menu" aria-labelledby="sidebarIconCopy">
+              <div class="dropdown-menu text-center" aria-labelledby="sidebarIconCopy">
                 <%= link_to 'Sign out', destroy_user_session_path, :method => :delete, class: 'dropdown-item' %>
               </div>
 
