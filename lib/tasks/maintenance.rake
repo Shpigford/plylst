@@ -10,7 +10,7 @@ namespace :maintenance do
   desc "Pull lyrics: 0 3 * * *"
   task :get_lyrics => :environment do
     Track.where(lyrics: nil).find_each do |track|
-      GetLyricsWorker.set(queue: :slow).perform_async(track.id) if track.lyrics.blank?
+      GetLyricsWorker.set(queue: :lyrics).perform_async(track.id) if track.lyrics.blank?
     end
   end
 
