@@ -41,7 +41,7 @@
 <div class="form-group row">
   <%= f.label :limit, class: 'col-sm-2 col-form-label' %>
   <div class="col-sm-10">
-    <%= f.text_field :limit, class: 'form-control mb-1' %>
+    <%= f.number_field :limit, min: 0, max: 10000, class: 'form-control mb-1' %>
     <small class="text-muted">How many songs should the playlist contain?</small>
   </div>
 </div>
