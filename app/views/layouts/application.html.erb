@@ -38,7 +38,8 @@
   </head>
 
   <body class="<%= yield (:body_class) %>">
-    <% if user_signed_in? and (@all_playlists.present? or params[:action] == 'new') -%>
+
+    <% if user_signed_in? and ((@all_playlists.present? or params[:action] == 'new') and @hide_sidebar != true) -%>
     <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-dark navbar-vibrant" id="sidebar">
        <div class="container-fluid">
 
