@@ -7,50 +7,25 @@
           <div class="header-body">
             <div class="row align-items-center">
               <div class="col">
-                
-                <div class="">
-                  <!-- Pretitle -->
-                  <h6 class="header-pretitle">
-                    Playlist
-                  </h6>
-
-                  <!-- Title -->
-                  <h1 class="header-title">Build a new playlist</h1>
-                </div>
-
-                <div class="card">
-                  <div class="card-body">
-                    <%= form_for @playlist, url: {action: "create"}, html: {class: "form-inline"} do |f| %>
-                      <%= f.label :name, class: 'sr-only' %>
-                      <%= f.text_field :name, class: 'form-control mb-2 mr-sm-2', placeholder: 'Playlist Name' %>
-                      <%= f.submit 'Submit', class: 'btn btn-primary mb-2' %>
-                    <% end %>
-                  </div>
-                </div>
+                <h6 class="header-pretitle">Playlist</h6>
+                <h1 class="header-title">Create a new playlist</h1>
               </div>
-            </div> <!-- / .row -->
+            </div>
           </div>
         </div>
 
+        <div class="card">
+          <div class="card-body">
 
-        <!-- <div class="card">
-          <div class="table-responsive">
-            <table class="table table-sm table-nowrap card-table">
-              <thead>
-                <tr>
-                  <th colspan="2">Song</th>
-                  <th>Artist</th>
-                  <th>Album</th>
-                  <th><i class="fal fa-calendar-alt"></i></th>
-                  <th><i class="fal fa-clock"></i></th>
-                </tr>
-              </thead>
-              <tbody class="list">
-                
-              </tbody>
-            </table>
+            <%= form_for @playlist, html: {class: ''} do |f| %>
+              
+              <%= render "form", f: f %>
+
+              <button type="submit" class="btn btn-primary mb-2">Save Playlist</button>
+            <% end %>
           </div>
-        </div> -->
+        </div>
+
 
 
       </div>

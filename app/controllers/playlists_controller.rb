@@ -13,10 +13,12 @@ class PlaylistsController < ApplicationController
     @playlist = Playlist.new(playlist_params)
     @playlist.user = current_user
 
-    if @playlist.save
-      redirect_to edit_playlist_path(@playlist)
+    params[:playlist][:filters] = JSON.parse(params[:playlist][:filters])
+  
+    if @playlist.update_attributes(playlist_params)
+      redirect_to playlist_path(@playlist)
     else
-      redirect_to new_playlist_path, alert: "Yeah, that didn't work."
+      render 'edit'
     end
   end
 
