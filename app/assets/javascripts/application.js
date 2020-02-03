@@ -15,6 +15,7 @@
 //= require turbolinks
 //= require jquery3
 //= require tooltip
+//= require list
 //= require popper
 //= require bootstrap-sprockets
 //= require extendext
@@ -22,6 +23,14 @@
 //= require_tree .
 
 $(document).on("turbolinks:load", function() {
+  var options = {
+    valueNames: ["name", "artist_count"],
+    page: 20,
+    pagination: true
+  };
+
+  var genreList = new List("genre_lists", options);
+
   $(function() {
     $('[data-toggle="popover"]').popover({});
   });

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>PLYLST: Smart Playlists for Spotify</title>
+    <title><%= content_for?(:title) ? ("#{yield(:title)} - PLYST").html_safe : "PLYLST: Smart Playlists for Spotify" %></title>
     <meta name="title" content="PLYLST">
     <meta name="description" content="Create smart playlists for your Spotify library! Stop relying on fancy pants algorithms to organize your library and instead build playlists the way you want.">
 

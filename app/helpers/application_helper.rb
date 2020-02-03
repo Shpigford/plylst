@@ -1,4 +1,8 @@
 module ApplicationHelper
+  def title(page_title)
+    content_for(:title) { page_title }
+  end
+  
   def gravatar_url(email, size)
     gravatar = Digest::MD5::hexdigest(email).downcase
     url = "https://gravatar.com/avatar/#{gravatar}.png?s=#{size}"

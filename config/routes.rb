@@ -21,5 +21,6 @@ Rails.application.routes.draw do
 
   resources :playlists
   
+  get 'genres', to: 'pages#genres'
   root to: "pages#index"
 end
