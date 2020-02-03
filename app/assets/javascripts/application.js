@@ -25,7 +25,7 @@
 $(document).on("turbolinks:load", function() {
   var options = {
     valueNames: ["name", "artist_count"],
-    page: 20,
+    page: 50,
     pagination: true
   };
 
