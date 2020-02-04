@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_01_202818) do
+ActiveRecord::Schema.define(version: 2020_02_04_170327) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -101,8 +101,17 @@ ActiveRecord::Schema.define(version: 2020_02_01_202818) do
     t.jsonb "audio_features"
     t.text "lyrics"
     t.datetime "lyrics_last_checked_at"
+    t.index "(((audio_features ->> 'acousticness'::text))::numeric)", name: "index_tracks_on_audio_features_acousticness"
+    t.index "(((audio_features ->> 'danceability'::text))::numeric)", name: "index_tracks_on_audio_features_danceability"
+    t.index "(((audio_features ->> 'energy'::text))::numeric)", name: "index_tracks_on_audio_features_energy"
+    t.index "(((audio_features ->> 'instrumentalness'::text))::numeric)", name: "index_tracks_on_audio_features_instrumentalness"
+    t.index "(((audio_features ->> 'key'::text))::numeric)", name: "index_tracks_on_audio_features_key"
+    t.index "(((audio_features ->> 'speechiness'::text))::numeric)", name: "index_tracks_on_audio_features_speechiness"
+    t.index "(((audio_features ->> 'tempo'::text))::numeric)", name: "index_tracks_on_audio_features_tempo"
+    t.index "(((audio_features ->> 'valence'::text))::numeric)", name: "index_tracks_on_audio_features_valence"
     t.index ["album_id"], name: "index_tracks_on_album_id"
     t.index ["artist_id"], name: "index_tracks_on_artist_id"
+    t.index ["audio_features"], name: "index_tracks_on_audio_features", using: :gin
     t.index ["explicit"], name: "index_tracks_on_explicit"
     t.index ["lyrics_last_checked_at"], name: "index_tracks_on_lyrics_last_checked_at"
     t.index ["spotify_id"], name: "index_tracks_on_spotify_id"
