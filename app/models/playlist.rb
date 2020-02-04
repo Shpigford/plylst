@@ -174,27 +174,68 @@ class Playlist < ApplicationRecord
 
     # DANCEABILITY
     find_rule(rules, 'danceability').try do |rule|
-      case rule['value']
-      when 0 # Not at all
-        start = 0.0
-        final = 0.199
-      when 1 # A little
-        start = 0.2
-        final = 0.399
-      when 2 # Somewhat
-        start = 0.4
-        final = 0.599
-      when 3 # Moderately
-        start = 0.6
-        final = 0.799
-      when 4 # Very
-        start = 0.8
-        final = 0.899
-      when 5 # Super
-        start = 0.9
-        final = 1.0
+      if rule['value'].kind_of?(Array)
+        case rule['value'][0]
+        when 0 # Not at all
+          start = 0.0
+        when 1 # A little
+          start = 0.2
+        when 2 # Somewhat
+          start = 0.4
+        when 3 # Moderately
+          start = 0.6
+        when 4 # Very
+          start = 0.8
+        when 5 # Super
+          start = 0.9
+        end
+
+        case rule['value'][1]
+        when 0 # Not at all
+          final = 0.199
+        when 1 # A little
+          final = 0.399
+        when 2 # Somewhat
+          final = 0.599
+        when 3 # Moderately
+          final = 0.799
+        when 4 # Very
+          final = 0.899
+        when 5 # Super
+          final = 1.0
+        end
+
+      else
+        case rule['value']
+        when 0 # Not at all
+          start = 0.0
+          final = 0.199
+        when 1 # A little
+          start = 0.2
+          final = 0.399
+        when 2 # Somewhat
+          start = 0.4
+          final = 0.599
+        when 3 # Moderately
+          start = 0.6
+          final = 0.799
+        when 4 # Very
+          start = 0.8
+          final = 0.899
+        when 5 # Super
+          start = 0.9
+          final = 1.0
+        end
       end
-      tracks = tracks.where("(audio_features ->> 'danceability')::numeric between ? and ?", start, final)
+      
+      if rule['operator'] == 'less'
+        tracks = tracks.where("(audio_features ->> 'danceability')::numeric < ?", final)
+      elsif rule['operator'] == 'greater'
+        tracks = tracks.where("(audio_features ->> 'danceability')::numeric > ?", start)
+      else
+        tracks = tracks.where("(audio_features ->> 'danceability')::numeric between ? and ?", start, final)
+      end
+      
     end
 
     # ACOUSTICNESS
@@ -367,19 +408,51 @@ class Playlist < ApplicationRecord
         "Very likely"
       end
     when "danceability"
-      case value
-      when 0 # Not at all
-        "Not at all"
-      when 1 # A little
-        "A little"
-      when 2 # Somewhat
-        "Somewhat"
-      when 3 # Moderately
-        "Moderately"
-      when 4 # Very
-        "Very"
-      when 5 # Super
-        "Super"
+      if value.kind_of?(Array)
+        case value[0]
+        when 0 # Not at all
+          start = "Not at all"
+        when 1 # A little
+          start = "A little"
+        when 2 # Somewhat
+          start = "Somewhat"
+        when 3 # Moderately
+          start = "Moderately"
+        when 4 # Very
+          start = "Very"
+        when 5 # Super
+          start = "Super"
+        end
+        case value[1]
+        when 0 # Not at all
+          finish = "Not at all"
+        when 1 # A little
+          finish = "A little"
+        when 2 # Somewhat
+          finish = "Somewhat"
+        when 3 # Moderately
+          finish = "Moderately"
+        when 4 # Very
+          finish = "Very"
+        when 5 # Super
+          finish = "Super"
+        end
+        "#{start} and #{finish}"
+      else
+        case value
+        when 0 # Not at all
+          "Not at all"
+        when 1 # A little
+          "A little"
+        when 2 # Somewhat
+          "Somewhat"
+        when 3 # Moderately
+          "Moderately"
+        when 4 # Very
+          "Very"
+        when 5 # Super
+          "Super"
+        end
       end
     when "key"
       case value

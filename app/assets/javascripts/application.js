@@ -265,7 +265,7 @@ $(document).on("turbolinks:load", function() {
             { "4": "Very" },
             { "5": "Super" }
           ],
-          operators: ["equal"],
+          operators: ["equal", "less", "greater", "between"],
           plugin: "selectpicker",
           unique: true,
           description: "How danceable is the track?"
