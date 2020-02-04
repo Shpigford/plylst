@@ -292,21 +292,52 @@ class Playlist < ApplicationRecord
 
     # ENERGY
     find_rule(rules, 'energy').try do |rule|
-      case rule['value']
-      when 0 # Not at all
-        start = 0.0
-        final = 0.250
-      when 1 # Somewhat
-        start = 0.251
-        final = 0.500
-      when 2 # Somewhat
-        start = 0.501
-        final = 0.750
-      when 3 # Very
-        start = 0.751
-        final = 1.0
+      if rule['value'].kind_of?(Array)
+        case rule['value'][0]
+        when 0 # Not at all
+          start = 0.0
+        when 1 # Somewhat
+          start = 0.251
+        when 2 # Somewhat
+          start = 0.501
+        when 3 # Very
+          start = 0.751
+        end
+
+        case rule['value'][1]
+        when 0 # Not at all
+          final = 0.250
+        when 1 # Somewhat
+          final = 0.500
+        when 2 # Somewhat
+          final = 0.750
+        when 3 # Very
+          final = 1.0
+        end
+      else
+        case rule['value']
+        when 0 # Not at all
+          start = 0.0
+          final = 0.250
+        when 1 # Somewhat
+          start = 0.251
+          final = 0.500
+        when 2 # Somewhat
+          start = 0.501
+          final = 0.750
+        when 3 # Very
+          start = 0.751
+          final = 1.0
+        end
       end
-      tracks = tracks.where("(audio_features ->> 'energy')::numeric between ? and ?", start, final)
+
+      if rule['operator'] == 'less'
+        tracks = tracks.where("(audio_features ->> 'energy')::numeric < ?", final)
+      elsif rule['operator'] == 'greater'
+        tracks = tracks.where("(audio_features ->> 'energy')::numeric > ?", start)
+      else
+        tracks = tracks.where("(audio_features ->> 'energy')::numeric between ? and ?", start, final)
+      end
     end
 
     # INSTRUMENTALNESS
@@ -548,16 +579,48 @@ class Playlist < ApplicationRecord
         "Positive (happy, cheerful, euphoric)"
       end
     when "energy"
-      case value
-      when 0 
-        "Low"
-      when 1
-        "Medium"
-      when 2
-        "High"
-      when 3 
-        "Insane"
+      if value.kind_of?(Array)
+        case value[0]
+        when 0 
+          start = "Low"
+        when 1
+          start = "Medium"
+        when 2
+          start = "High"
+        when 3 
+          start = "Insane"
+        end
+
+        case value[1]
+        when 0 
+          finish = "Low"
+        when 1
+          finish = "Medium"
+        when 2
+          finish = "High"
+        when 3 
+          finish = "Insane"
+        end
+
+        "#{start} and #{finish}"
+      else
+        case value
+        when 0 
+          "Low"
+        when 1
+          "Medium"
+        when 2
+          "High"
+        when 3 
+          "Insane"
+        end
       end
+
+
+      
+
+
+
     when "instrumentalness"
       case value
       when 0 

@@ -308,7 +308,7 @@ $(document).on("turbolinks:load", function() {
             { "2": "High" },
             { "3": "Insane" }
           ],
-          operators: ["equal"],
+          operators: ["equal", "less", "greater", "between"],
           plugin: "selectpicker",
           unique: true,
           description: "How energetic is the song?"
