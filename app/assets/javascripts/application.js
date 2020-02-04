@@ -292,7 +292,7 @@ $(document).on("turbolinks:load", function() {
             { "2": "Likely" },
             { "3": "Very likely" }
           ],
-          operators: ["equal"],
+          operators: ["equal", "less", "greater", "between"],
           plugin: "selectpicker",
           unique: true,
           description: "How likely is it the song is acoustic?"

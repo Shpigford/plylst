@@ -240,21 +240,54 @@ class Playlist < ApplicationRecord
 
     # ACOUSTICNESS
     find_rule(rules, 'acousticness').try do |rule|
-      case rule['value']
-      when 0 # Not at all
-        start = 0.0
-        final = 0.250
-      when 1 # Somewhat
-        start = 0.251
-        final = 0.500
-      when 2 # Likely
-        start = 0.501
-        final = 0.750
-      when 3 # Very likely
-        start = 0.751
-        final = 1.0
+      if rule['value'].kind_of?(Array)
+        case rule['value'][0]
+        when 0 # Not at all
+          start = 0.0
+        when 1 # Somewhat
+          start = 0.251
+        when 2 # Likely
+          start = 0.501
+        when 3 # Very likely
+          start = 0.751
+        end
+
+        case rule['value'][1]
+        when 0 # Not at all
+          final = 0.250
+        when 1 # Somewhat
+          final = 0.500
+        when 2 # Likely
+          final = 0.750
+        when 3 # Very likely
+          final = 1.0
+        end
+        
+      else
+        case rule['value']
+        when 0 # Not at all
+          start = 0.0
+          final = 0.250
+        when 1 # Somewhat
+          start = 0.251
+          final = 0.500
+        when 2 # Likely
+          start = 0.501
+          final = 0.750
+        when 3 # Very likely
+          start = 0.751
+          final = 1.0
+        end
       end
-      tracks = tracks.where("(audio_features ->> 'acousticness')::numeric between ? and ?", start, final)
+
+      if rule['operator'] == 'less'
+        tracks = tracks.where("(audio_features ->> 'acousticness')::numeric < ?", final)
+      elsif rule['operator'] == 'greater'
+        tracks = tracks.where("(audio_features ->> 'acousticness')::numeric > ?", start)
+      else
+        tracks = tracks.where("(audio_features ->> 'acousticness')::numeric between ? and ?", start, final)
+      end
+
     end
 
     # ENERGY
@@ -397,16 +430,42 @@ class Playlist < ApplicationRecord
   def translate_value(field, value)
     case field
     when "acousticness"
-      case value
-      when 0 # Not at all
-        "Not at all"
-      when 1 # Somewhat
-        "Somewhat"
-      when 2 # Likely
-        "Likely"
-      when 3 # Very likely
-        "Very likely"
+      if value.kind_of?(Array)
+        case value[0]
+        when 0 # Not at all
+          start = "Not at all"
+        when 1 # Somewhat
+          start = "Somewhat"
+        when 2 # Likely
+          start = "Likely"
+        when 3 # Very likely
+          start = "Very likely"
+        end
+
+        case value[1]
+        when 0 # Not at all
+          finish = "Not at all"
+        when 1 # Somewhat
+          finish = "Somewhat"
+        when 2 # Likely
+          finish = "Likely"
+        when 3 # Very likely
+          finish = "Very likely"
+        end
+        "#{start} and #{finish}"
+      else
+        case value
+        when 0 # Not at all
+          "Not at all"
+        when 1 # Somewhat
+          "Somewhat"
+        when 2 # Likely
+          "Likely"
+        when 3 # Very likely
+          "Very likely"
+        end
       end
+      
     when "danceability"
       if value.kind_of?(Array)
         case value[0]
