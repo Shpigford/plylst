@@ -62,9 +62,6 @@ class SaveTracksWorker
         track.save
 
       end
-
-      # Build the "audio features" for new tracks
-      AudioFeaturesWorker.perform_async(audio_feature_ids)
     end
 
 

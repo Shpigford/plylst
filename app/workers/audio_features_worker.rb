@@ -6,11 +6,11 @@ class AudioFeaturesWorker
   def perform(track_ids)
     spotify_tracks = RSpotify::AudioFeatures.find(track_ids)
     tracks = Track.where(spotify_id: track_ids)
-
+    
     spotify_tracks.each do |spotify_track|
-      if spotify_track.present?
-        track = tracks.find{|a| a.spotify_id == spotify_track.id}
-        track.update_attribute(:audio_features, {
+      track = tracks.find{|a| a.spotify_id == spotify_track.id}
+      if spotify_track.present? and track.present?
+        track.update_attributes(audio_features: {
           acousticness: spotify_track.acousticness,
           danceability: spotify_track.danceability,
           energy: spotify_track.energy,
@@ -23,7 +23,9 @@ class AudioFeaturesWorker
           tempo: spotify_track.tempo,
           time_signature: spotify_track.time_signature,
           valence: spotify_track.valence
-        })
+        }, audio_features_last_checked: Time.now)
+      elsif track.present?
+        track.touch(:audio_features_last_checked)
       end
     end
     
