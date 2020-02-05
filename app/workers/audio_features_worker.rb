@@ -4,8 +4,10 @@ class AudioFeaturesWorker
   sidekiq_options queue: :slow
 
   def perform(track_ids)
-    spotify_tracks = RSpotify::AudioFeatures.find(track_ids)
-    tracks = Track.where(spotify_id: track_ids)
+    tracks = Track.where(spotify_id: track_ids).where(audio_features: {}).where('audio_features_last_checked < ? OR audio_features_last_checked IS NULL', 72.hours.ago)
+    tracks_with_spotify_ids = tracks.pluck(:spotify_id)
+
+    spotify_tracks = RSpotify::AudioFeatures.find(tracks_with_spotify_ids)
     
     spotify_tracks.each do |spotify_track|
       if spotify_track.present?
