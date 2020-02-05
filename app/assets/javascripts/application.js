@@ -173,7 +173,7 @@ $(document).on("turbolinks:load", function() {
             format: "yyyy-mm-dd",
             assumeNearbyYear: true,
             autoclose: true
-          },
+          }
         },
         // {
         //   id: 'genres',
@@ -367,8 +367,12 @@ $(document).on("turbolinks:load", function() {
           type: "integer",
           operators: ["less", "greater", "between"],
           unique: true,
+          validation: {
+            min: 0,
+            max: 100
+          },
           description: "How popular should the songs be? (0-100)"
-        },
+        }
       ],
       /*rules: rules_basic,*/
       allow_groups: 0,

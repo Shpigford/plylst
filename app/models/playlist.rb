@@ -387,11 +387,11 @@ class Playlist < ApplicationRecord
     # POPULARITY
     find_rule(rules, 'popularity').try do |rule|
       if rule['operator'] == 'less'
-        tracks = tracks.where("popularity < ?", rule['value'])
+        tracks = tracks.where("tracks.popularity < ?", rule['value'])
       elsif rule['operator'] == 'greater'
-        tracks = tracks.where("popularity > ?", rule['value'])
+        tracks = tracks.where("tracks.popularity > ?", rule['value'])
       elsif rule['operator'] == 'between'
-        tracks = tracks.where("popularity between ? and ?", rule['value'][0], rule['value'][1])
+        tracks = tracks.where("tracks.popularity between ? and ?", rule['value'][0], rule['value'][1])
       end
     end
 
