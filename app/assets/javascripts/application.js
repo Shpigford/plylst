@@ -173,7 +173,7 @@ $(document).on("turbolinks:load", function() {
             format: "yyyy-mm-dd",
             assumeNearbyYear: true,
             autoclose: true
-          }
+          },
         },
         // {
         //   id: 'genres',
@@ -360,7 +360,15 @@ $(document).on("turbolinks:load", function() {
           plugin: "selectpicker",
           unique: true,
           description: "Should explicit tracks be excluded or included?"
-        }
+        },
+        {
+          id: "popularity",
+          label: "Popularity",
+          type: "integer",
+          operators: ["less", "greater", "between"],
+          unique: true,
+          description: "How popular should the songs be? (0-100)"
+        },
       ],
       /*rules: rules_basic,*/
       allow_groups: 0,
