@@ -28,7 +28,6 @@
   </head>
 
   <body class="<%= yield (:body_class) %>">
-
     <% if user_signed_in? and ((@all_playlists.present? or params[:action] == 'new') and @hide_sidebar != true) -%>
     <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-dark navbar-vibrant" id="sidebar">
        <div class="container-fluid">
@@ -80,6 +79,10 @@
 
           <!-- Push content down -->
           <div class="mt-auto"></div>
+
+          <div class="alert alert-danger" role="alert">
+            The servers are struggling a bit with our newfound fame, and as such, things might be a tad slower than they should. Working hard to fix it!
+          </div>
 
           <div class="text-center mb-5">
             <a href="https://github.com/Shpigford/plylst" class="btn btn-sm btn-outline-dark px-3 py-2"><b><i class="fab fa-github mr-1"></i> PLYLST is open source!</b></a>
