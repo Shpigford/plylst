@@ -1,13 +1,23 @@
 class AddIndexesFollowsStreams < ActiveRecord::Migration[5.2]
   def change
     User.all.find_each do |user|
-      grouped = Follow.where(user_id: user.id).order('updated_at DESC').group_by{|model| [model.user_id,model.track_id] }
+      follows_grouped = Follow.where(user_id: user.id).order('updated_at DESC').group_by{|model| [model.user_id,model.track_id] }
 
-      grouped.values.each do |duplicates|
+      follows_grouped.values.each do |duplicates|
         # the first one we want to keep right?
         first_one = duplicates.shift # or pop for last one
         # if there are any more left, they are duplicates
-        # so delete all of them
+        # so delete all of them4
+        duplicates.each{|double| double.destroy} # duplicates can now be destroyed
+      end
+
+      streams_grouped = Stream.where(user_id: user.id).order('updated_at DESC').group_by{|model| [model.user_id,model.track_id,model.played_at] }
+
+      streams_grouped.values.each do |duplicates|
+        # the first one we want to keep right?
+        first_one = duplicates.shift # or pop for last one
+        # if there are any more left, they are duplicates
+        # so delete all of them4
         duplicates.each{|double| double.destroy} # duplicates can now be destroyed
       end
     end
