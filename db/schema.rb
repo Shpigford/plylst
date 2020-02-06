@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_06_034352) do
+ActiveRecord::Schema.define(version: 2020_02_06_194544) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,6 +103,18 @@ ActiveRecord::Schema.define(version: 2020_02_06_034352) do
     t.text "lyrics"
     t.datetime "lyrics_last_checked_at"
     t.datetime "audio_features_last_checked"
+    t.integer "key"
+    t.integer "mode"
+    t.decimal "tempo"
+    t.decimal "energy"
+    t.decimal "valence"
+    t.decimal "liveness"
+    t.decimal "loudness"
+    t.decimal "speechiness"
+    t.decimal "acousticness"
+    t.decimal "danceability"
+    t.integer "time_signature"
+    t.decimal "instrumentalness"
     t.index "(((audio_features ->> 'acousticness'::text))::numeric)", name: "index_tracks_on_audio_features_acousticness"
     t.index "(((audio_features ->> 'danceability'::text))::numeric)", name: "index_tracks_on_audio_features_danceability"
     t.index "(((audio_features ->> 'energy'::text))::numeric)", name: "index_tracks_on_audio_features_energy"
@@ -111,13 +123,25 @@ ActiveRecord::Schema.define(version: 2020_02_06_034352) do
     t.index "(((audio_features ->> 'speechiness'::text))::numeric)", name: "index_tracks_on_audio_features_speechiness"
     t.index "(((audio_features ->> 'tempo'::text))::numeric)", name: "index_tracks_on_audio_features_tempo"
     t.index "(((audio_features ->> 'valence'::text))::numeric)", name: "index_tracks_on_audio_features_valence"
+    t.index ["acousticness"], name: "index_tracks_on_acousticness"
     t.index ["album_id"], name: "index_tracks_on_album_id"
     t.index ["artist_id"], name: "index_tracks_on_artist_id"
     t.index ["audio_features"], name: "index_tracks_on_audio_features", using: :gin
     t.index ["audio_features_last_checked"], name: "index_tracks_on_audio_features_last_checked"
+    t.index ["danceability"], name: "index_tracks_on_danceability"
+    t.index ["energy"], name: "index_tracks_on_energy"
     t.index ["explicit"], name: "index_tracks_on_explicit"
+    t.index ["instrumentalness"], name: "index_tracks_on_instrumentalness"
+    t.index ["key"], name: "index_tracks_on_key"
+    t.index ["liveness"], name: "index_tracks_on_liveness"
+    t.index ["loudness"], name: "index_tracks_on_loudness"
     t.index ["lyrics_last_checked_at"], name: "index_tracks_on_lyrics_last_checked_at"
+    t.index ["mode"], name: "index_tracks_on_mode"
+    t.index ["speechiness"], name: "index_tracks_on_speechiness"
     t.index ["spotify_id"], name: "index_tracks_on_spotify_id"
+    t.index ["tempo"], name: "index_tracks_on_tempo"
+    t.index ["time_signature"], name: "index_tracks_on_time_signature"
+    t.index ["valence"], name: "index_tracks_on_valence"
   end
 
   create_table "users", force: :cascade do |t|
