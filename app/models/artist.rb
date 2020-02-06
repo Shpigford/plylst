@@ -18,5 +18,7 @@ class Artist < ApplicationRecord
   has_many :albums
   has_many :tracks
 
+  validates :spotify_id, uniqueness: true
+
   include Storext.model(genres: {})
 end
