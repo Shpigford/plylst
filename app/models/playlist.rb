@@ -399,7 +399,7 @@ class Playlist < ApplicationRecord
     if sort.present?
       case sort
       when 'random'
-        tracks = tracks.order("random()")
+        #tracks = tracks.order("random()")
       when 'most_popular'
         tracks = tracks.order("tracks.popularity DESC NULLS LAST")
       when 'least_popular'
