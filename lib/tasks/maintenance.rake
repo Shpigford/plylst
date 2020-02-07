@@ -18,7 +18,6 @@ namespace :maintenance do
   task :update_data_regular => :environment do
     User.active.find_each do |user|
       UpdatePlayDataWorker.set(queue: :slow).perform_async(user.id)
-      BuildUserGenresWorker.set(queue: :slow).perform_async(user.id)
     end
     ProcessAudioFeaturesWorker.set(queue: :slow).perform_async
   end
