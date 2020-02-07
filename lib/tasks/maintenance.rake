@@ -20,7 +20,7 @@ namespace :maintenance do
       UpdatePlayDataWorker.set(queue: :slow).perform_async(user.id)
       BuildUserGenresWorker.set(queue: :slow).perform_async(user.id)
     end
-    #ProcessAudioFeaturesWorker.set(queue: :slow).perform_async
+    ProcessAudioFeaturesWorker.set(queue: :slow).perform_async
   end
 
   desc "Update user data every 2 hours: 0 */2 * * *"
