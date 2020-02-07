@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_06_194544) do
+ActiveRecord::Schema.define(version: 2020_02_07_163126) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,7 +99,6 @@ ActiveRecord::Schema.define(version: 2020_02_06_194544) do
     t.text "preview_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.jsonb "audio_features"
     t.text "lyrics"
     t.datetime "lyrics_last_checked_at"
     t.datetime "audio_features_last_checked"
@@ -115,18 +114,9 @@ ActiveRecord::Schema.define(version: 2020_02_06_194544) do
     t.decimal "danceability"
     t.integer "time_signature"
     t.decimal "instrumentalness"
-    t.index "(((audio_features ->> 'acousticness'::text))::numeric)", name: "index_tracks_on_audio_features_acousticness"
-    t.index "(((audio_features ->> 'danceability'::text))::numeric)", name: "index_tracks_on_audio_features_danceability"
-    t.index "(((audio_features ->> 'energy'::text))::numeric)", name: "index_tracks_on_audio_features_energy"
-    t.index "(((audio_features ->> 'instrumentalness'::text))::numeric)", name: "index_tracks_on_audio_features_instrumentalness"
-    t.index "(((audio_features ->> 'key'::text))::numeric)", name: "index_tracks_on_audio_features_key"
-    t.index "(((audio_features ->> 'speechiness'::text))::numeric)", name: "index_tracks_on_audio_features_speechiness"
-    t.index "(((audio_features ->> 'tempo'::text))::numeric)", name: "index_tracks_on_audio_features_tempo"
-    t.index "(((audio_features ->> 'valence'::text))::numeric)", name: "index_tracks_on_audio_features_valence"
     t.index ["acousticness"], name: "index_tracks_on_acousticness"
     t.index ["album_id"], name: "index_tracks_on_album_id"
     t.index ["artist_id"], name: "index_tracks_on_artist_id"
-    t.index ["audio_features"], name: "index_tracks_on_audio_features", using: :gin
     t.index ["audio_features_last_checked"], name: "index_tracks_on_audio_features_last_checked"
     t.index ["danceability"], name: "index_tracks_on_danceability"
     t.index ["energy"], name: "index_tracks_on_energy"
