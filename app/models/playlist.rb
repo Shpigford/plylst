@@ -647,7 +647,15 @@ class Playlist < ApplicationRecord
         "Yes"
       end
     when "release_date"
-      "#{value[0].to_date.strftime("%b %-d, %Y")} and #{value[1].to_date.strftime("%b %-d, %Y")}"
+      if value[0].scan(/\D/).empty? and (1700..2100).include?(value[0].to_i)
+        release_date_start = "#{value[0]}-01-01"
+      end
+
+      if value[1].scan(/\D/).empty? and (1700..2100).include?(value[1].to_i)
+        release_date_end = "#{value[1]}-12-31"
+      end
+
+      "#{release_date_start.to_date.strftime("%b %-d, %Y")} and #{release_date_end.to_date.strftime("%b %-d, %Y")}"
     when "duration"
       if value.is_a?(Array)
         "#{value[0]} and #{value[1]} seconds"
