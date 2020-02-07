@@ -1,0 +1,5 @@
+# Details for setting these up can be found in the README: https://github.com/Shpigford/plylst#how-to-start
+
+spotify_key: SPOTIFY_KEY
+spotify_secret: SPOTIFY_SECRET_KEY
+genius_access_token: GENIUS_ACCESS_TOKEN

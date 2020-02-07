@@ -18,11 +18,16 @@ spotify_secret: SECRET
 ```
 
 ### Spotify
-You'll need a free Developer account and create your own app, which is also free: https://developer.spotify.com
+You'll need a free Developer account and create your own app, which is free: https://developer.spotify.com
 
 Make sure to set the Redirect URI to `http://localhost:5000/users/auth/spotify/callback`
 
 These will get you the necessary keys for the app to fully function.
+
+### Genius
+If you'd like to pull in lyrics for lyric-based rules, you can create an API key here: https://genius.com/developers
+
+The "Client Access Token" is the key you want. Genius is only required if you want to build/test rules around lyrics.
 
 **3. In the command line, you'll then run the following to set up gems and the database...**
 ```bash
