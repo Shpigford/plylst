@@ -53,7 +53,7 @@ One area that can always use some additional perspective is performance.
 
 You can see what the current painpoints are on Skylight.
 
-**Slow web requests: https://oss.skylight.io/app/applications/2JBLsZt07yjO/recent/30m/endpoints**
+**Slow web requests: https://oss.skylight.io/app/applications/2JBLsZt07yjO/recent/30m/endpoints**  
 **Slow worker requests: https://oss.skylight.io/app/applications/x1STSO2QMwrX/recent/30m/endpoints**
 
 ## License & Copyright
