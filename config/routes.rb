@@ -12,12 +12,7 @@ Rails.application.routes.draw do
     delete 'sign_out', :to => 'devise/sessions#destroy', :as => :destroy_user_session
   end
 
-  resources :tracks do
-    collection do
-      get :search
-    end
-  end
-
+  resources :tracks
   resources :playlists
   
   get 'genres', to: 'pages#genres'

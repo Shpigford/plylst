@@ -6,6 +6,4 @@ class Track < ApplicationRecord
   has_many :streams
 
   validates :spotify_id, uniqueness: true
-
-  include Storext.model(audio_features: {})
 end
