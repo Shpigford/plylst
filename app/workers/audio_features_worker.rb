@@ -4,7 +4,7 @@ class AudioFeaturesWorker
   sidekiq_options queue: :slow
 
   def perform(track_ids)
-    tracks = Track.where(spotify_id: track_ids).where(key: nil).where('audio_features_last_checked < ? OR audio_features_last_checked IS NULL', 72.hours.ago)
+    tracks = Track.where(spotify_id: track_ids, key: nil)
     tracks_with_spotify_ids = tracks.pluck(:spotify_id)
 
     spotify_tracks = RSpotify::AudioFeatures.find(tracks_with_spotify_ids)
@@ -24,7 +24,8 @@ class AudioFeaturesWorker
           speechiness: spotify_track.speechiness,
           tempo: spotify_track.tempo,
           time_signature: spotify_track.time_signature,
-          valence: spotify_track.valence
+          valence: spotify_track.valence,
+          audio_features_last_checked: Time.now
         )
       end
     end
