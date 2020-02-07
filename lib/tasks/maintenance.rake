@@ -41,21 +41,22 @@ namespace :maintenance do
 
   desc "Transition JSONB to first-class columns"
   task :transition_jsonb => :environment do
-    sql = <<-SQL
-      UPDATE tracks
-      SET key = ((audio_features->>'key'))::numeric,
-      mode = ((audio_features->>'mode'))::numeric,
-      tempo = ((audio_features->>'tempo'))::numeric,
-      energy = ((audio_features->>'energy'))::numeric,
-      valence = ((audio_features->>'valence'))::numeric,
-      liveness = ((audio_features->>'liveness'))::numeric,
-      loudness = ((audio_features->>'loudness'))::numeric,
-      speechiness = ((audio_features->>'speechiness'))::numeric,
-      acousticness = ((audio_features->>'acousticness'))::numeric,
-      danceability = ((audio_features->>'danceability'))::numeric,
-      time_signature = ((audio_features->>'time_signature'))::numeric,
-      instrumentalness = ((audio_features->>'instrumentalness'))::numeric;
-    SQL
-    ActiveRecord::Base.connection.execute(sql)
+      Track.where(key: nil).where.not(audio_features: {}).find_each do |track|
+        track.update_attributes(
+          key: track.audio_features['key'],
+          mode: track.audio_features['mode'],
+          tempo: track.audio_features['tempo'],
+          energy: track.audio_features['energy'],
+          valence: track.audio_features['valence'],
+          liveness: track.audio_features['liveness'],
+          loudness: track.audio_features['loudness'],
+          speechiness: track.audio_features['speechiness'],
+          acousticness: track.audio_features['acousticness'],
+          danceability: track.audio_features['danceability'],
+          time_signature: track.audio_features['time_signature'],
+          instrumentalness: track.audio_features['instrumentalness'],
+        )
+        puts "#{track.id} updated"
+      end
   end
 end

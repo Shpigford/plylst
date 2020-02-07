@@ -67,11 +67,11 @@ class Playlist < ApplicationRecord
     # BPM
     find_rule(rules, 'bpm').try do |rule|
       if rule['operator'] == 'less'
-        tracks = tracks.where("(audio_features ->> 'tempo')::numeric < ?", rule['value'])
+        tracks = tracks.where("tempo < ?", rule['value'])
       elsif rule['operator'] == 'greater'
-        tracks = tracks.where("(audio_features ->> 'tempo')::numeric > ?", rule['value'])
+        tracks = tracks.where("tempo > ?", rule['value'])
       elsif rule['operator'] == 'between'
-        tracks = tracks.where("(audio_features ->> 'tempo')::numeric between ? and ?", rule['value'][0], rule['value'][1])
+        tracks = tracks.where("tempo between ? and ?", rule['value'][0], rule['value'][1])
       end
     end
 
@@ -164,12 +164,12 @@ class Playlist < ApplicationRecord
 
     # KEY
     find_rule(rules, 'key').try do |rule|
-      tracks = tracks.where("(audio_features ->> 'key')::numeric = ?", rule['value'])
+      tracks = tracks.where("key = ?", rule['value'])
     end
 
     # MODE
     find_rule(rules, 'mode').try do |rule|
-      tracks = tracks.where("(audio_features ->> 'mode')::numeric = ?", rule['value'])
+      tracks = tracks.where("key = ?", rule['value'])
     end
 
     # DANCEABILITY
@@ -229,11 +229,11 @@ class Playlist < ApplicationRecord
       end
       
       if rule['operator'] == 'less'
-        tracks = tracks.where("(audio_features ->> 'danceability')::numeric < ?", final)
+        tracks = tracks.where("danceability < ?", final)
       elsif rule['operator'] == 'greater'
-        tracks = tracks.where("(audio_features ->> 'danceability')::numeric > ?", start)
+        tracks = tracks.where("danceability > ?", start)
       else
-        tracks = tracks.where("(audio_features ->> 'danceability')::numeric between ? and ?", start, final)
+        tracks = tracks.where("danceability between ? and ?", start, final)
       end
       
     end
@@ -281,11 +281,11 @@ class Playlist < ApplicationRecord
       end
 
       if rule['operator'] == 'less'
-        tracks = tracks.where("(audio_features ->> 'acousticness')::numeric < ?", final)
+        tracks = tracks.where("acousticness < ?", final)
       elsif rule['operator'] == 'greater'
-        tracks = tracks.where("(audio_features ->> 'acousticness')::numeric > ?", start)
+        tracks = tracks.where("acousticness > ?", start)
       else
-        tracks = tracks.where("(audio_features ->> 'acousticness')::numeric between ? and ?", start, final)
+        tracks = tracks.where("acousticness between ? and ?", start, final)
       end
 
     end
@@ -332,11 +332,11 @@ class Playlist < ApplicationRecord
       end
 
       if rule['operator'] == 'less'
-        tracks = tracks.where("(audio_features ->> 'energy')::numeric < ?", final)
+        tracks = tracks.where("energy < ?", final)
       elsif rule['operator'] == 'greater'
-        tracks = tracks.where("(audio_features ->> 'energy')::numeric > ?", start)
+        tracks = tracks.where("energy > ?", start)
       else
-        tracks = tracks.where("(audio_features ->> 'energy')::numeric between ? and ?", start, final)
+        tracks = tracks.where("energy between ? and ?", start, final)
       end
     end
 
@@ -350,7 +350,7 @@ class Playlist < ApplicationRecord
         start = 0.8
         final = 1.0
       end
-      tracks = tracks.where("(audio_features ->> 'instrumentalness')::numeric between ? and ?", start, final)
+      tracks = tracks.where("instrumentalness between ? and ?", start, final)
     end
 
     # SPEECHINESS
@@ -363,7 +363,7 @@ class Playlist < ApplicationRecord
         start = 0.667
         final = 1.0
       end
-      tracks = tracks.where("(audio_features ->> 'speechiness')::numeric between ? and ?", start, final)
+      tracks = tracks.where("speechiness between ? and ?", start, final)
     end
 
     # EXPLICIT
@@ -381,7 +381,7 @@ class Playlist < ApplicationRecord
         start = 0.51
         final = 1.0
       end
-      tracks = tracks.where("(audio_features ->> 'valence')::numeric between ? and ?", start, final)
+      tracks = tracks.where("valence between ? and ?", start, final)
     end
 
     # POPULARITY
