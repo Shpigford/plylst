@@ -17,7 +17,7 @@ class GetMoreArtistsWorker
           days = 10
       end
 
-      GetMoreArtistsTopTracksWorker.perform_async(artist.spotify_id) if artist.last_checked_at.blank? || artist.last_checked_at < days.day.ago
+      GetMoreArtistsTopTracksWorker.set(queue: :slow).perform_async(artist.spotify_id) if artist.last_checked_at.blank? || artist.last_checked_at < days.day.ago
     end
   end
 end

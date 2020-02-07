@@ -13,7 +13,7 @@ class GetMoreCategoriesWorker
       
       if playlists.present?
         playlists.each do |playlist|
-          GetMorePlaylistsWorker.perform_async(playlist.owner.id, playlist.id)
+          GetMorePlaylistsWorker.set(queue: :slow).perform_async(playlist.owner.id, playlist.id)
         end
       end
       sleep(10.seconds)
