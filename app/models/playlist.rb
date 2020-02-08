@@ -649,10 +649,14 @@ class Playlist < ApplicationRecord
     when "release_date"
       if value[0].scan(/\D/).empty? and (1700..2100).include?(value[0].to_i)
         release_date_start = "#{value[0]}-01-01"
+      else
+        release_date_start = value[0]
       end
 
       if value[1].scan(/\D/).empty? and (1700..2100).include?(value[1].to_i)
         release_date_end = "#{value[1]}-12-31"
+      else
+        release_date_end = value[1]
       end
 
       "#{release_date_start.to_date.strftime("%b %-d, %Y")} and #{release_date_end.to_date.strftime("%b %-d, %Y")}"
