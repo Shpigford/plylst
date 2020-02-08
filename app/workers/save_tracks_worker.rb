@@ -67,22 +67,16 @@ class SaveTracksWorker
     # If this worker was called with 'added', we're adding these tracks to the User's library as a track they have saved/followed
     # So, we need to check for that in the Follow table and update accordingly
     if kind == 'added'
-      # Make the Spotify API call to get all of the tracks
-      spotify_tracks = RSpotify::Track.find(track_ids)
       tracks = Track.where(spotify_id: track_ids)
+      follows = []
 
-      # Looop through the returned tracks
-      spotify_tracks.each do |spotify_track|
-        track = tracks.find{|a| a.spotify_id == spotify_track.id}
-
-        if track.present?
-          begin
-            added_at = tracks_with_date.select{|(x, y)| x == spotify_track.id}.first[1].to_time
-            Follow.create(user: user, track: track, added_at: added_at)
-          rescue
-          end
-        end
+      tracks_with_date.each do |track_with_date|
+        track = tracks.find{|a| a.spotify_id == track_with_date.first}
+        time = track_with_date.last.to_time
+        follows << Follow.new(user: user, track: track, added_at: time)
       end
+
+      Follow.import follows, on_duplicate_key_update: {conflict_target: [:user_id, :track_id], columns: []}
     end
 
     # If this track was created from the "RecentlyStreamedWorker" worker, be sure to add that stream
