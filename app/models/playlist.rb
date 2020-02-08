@@ -401,17 +401,17 @@ class Playlist < ApplicationRecord
       when 'random'
         #tracks = tracks.order("random()")
       when 'most_popular'
-        tracks = tracks.order("tracks.popularity DESC NULLS LAST")
+        tracks = tracks.order("tracks.popularity DESC")
       when 'least_popular'
-        tracks = tracks.order("tracks.popularity ASC NULLS LAST")
+        tracks = tracks.order("tracks.popularity ASC")
       when 'most_often_played'
-        tracks = tracks.order("follows.plays DESC NULLS LAST") if full_catalog.blank?
+        tracks = tracks.order("follows.plays DESC") if full_catalog.blank?
       when 'least_often_played'
-        tracks = tracks.order("follows.plays ASC NULLS LAST") if full_catalog.blank?
+        tracks = tracks.order("follows.plays ASC") if full_catalog.blank?
       when 'most_recently_added'
-        tracks = tracks.order("follows.added_at DESC NULLS LAST") if full_catalog.blank?
+        tracks = tracks.order("follows.added_at DESC") if full_catalog.blank?
       when 'least_recently_added'
-        tracks = tracks.order("follows.added_at ASC NULLS LAST") if full_catalog.blank?
+        tracks = tracks.order("follows.added_at ASC") if full_catalog.blank?
       when 'release_date_desc'
         tracks = tracks.joins(:album).order("albums.release_date DESC")
       when 'release_date_asc'
