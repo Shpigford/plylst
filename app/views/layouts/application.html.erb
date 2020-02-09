@@ -52,7 +52,7 @@
             <!-- Toggle -->
             <a href="#" id="sidebarIcon" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <div class="avatar avatar-sm avatar-online">
-                <%= image_tag gravatar_url(current_user.email, 250), alt: "", class: 'avatar-img rounded-circle' %>
+                <%= image_tag gravatar_url(current_user, 250), alt: "", class: 'avatar-img rounded-circle' %>
               </div>
             </a>
 
@@ -91,7 +91,7 @@
               <!-- Toggle -->
               <a href="#" id="sidebarIconCopy" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="avatar avatar-sm avatar-online">
-                  <%= image_tag gravatar_url(current_user.email, 250), alt: "", class: 'avatar-img rounded-circle' %>
+                  <%= image_tag gravatar_url(current_user, 250), alt: "", class: 'avatar-img rounded-circle' %>
                 </div>
               </a>
 

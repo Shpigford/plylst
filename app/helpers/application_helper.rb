@@ -3,9 +3,10 @@ module ApplicationHelper
     content_for(:title) { page_title }
   end
   
-  def gravatar_url(email, size)
-    gravatar = Digest::MD5::hexdigest(email).downcase
-    url = "https://gravatar.com/avatar/#{gravatar}.png?s=#{size}"
+  def gravatar_url(user, size)
+    id = user.email.present? ? user.email : user.id
+    gravatar = Digest::MD5::hexdigest(id.to_s).downcase
+    url = "https://gravatar.com/avatar/#{gravatar}.png?s=#{size}&d=mp"
   end
 
   def format_ms(duration)
