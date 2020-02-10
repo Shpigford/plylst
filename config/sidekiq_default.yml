@@ -1,0 +1,5 @@
+:max_retries: 10
+:queues:
+  - [default, 20]
+  - [slow, 10]
+  - lyrics
