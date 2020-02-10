@@ -1,3 +1,4 @@
+:max_retries: 10
 :queues:
   - [critical, 40]
   - [default, 20]
