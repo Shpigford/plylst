@@ -12,7 +12,7 @@ class RecentlyStreamedWorker
 
       begin
         recent_tracks = spotify.recently_played(limit: 50)
-      rescue RestClient::Unauthorized => e
+      rescue RestClient::Unauthorized, RestClient::BadRequest => e
         user.increment!(:authorization_fails)
 
         # Deactivate user if we don't have the right permissions and if their authorization has failed a crap ton of times
