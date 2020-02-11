@@ -15,7 +15,7 @@ class ProcessTracksWorker
         user.increment!(:authorization_fails)
     
         # Deactivate user if we don't have the right permissions and if their authorization has failed a crap ton of times
-        user.update_attribute(:active, false) if user.authorization_fails > 10
+        user.update_attribute(:active, false) if user.authorization_fails >= 10
       rescue RestClient::BadGateway => e
       end
     
