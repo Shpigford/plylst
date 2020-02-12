@@ -47,7 +47,7 @@ class User < ApplicationRecord
     end
 
     if self.genres.present?
-      (Array(self.genres) + pop_genres).uniq.sort_by(&:downcase)
+      (JSON.parse(self.genres) + pop_genres).uniq.sort_by(&:downcase)
     else
       pop_genres.uniq.sort_by(&:downcase)
     end
