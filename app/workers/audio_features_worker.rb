@@ -12,7 +12,7 @@ class AudioFeaturesWorker
     spotify_tracks.each do |spotify_track|
       if spotify_track.present?
         track = tracks.find{|a| a.spotify_id == spotify_track.id}
-        track.update_attributes(
+        track.update_columns(
           acousticness: spotify_track.acousticness,
           danceability: spotify_track.danceability,
           energy: spotify_track.energy,
