@@ -22,43 +22,39 @@ class BuildPlaylistsWorker
       end
 
       user.playlists.find_each do |playlist|
+        if spotify_playlists.present?
+          existing_playlist = spotify_playlists.select{|key| key.name == "PLYLST: #{playlist.name}"}.first
+        else
+          existing_playlist = nil
+        end
 
-        
-          if spotify_playlists.present?
-            existing_playlist = spotify_playlists.select{|key| key.name == "PLYLST: #{playlist.name}"}
-          else
-            existing_playlist = nil
-          end
+        total = 0
 
-          total = 0
-
-          if existing_playlist.present?
-            existing_playlist = RSpotify::Playlist.find(spotify.id, existing_playlist.first.id)
-
-            # Thanks to Spotify API limits, we need to divide the remove_tracks! call in to groups of 100
-            total = existing_playlist.total
-            times_to_loop = (total.to_f / 100).ceil
-
-            if total <= 0 or playlist.auto_update.present?
-              begin
-                times_to_loop.times { existing_playlist.remove_tracks!(existing_playlist.tracks) }
-              rescue RestClient::BadRequest => e
-              end
-            end
-            existing_playlist.change_details!(description: "Created with PLYLST.app! #{playlist.translated_rules}.", public: playlist.public)
-          else
-            existing_playlist = spotify.create_playlist!("PLYLST: #{playlist.name}", public: playlist.public)
-          end
-
-          tracks = playlist.filtered_tracks(user).pluck(:spotify_id)
-          tracks_formatted = tracks.map{|x| x.prepend('spotify:track:')}
+        if existing_playlist.present?
+          # Thanks to Spotify API limits, we need to divide the remove_tracks! call in to groups of 100
+          total = existing_playlist.total
+          times_to_loop = (total.to_f / 100).ceil
 
           if total <= 0 or playlist.auto_update.present?
-            # Divide tracks in to groups of 100, due to Spotify API limit
-            tracks_formatted.each_slice(100) do |group|
-              existing_playlist.add_tracks!(group)
+            begin
+              times_to_loop.times { existing_playlist.remove_tracks!(existing_playlist.tracks) }
+            rescue RestClient::BadRequest => e
             end
           end
+          existing_playlist.change_details!(description: "Created with PLYLST.app! #{playlist.translated_rules}.", public: playlist.public)
+        else
+          existing_playlist = spotify.create_playlist!("PLYLST: #{playlist.name}", public: playlist.public)
+        end
+
+        tracks = playlist.filtered_tracks(user).pluck(:spotify_id)
+        tracks_formatted = tracks.map{|x| x.prepend('spotify:track:')}
+
+        if total <= 0 or playlist.auto_update.present?
+          # Divide tracks in to groups of 100, due to Spotify API limit
+          tracks_formatted.each_slice(100) do |group|
+            existing_playlist.add_tracks!(group)
+          end
+        end
       end
     end
   end
