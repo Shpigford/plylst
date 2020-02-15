@@ -11,7 +11,6 @@ class Playlist < ApplicationRecord
     rules.find{|r| r['id'] == rule_name} if rules.present?
   end
 
-
   def filtered_tracks(current_user)
     if full_catalog.present?
       tracks = Track.all
