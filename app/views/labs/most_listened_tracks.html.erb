@@ -29,7 +29,6 @@
                   </tr>
                 </thead>
                 <tbody class="list">
-                <% Rails.cache.fetch("most_listened_tracks", expires_in: 24.hours) do %>
                   <% if @tracks.present? %>
                   <% @tracks.each do |track| %>
                   <% track = track.track %>
@@ -51,7 +50,6 @@
                   </tr>
                   <% end %>
                   <% end %>
-                <% end %>
                 </tbody>
               </table>
             </div>
