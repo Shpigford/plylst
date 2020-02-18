@@ -1,0 +1,63 @@
+<% title "Most Listened Tracks" %>
+<% content_for :head do %>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<% end %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-12 p-5 text-center">
+      <%= link_to image_tag('logo-full.svg', class: 'img-fluid mt-n5 mb-2 pt-5', style: 'max-width:275px'), root_path, class: '' %>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body p-5">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <h1 class="display-1 mb-0 text-center">Most Listened Tracks</h1>
+          <h2 class="text-muted text-center">The tracks folks are listening to the most!</h2>
+          <div class="card">
+            <div class="table-responsive">
+              <table class="table table-sm table-nowrap card-table">
+                <thead>
+                  <tr>
+                    <th colspan="2">Song</th>
+                    <th>Artist</th>
+                    <th>Album</th>
+                    <th><i class="fal fa-clock"></i></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody class="list">
+                <% Rails.cache.fetch("most_listened_tracks", expires_in: 24.hours) do %>
+                  <% if @tracks.present? %>
+                  <% @tracks.each do |track| %>
+                  <% track = track.track %>
+                  <tr>
+                    <td colspan="2">
+                      <div class="avatar avatar-xs mr-2"><%= image_tag track.album.image, class: 'avatar-img rounded-sm' if track.album.image.present? %></div>
+                      <span class="align-middle text-truncate d-inline-block" style="max-width:200px;"><%= track.name %> </span>
+                    </td>
+                    <td>
+                      <%= track.artist.name %>
+                    </td>
+                    <td>
+                      <span class="align-middle text-truncate d-inline-block" style="max-width:200px;"><%= track.album.name %></span>
+                    </td>
+                    <td>
+                      <%= format_ms(track.duration) %>
+                    </td>
+                    <td><span tabindex="0" data-trigger="focus" data-toggle="popover"data-html="true" data-content="<% if track.artist.genres.present? %><h3 class='popover-header'>Genres</h3><div class='popover-body'><%= track.artist.genres.join(', ') %></div><br><% end %><% if track.key.present? %><h3 class='popover-header'>Audio Features</h3><div class='popover-body'><%= human_readable(track.slice(:key,:mode,:tempo,:energy,:valence,:liveness,:loudness,:speechiness,:acousticness,:danceability,:time_signature,:instrumentalness).as_json) %></div><% end %>"><i class="fas fa-info-circle"></i></span></td>
+                  </tr>
+                  <% end %>
+                  <% end %>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
