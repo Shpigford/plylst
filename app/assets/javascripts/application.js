@@ -23,6 +23,12 @@
 //= require_tree .
 
 $(document).on("turbolinks:load", function() {
+  $("#genre_search").bind("keypress", function(e) {
+    if (e.keyCode == 13) {
+      return false;
+    }
+  });
+
   var options = {
     valueNames: ["name", "artist_count"],
     page: 50,
