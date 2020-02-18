@@ -14,7 +14,13 @@ Rails.application.routes.draw do
 
   resources :tracks
   resources :playlists
-  
+  resources :labs do
+    collection do
+      get 'most-listened-tracks'
+    end
+  end
+
   get 'genres', to: 'pages#genres'
+  
   root to: "pages#index"
 end

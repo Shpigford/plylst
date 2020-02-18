@@ -25,6 +25,7 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <script data-search-pseudo-elements src="https://kit.fontawesome.com/3ebaf2334e.js"></script>
+    <%= yield :head %>
   </head>
 
   <body class="<%= yield (:body_class) %>">
