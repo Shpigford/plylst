@@ -19,11 +19,11 @@
 
 class User < ApplicationRecord
   has_many :follows, dependent:  :destroy
-  has_many :tracks, through: :follows
   has_many :albums, through: :tracks
-  has_many :artists, through: :tracks
   has_many :streams
   has_many :playlists
+  has_many :tracks, through: :follows
+  has_many :artists, through: :tracks, join_table: :follows
 
   scope :active, -> {where(active:true)}
 
