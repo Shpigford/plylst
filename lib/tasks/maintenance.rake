@@ -4,7 +4,6 @@ namespace :maintenance do
     GetMoreCategoriesWorker.set(queue: :slow).perform_async
     GetMoreFeaturedWorker.set(queue: :slow).perform_async
     GetMoreNewReleasesWorker.set(queue: :slow).perform_async
-    GetMoreArtistsWorker.set(queue: :slow).perform_async
   end
 
   desc "Pull lyrics: 0 3 * * *"
@@ -29,13 +28,15 @@ namespace :maintenance do
     end
   end
 
-  desc "Update user data daily: 0 */2 * * *"
+  desc "Update data daily: 0 */2 * * *"
   task :update_data_daily => :environment do
     User.active.find_each do |user|
       ProcessAccountWorker.set(queue: :slow).perform_async(user.id)
       BuildPlaylistsWorker.set(queue: :default).perform_async(user.id)
       CheckTracksWorker.set(queue: :slow).perform_async(user.id)
     end
+    
+    UpdateArtistDataWorker.set(queue: :slow).perform_async
   end
 
   desc "Transition JSONB to first-class columns"
