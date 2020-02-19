@@ -15,6 +15,7 @@ class GetUpdatedArtistsDataWorker
       spotify_genres = spotify_artist.genres.map(&:downcase)
       
       Artist.find_by(spotify_id: spotify_artist.id).update_columns(
+        name: spotify_artist.name,
         followers: spotify_artist.followers['total'], 
         popularity: spotify_artist.popularity, 
         images: image,
