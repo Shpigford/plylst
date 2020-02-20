@@ -60,6 +60,7 @@
                     </tr>
                   </thead>
                   <tbody class="list">
+                    <% cache(['v1', "latest_streams-#{current_user.id}"], expires_in: 2.hours) do %>
                     <% @latest_streams.each do |stream| %>
                     <tr>
                       <td colspan="2">
@@ -80,6 +81,7 @@
                       </td>
                       <td><span tabindex="0" data-trigger="focus" data-toggle="popover"data-html="true" data-content="<% if stream.track.artist.genres.present? %><h3 class='popover-header'>Genres</h3><div class='popover-body'><%= stream.track.artist.genres.join(', ') %></div><br><% end %><% if stream.track.key.present? %><h3 class='popover-header'>Audio Features</h3><div class='popover-body'><%= human_readable(stream.track.slice(:key,:mode,:tempo,:energy,:valence,:liveness,:loudness,:speechiness,:acousticness,:danceability,:time_signature,:instrumentalness).as_json) %></div><% end %>"><i class="fas fa-info-circle"></i></span></td>
                     </tr>
+                    <% end %>
                     <% end %>
                   </tbody>
                 </table>
