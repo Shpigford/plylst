@@ -26,8 +26,8 @@
 <hr>
 <h2>Source</h2>
 <div class="form-group row">
-  <div class="col-sm-10">
-    <%= f.select(:catalog, options_for_select([['Only songs I\'ve liked', 'songs'], ['Any track from artists I\'ve liked', 'artists'], ['Full Spotify catalog', 'full']], @playlist.catalog), {}, { class: 'custom-select custom-select-lg mb-1'}) %>
+  <div class="col-sm-12">
+    <%= f.select(:catalog, options_for_select([['Only songs I\'ve liked', 'songs'], ['Any songs from artists I\'ve liked', 'artists'], ['Full Spotify catalog', 'full']], @playlist.catalog), {}, { class: 'custom-select custom-select-lg mb-1'}) %>
     <small class="text-muted">Select songs from just your library or the full Spotify catalog?</small>
   </div>
 </div>
