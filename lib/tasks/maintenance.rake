@@ -59,4 +59,12 @@ namespace :maintenance do
         puts "#{track.id} updated"
       end
   end
+  
+  desc "Transition catalog column"
+  task :transition_catalog => :environment do
+    Playlist.all.each do |playlist|
+      catalog = playlist.full_catalog.present? ? 'full' : 'songs'
+      playlist.update_attribute(:catalog, catalog)
+    end
+  end
 end

@@ -25,7 +25,7 @@ class PlaylistsController < ApplicationController
   def show
     @playlist = current_user.playlists.find(params[:id])
 
-    if @playlist.full_catalog.present?
+    if @playlist.catalog == 'full'
       @tracks =  @playlist.filtered_tracks(current_user).includes(:album, :artist)
     else
       @tracks =  @playlist.filtered_tracks(current_user).includes(:album, :artist, :follows)
@@ -60,6 +60,6 @@ class PlaylistsController < ApplicationController
 
   private
     def playlist_params
-      params.require(:playlist).permit(:name, :limit, :sort, :full_catalog, :auto_update, :public, filters: {})
+      params.require(:playlist).permit(:name, :limit, :sort, :catalog, :auto_update, :public, filters: {})
     end
 end

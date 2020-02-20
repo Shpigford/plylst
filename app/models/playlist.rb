@@ -12,8 +12,10 @@ class Playlist < ApplicationRecord
   end
 
   def filtered_tracks(current_user)
-    if full_catalog.present?
+    if catalog == 'full'
       tracks = Track.all
+    elsif catalog == 'artists'
+      tracks = Track.where(artist_id: current_user.artists.group(:id).pluck(:id))
     else
       tracks = current_user.tracks.where('follows.active = ?', true)
     end
@@ -75,7 +77,7 @@ class Playlist < ApplicationRecord
     end
 
     # DAYS AGO
-    if full_catalog.blank?
+    if catalog == 'songs'
       find_rule(rules, 'days_ago').try do |rule|
         if rule['operator'] == 'less'
           tracks = tracks.where('follows.added_at > ?', rule['value'].days.ago).order('follows.added_at ASC')
@@ -87,18 +89,24 @@ class Playlist < ApplicationRecord
 
     # RELEASE DATE
     find_rule(rules, 'release_date').try do |rule|
-      release_date_start = rule['value'][0]
-      release_date_end = rule['value'][1]
+      if rule['operator'] == 'less'
+        tracks = tracks.joins(:album).where('release_date >= ?', rule['value'].to_i.days.ago)
+      elsif rule['operator'] == 'greater'
+        tracks = tracks.joins(:album).where('release_date <= ?', rule['value'].to_i.days.ago)
+      elsif rule['operator'] == 'between'
+        release_date_start = rule['value'][0]
+        release_date_end = rule['value'][1]
 
-      if release_date_start.scan(/\D/).empty? and (1700..2100).include?(release_date_start.to_i)
-        release_date_start = "#{release_date_start}-01-01"
+        if release_date_start.scan(/\D/).empty? and (1700..2100).include?(release_date_start.to_i)
+          release_date_start = "#{release_date_start}-01-01"
+        end
+  
+        if release_date_end.scan(/\D/).empty? and (1700..2100).include?(release_date_end.to_i)
+          release_date_end = "#{release_date_end}-12-31"
+        end
+
+        tracks = tracks.joins(:album).where('release_date >= ? AND release_date <= ?', release_date_start, release_date_end)
       end
-
-      if release_date_end.scan(/\D/).empty? and (1700..2100).include?(release_date_end.to_i)
-        release_date_end = "#{release_date_end}-12-31"
-      end
-
-      tracks = tracks.joins(:album).where('release_date >= ? AND release_date <= ?', release_date_start, release_date_end)
     end
 
     # GENRES
@@ -113,7 +121,7 @@ class Playlist < ApplicationRecord
     end
 
     # PLAYS
-    if full_catalog.blank?
+    if catalog == 'songs'
       find_rule(rules, 'plays').try do |rule|
         if rule['value'].kind_of?(Array)
           plays_start = rule['value'][0] * 1000
@@ -151,7 +159,7 @@ class Playlist < ApplicationRecord
     end
 
     # DAYS SINCE LAST PLAYED
-    if full_catalog.blank?
+    if catalog == 'songs'
       find_rule(rules, 'last_played_days_ago').try do |rule|
         if rule['operator'] == 'less'
           tracks = tracks.where('follows.last_played_at < ?', rule['value'].days.ago).order('follows.last_played_at ASC')
@@ -404,13 +412,13 @@ class Playlist < ApplicationRecord
       when 'least_popular'
         tracks = tracks.order("tracks.popularity ASC")
       when 'most_often_played'
-        tracks = tracks.order("follows.plays DESC") if full_catalog.blank?
+        tracks = tracks.order("follows.plays DESC") if catalog == 'songs'
       when 'least_often_played'
-        tracks = tracks.order("follows.plays ASC") if full_catalog.blank?
+        tracks = tracks.order("follows.plays ASC") if catalog == 'songs'
       when 'most_recently_added'
-        tracks = tracks.order("follows.added_at DESC") if full_catalog.blank?
+        tracks = tracks.order("follows.added_at DESC") if catalog == 'songs'
       when 'least_recently_added'
-        tracks = tracks.order("follows.added_at ASC") if full_catalog.blank?
+        tracks = tracks.order("follows.added_at ASC") if catalog == 'songs'
       when 'release_date_desc'
         tracks = tracks.joins(:album).order("albums.release_date DESC")
       when 'release_date_asc'
@@ -646,19 +654,23 @@ class Playlist < ApplicationRecord
         "Yes"
       end
     when "release_date"
-      if value[0].scan(/\D/).empty? and (1700..2100).include?(value[0].to_i)
-        release_date_start = "#{value[0]}-01-01"
-      else
-        release_date_start = value[0]
-      end
+      if value.is_a?(Array)
+        if value[0].scan(/\D/).empty? and (1700..2100).include?(value[0].to_i)
+          release_date_start = "#{value[0]}-01-01"
+        else
+          release_date_start = value[0]
+        end
 
-      if value[1].scan(/\D/).empty? and (1700..2100).include?(value[1].to_i)
-        release_date_end = "#{value[1]}-12-31"
-      else
-        release_date_end = value[1]
-      end
+        if value[1].scan(/\D/).empty? and (1700..2100).include?(value[1].to_i)
+          release_date_end = "#{value[1]}-12-31"
+        else
+          release_date_end = value[1]
+        end
 
-      "#{release_date_start.to_date.strftime("%b %-d, %Y")} and #{release_date_end.to_date.strftime("%b %-d, %Y")}"
+        "#{release_date_start.to_date.strftime("%b %-d, %Y")} and #{release_date_end.to_date.strftime("%b %-d, %Y")}"
+      else
+        "#{value} days ago"
+      end
     when "duration"
       if value.is_a?(Array)
         "#{value[0]} and #{value[1]} seconds"

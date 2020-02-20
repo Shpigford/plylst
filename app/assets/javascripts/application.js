@@ -171,7 +171,7 @@ $(document).on("turbolinks:load", function() {
           id: "release_date",
           label: "Release Date",
           type: "date",
-          operators: ["between"],
+          operators: ["between", "less", "greater"],
           unique: true,
           description: "When were the tracks released?",
           plugin: "datepicker",
@@ -413,17 +413,36 @@ $(document).on("turbolinks:load", function() {
   }
 
   $("#builder").on(
-    "afterUpdateRuleValue.queryBuilder afterUpdateRuleFilter.queryBuilder afterUpdateRuleOperator.queryBuilder afterUpdateGroupCondition.queryBuilder afterDeleteRule.queryBuilder afterDeleteGroup.queryBuilder",
+    "afterUpdateRuleValue.queryBuilder afterUpdateRuleFilter.queryBuilder afterUpdateGroupCondition.queryBuilder afterDeleteRule.queryBuilder afterDeleteGroup.queryBuilder afterUpdateRuleOperator.queryBuilder",
     function(e, rule) {
-      console
-        .log
-        //$("#builder").queryBuilder("getRules", { allow_invalid: true })
-        ();
       $("#playlist_filters").val(
         JSON.stringify(
           $("#builder").queryBuilder("getRules", { skip_empty: true })
         )
       );
+
+      if (rule.filter.id == "release_date") {
+        var $input = rule.$el.find(
+          $.fn.queryBuilder.constructor.selectors.rule_value
+        );
+
+        if (rule.operator.type == "less" || rule.operator.type == "greater") {
+          $input.prop({ type: "number" }).datepicker("destroy");
+          $input
+            .parent()
+            .find("span")
+            .remove();
+          $input.parent().append("<span class='rule-text'>days ago</span>");
+        }
+
+        if (rule.operator.type == "between") {
+          $input.prop({ type: "date" }).datepicker({
+            format: "dd-mm-yyyy",
+            assumeNearbyYear: true,
+            autoclose: true
+          });
+        }
+      }
     }
   );
 });

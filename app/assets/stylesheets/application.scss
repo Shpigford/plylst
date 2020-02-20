@@ -156,6 +156,9 @@
 .query-builder {
   width: 100% !important;
   display: block !important;
+  .rule-text {
+    margin-left: 10px;
+  }
   .rules-group-header {
     margin-top: 20px;
   }
