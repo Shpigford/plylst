@@ -1,4 +1,6 @@
 class Playlist < ApplicationRecord
+  include Hashid::Rails
+  
   belongs_to :user
 
   validates :name, presence: true

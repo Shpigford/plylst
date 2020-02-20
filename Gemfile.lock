@@ -144,6 +144,10 @@ GEM
       ffi (~> 1.0)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    hashid-rails (1.4.0)
+      activerecord (>= 4.0)
+      hashids (~> 1.0)
+    hashids (1.0.5)
     hashie (3.6.0)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
@@ -375,6 +379,7 @@ DEPENDENCIES
   figaro
   foreman
   genius
+  hashid-rails (~> 1.0)
   httparty
   jbuilder (~> 2.5)
   jquery-rails

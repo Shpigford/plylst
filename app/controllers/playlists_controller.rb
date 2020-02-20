@@ -23,7 +23,7 @@ class PlaylistsController < ApplicationController
   end
 
   def show
-    @playlist = current_user.playlists.find(params[:id])
+    @playlist = current_user.playlists.find_by_hashid(params[:id])
 
     if @playlist.catalog == 'full'
       @tracks =  @playlist.filtered_tracks(current_user).includes(:album, :artist)
@@ -37,11 +37,11 @@ class PlaylistsController < ApplicationController
   end
 
   def edit
-    @playlist = current_user.playlists.find(params[:id])
+    @playlist = current_user.playlists.find_by_hashid(params[:id])
   end
 
   def update
-    @playlist = current_user.playlists.find(params[:id])
+    @playlist = current_user.playlists.find_by_hashid(params[:id])
 
     params[:playlist][:filters] = JSON.parse(params[:playlist][:filters])
 
@@ -53,7 +53,7 @@ class PlaylistsController < ApplicationController
   end
 
   def destroy
-    @playlist = current_user.playlists.find(params[:id])
+    @playlist = current_user.playlists.find_by_hashid(params[:id])
     @playlist.destroy
     redirect_to root_path, notice: "Deleted that for you!"
   end

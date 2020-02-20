@@ -40,6 +40,7 @@ gem 'nokogiri'
 gem 'httparty'
 gem "colorize"          # ability to colorize output strings
 gem "skylight"
+gem "hashid-rails", "~> 1.0" # Slightly obfuscated playlist IDs
 
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
