@@ -126,7 +126,8 @@ $(document).on("turbolinks:load", function() {
             "ends_with"
           ],
           unique: true,
-          description: "Text the track name contains"
+          description:
+            "Text the track name contains. Use a pipe to include multiple artists: <code>love|tears|pugs</code>."
         },
         {
           id: "artist_name",
@@ -141,7 +142,8 @@ $(document).on("turbolinks:load", function() {
             "ends_with"
           ],
           unique: true,
-          description: "Text the artist name contains"
+          description:
+            "Text the artist name contains. Use a pipe to include multiple artists: <code>Taylor Swift|Bob Dylan|Justin Bieber</code>."
         },
         {
           id: "lyrics",
