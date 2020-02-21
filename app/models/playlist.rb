@@ -443,7 +443,50 @@ class Playlist < ApplicationRecord
   end
 
   def translated_rules
-    filters['rules'].to_a.map { |item| "#{translate_field(item['field'])} #{translate_operator(item['operator'])} #{translate_value(item['field'], item['value'])}" }.join(", ")
+    # Rules
+    rules = filters['rules'].to_a.map { |item| "#{translate_field(item['field'])} #{translate_operator(item['operator'])} #{translate_value(item['field'], item['value'])}" }.join(", ")
+    
+    # Source
+    source = case catalog
+    when 'songs'
+      "only songs I've liked"
+    when 'artists'
+      "any songs from artists I've liked"
+    when 'full'
+      "the full Spotify catalog"
+    end
+
+    # Limt & Sorting
+    [['Random','random'], ['Most Popular', 'most_popular'], ['Least Popular', 'least_popular'], ['Most Played', 'most_often_played'], ['Least Played', 'least_often_played'], ['Most Recently Added', 'most_recently_added'], ['Least Recently Added', 'least_recently_added'], ['Release Date - Ascending', 'release_date_asc'], ['Release Date - Descending', 'release_date_desc']]
+
+    sorting = case sort
+    when 'random'
+      "randomly"
+    when 'most_popular'
+      "by most popular"
+    when 'least_popular'
+      "by least popular"
+    when 'most_often_played'
+      "by most often played"
+    when 'least_often_played'
+      "by least often played"
+    when 'most_recently_added'
+      "by most recently added"
+    when 'least_recently_added'
+      "by least recently added"
+    when 'release_date_asc'
+      "by release date (ascending)"
+    when 'release_date_desc'
+      "by release date (descending)"
+    end
+
+    output = ''
+    output << "#{rules}. " if rules.present?
+    output << "Uses #{source}. " if source.present?
+    output << "Sorted #{sorting}. " if sorting.present?
+    output << "Limited to #{limit} songs." if limit.present?
+
+    output
   end
 
   def translate_field(field)
@@ -635,12 +678,6 @@ class Playlist < ApplicationRecord
           "Insane"
         end
       end
-
-
-      
-
-
-
     when "instrumentalness"
       case value
       when 0 

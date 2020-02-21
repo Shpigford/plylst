@@ -41,7 +41,7 @@ class BuildPlaylistsWorker
             rescue RestClient::BadRequest => e
             end
           end
-          existing_playlist.change_details!(description: "Created with PLYLST.app! #{playlist.translated_rules}.", public: playlist.public)
+          existing_playlist.change_details!(description: "Created with PLYLST.app! #{playlist.translated_rules}", public: playlist.public)
         else
           existing_playlist = spotify.create_playlist!("PLYLST: #{playlist.name}", public: playlist.public)
         end
