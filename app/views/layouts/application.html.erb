@@ -110,7 +110,7 @@
     </nav>
     <% end -%>
 
-    <% if Rails.env.production? and user_signed_in? %>
+    <% if user_signed_in? %>
     <div class="feedback">
       <a href="#"><span>👋</span></a>
       <div class="form">

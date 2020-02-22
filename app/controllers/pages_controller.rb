@@ -10,7 +10,7 @@ class PagesController < ApplicationController
   end
 
   def contact
-    FeedbackMailer.with(user: current_user, message: params[:message]).feedback_email.deliver
+    FeedbackMailer.with(user: current_user, message: params[:message]).feedback_email.deliver if params[:message].present?
   end
 
   def genres

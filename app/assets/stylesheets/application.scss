@@ -280,7 +280,15 @@
 .sort {
   cursor: pointer;
 }
-
+.feedback_active {
+  background: transparent;
+  position: fixed;
+  z-index: 9000;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
 .feedback {
   position: fixed;
   bottom: 20px;
@@ -291,7 +299,7 @@
     background: white;
     border-radius: 100px;
     padding: 15px;
-    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
     span {
       display: inline-block;
       transition: transform 0.2s ease-in-out;
@@ -303,12 +311,11 @@
     &:hover {
     }
   }
-  form {
+  .form {
     display: none;
     background: white;
-    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    border-bottom-right-radius: 2px;
     padding: 15px;
     textarea {
       margin: 0;
@@ -317,9 +324,8 @@
   .thanks {
     display: none;
     background: white;
-    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    border-bottom-right-radius: 2px;
     padding: 15px;
   }
   .form-group {

@@ -23,8 +23,16 @@
 //= require_tree .
 
 $(document).on("turbolinks:load", function() {
+  $("body").on("click", ".feedback_active", function(e) {
+    $(".feedback .thanks").hide();
+    $(".feedback .form").hide();
+    $(".feedback a").show();
+    $(".feedback_active").hide();
+  });
+
   $(".feedback a").on("click", function(e) {
-    $(".feedback form").show();
+    $("body").prepend("<div class='feedback_active'></div>");
+    $(".feedback .form").show();
     $(".feedback a").hide();
     e.preventDefault();
   });
@@ -32,6 +40,7 @@ $(document).on("turbolinks:load", function() {
   $(".feedback button").on("click", function(e) {
     $(".feedback .thanks").show();
     $(".feedback .form").hide();
+    $(".feedback textarea").val("");
   });
 
   $("#genre_search").bind("keypress", function(e) {
