@@ -116,7 +116,7 @@
       <div class="form">
         <%= form_tag(contact_pages_path, remote: true, method: :post) do %>
         <div class="form-group">
-          <%= text_area_tag(:message, '', placeholder: "Send us your feedback!", class: "form-control") %>
+          <%= text_area_tag(:message, '', placeholder: "Send us your feedback!", class: "form-control", autofocus: 'autofocus') %>
         </div>
         <button type="submit" class="btn btn-primary btn-sm btn-block">Send it!</button>
       <% end %>
