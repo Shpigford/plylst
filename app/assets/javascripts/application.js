@@ -33,6 +33,7 @@ $(document).on("turbolinks:load", function() {
   $(".feedback a").on("click", function(e) {
     $("body").prepend("<div class='feedback_active'></div>");
     $(".feedback .form").show();
+    $(".feedback .form textarea").focus();
     $(".feedback a").hide();
     e.preventDefault();
   });
