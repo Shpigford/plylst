@@ -280,3 +280,49 @@
 .sort {
   cursor: pointer;
 }
+
+.feedback {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 10000;
+  a {
+    font-size: 2.8em;
+    background: white;
+    border-radius: 100px;
+    padding: 15px;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1);
+    span {
+      display: inline-block;
+      transition: transform 0.2s ease-in-out;
+      &:hover {
+        transform: rotate(20deg);
+      }
+    }
+
+    &:hover {
+    }
+  }
+  form {
+    display: none;
+    background: white;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    border-bottom-right-radius: 2px;
+    padding: 15px;
+    textarea {
+      margin: 0;
+    }
+  }
+  .thanks {
+    display: none;
+    background: white;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    border-bottom-right-radius: 2px;
+    padding: 15px;
+  }
+  .form-group {
+    margin-bottom: 2px;
+  }
+}

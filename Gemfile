@@ -78,6 +78,7 @@ group :development do
   gem "annotate", require: false
   gem "better_errors"
   gem 'bullet'
+  gem "letter_opener"
 end
 
 group :test do

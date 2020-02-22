@@ -9,6 +9,10 @@ class PagesController < ApplicationController
     
   end
 
+  def contact
+    FeedbackMailer.with(user: current_user, message: params[:message]).feedback_email.deliver
+  end
+
   def genres
     @genres = Artist.pluck(:genres).reject!(&:empty?).flatten.group_by(&:itself).map { |k,v| [k, v.count] }.to_h.sort_by{|k,v| v}.reverse
     @hide_sidebar = true

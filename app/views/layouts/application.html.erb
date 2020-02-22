@@ -109,6 +109,24 @@
       </div>
     </nav>
     <% end -%>
+
+    <% if Rails.env.production? and user_signed_in? %>
+    <div class="feedback">
+      <a href="#"><span>👋</span></a>
+      <div class="form">
+        <%= form_tag(contact_pages_path, remote: true, method: :post) do %>
+        <div class="form-group">
+          <%= text_area_tag(:message, '', placeholder: "Send us your feedback!", class: "form-control") %>
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm btn-block">Send it!</button>
+      <% end %>
+      </div>
+      <div class="thanks">
+        Feedback sent! You're amazing!
+      </div>
+    </div>
+    <% end %>
+
     <%= yield %>
     <% if Rails.env.production? %>
     <script>

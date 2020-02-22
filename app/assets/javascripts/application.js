@@ -23,6 +23,17 @@
 //= require_tree .
 
 $(document).on("turbolinks:load", function() {
+  $(".feedback a").on("click", function(e) {
+    $(".feedback form").show();
+    $(".feedback a").hide();
+    e.preventDefault();
+  });
+
+  $(".feedback button").on("click", function(e) {
+    $(".feedback .thanks").show();
+    $(".feedback .form").hide();
+  });
+
   $("#genre_search").bind("keypress", function(e) {
     if (e.keyCode == 13) {
       return false;

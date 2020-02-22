@@ -20,6 +20,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :pages do
+    collection do
+      post 'contact'
+    end
+  end
+
   get 'genres', to: 'pages#genres'
   
   root to: "pages#index"
