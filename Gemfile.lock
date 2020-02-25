@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/Shpigford/rspotify
-  revision: c40beee9e64ffacd97aab9269c12b85590dfb804
+  revision: 41010c305cc121abd61dde9184e5889f39ae7929
   specs:
     rspotify (2.6.0)
       addressable (~> 2.5.2)
@@ -197,7 +197,7 @@ GEM
     nio4r (2.5.2)
     nokogiri (1.10.7)
       mini_portile2 (~> 2.4.0)
-    oauth2 (1.4.3)
+    oauth2 (1.4.4)
       faraday (>= 0.8, < 2.0)
       jwt (>= 1.0, < 3.0)
       multi_json (~> 1.3)
@@ -221,7 +221,7 @@ GEM
       get_process_mem (~> 0.2)
       puma (>= 2.7, < 5)
     raabro (1.1.6)
-    rack (2.1.2)
+    rack (2.2.2)
     rack-protection (2.0.8.1)
       rack
     rack-test (1.1.0)
