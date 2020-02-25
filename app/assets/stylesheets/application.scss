@@ -332,3 +332,18 @@
     margin-bottom: 2px;
   }
 }
+
+.changelog {
+  position: absolute;
+  z-index: 8000;
+  right: 60px;
+  top: 20px;
+}
+#HW_badge {
+  background: #00d97e !important;
+  color: white !important;
+  height: 18px !important;
+  width: 18px !important;
+  line-height: 18px !important;
+  font-weight: bold !important;
+}

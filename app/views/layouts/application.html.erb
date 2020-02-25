@@ -41,8 +41,16 @@
         <% flash.each do |name, msg| -%>
           <%= content_tag :div, msg, class: name %>
         <% end -%>
-
+        <div class="changelog"></div>
         <%= link_to image_tag('logo.svg', class: 'navbar-brand-img mx-auto'), root_path, class: 'navbar-brand' %>
+        <script>
+          // @see https://docs.headwayapp.co/widget for more configuration options.
+          var HW_config = {
+            selector: ".changelog", // CSS selector where to inject the badge
+            account:  "JP02rJ"
+          }
+        </script>
+        <script async src="https://cdn.headwayapp.co/widget.js"></script>
 
         <!-- User (xs) -->
         <div class="navbar-user d-md-none">
