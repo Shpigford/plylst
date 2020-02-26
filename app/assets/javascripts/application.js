@@ -20,9 +20,17 @@
 //= require bootstrap-sprockets
 //= require extendext
 //= require dot
+//= require clipboard
 //= require_tree .
 
 $(document).on("turbolinks:load", function() {
+  var clipboard = new ClipboardJS(".copy-text");
+
+  clipboard.on("success", function(e) {
+    $(".copy-text span").text("Copied to clipboard!");
+    e.clearSelection();
+  });
+
   $("body").on("click", ".feedback_active", function(e) {
     $(".feedback .thanks").hide();
     $(".feedback .form").hide();

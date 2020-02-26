@@ -1,5 +1,19 @@
 <% title @playlist.name %>
 
+<% if @playlist.public == true and @playlist.user != current_user %>
+<div class="container">
+<div class="row">
+    <div class="col-12 p-5 text-center">
+      <%= link_to image_tag('logo-full.svg', class: 'img-fluid mt-n5 mb-2 pt-5', style: 'max-width:275px'), root_path, class: '' %>
+    </div>
+  </div>
+<div class="card">
+    <div class="card-body p-5">
+      <div class="row justify-content-center">
+        <div class="col-12">
+<% end %>
+
+
 <div class="main-content">
   <div class="container-fluid">
     <div class="row justify-content-center">
@@ -7,18 +21,34 @@
 
         <div class="header mt-md-5">
           <div class="row align-items-center">
-            <div class="col-8">
+            <div class="col-7">
+              <% if @playlist.user == current_user %>
               <h6 class="header-pretitle">Playlist</h6>
-              <h1 class="header-title"><%= @playlist.name %> <small class="actions"><%= link_to "Edit", edit_playlist_path(@playlist), class: 'btn btn-sm btn-primary' %> <%= link_to 'Delete', playlist_path(@playlist), :class => "btn-danger btn btn-sm", :method => :delete, :data => {:confirm => 'Are you sure you want to delete this playlist?'} %> </small></h1>
+              <% end %>
+              <h1 class="header-title"><%= @playlist.name %> 
+              <% if @playlist.public == true and @playlist.user != current_user %>
+              <span class="text-muted">by <%= @playlist.user.uid %></span>
+              <% end %>
+              <% if user_signed_in? and @playlist.user == current_user %>
+                <small class="actions"><%= link_to "Edit", edit_playlist_path(@playlist), class: 'btn btn-sm btn-primary' %> <%= link_to 'Delete', playlist_path(@playlist), :class => "btn-danger btn btn-sm", :method => :delete, :data => {:confirm => 'Are you sure you want to delete this playlist?'} %> </small>
+              <% end %>
+              </h1>
               <% if @playlist.translated_rules.present? %>
               <h4><%= @playlist.translated_rules %></h4>
               <% end %>
             </div>
-            <% if @playlist.spotify_id.present? %>
-            <div class="col-4 text-right">
+            
+            <div class="col-5 text-right">
+            <% if @playlist.spotify_id.present? and @playlist.user == current_user %>
               <%= link_to "<i class='fab fa-spotify'></i> Open in Spotify".html_safe, @playlist.open_spotify_link, class: 'btn btn-success font-weight-bolder' %>
-            </div>
+              <a href="javascript:void(0)" class="btn btn-primary copy-text" data-clipboard-text="<%= playlist_url(@playlist) %>"><i class="far fa-share-alt"></i> <span>Copy shareable link</span></a>
             <% end %>
+            
+            <% if @playlist.public == true and @playlist.user != current_user %>
+              <%= link_to "<i class='far fa-clone'></i> Clone this PLYLST".html_safe, duplicate_playlist_path(@playlist), class: 'btn btn-primary font-weight-bolder' %>
+            <% end %>
+            </div>
+            
           </div>
         </div>
 
@@ -75,3 +105,7 @@
     </div>
   </div>
 </div>
+
+<% if @playlist.public == true and @playlist.user != current_user %>
+</div></div></div></div></div>
+<% end %>
