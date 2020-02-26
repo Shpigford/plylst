@@ -9,7 +9,9 @@ class LabsController < ApplicationController
   end
 
   def record_labels
-    @labels = Album.pluck(:label).reject!(&:blank?).flatten.group_by(&:itself).map { |k,v| [k, v.count] }.to_h.sort_by{|k,v| v}.reverse
+    @labels = Rails.cache.fetch("record_labels", expires_in: 24.hours) do
+      Album.pluck(:label).reject!(&:blank?).flatten.group_by(&:itself).map { |k,v| [k, v.count] }.to_h.sort_by{|k,v| v}.reverse
+    end
     @hide_sidebar = true
   end
 end
