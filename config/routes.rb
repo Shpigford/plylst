@@ -13,7 +13,13 @@ Rails.application.routes.draw do
   end
 
   resources :tracks
-  resources :playlists
+
+  resources :playlists do
+    member do
+      get 'duplicate'
+    end
+  end
+
   resources :labs do
     collection do
       get 'most-listened-tracks'

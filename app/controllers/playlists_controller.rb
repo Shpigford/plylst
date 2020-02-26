@@ -1,5 +1,5 @@
 class PlaylistsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:show]
 
   def index
     redirect_to root_path
@@ -23,12 +23,20 @@ class PlaylistsController < ApplicationController
   end
 
   def show
-    @playlist = current_user.playlists.find_by_hashid(params[:id])
+    @playlist = Playlist.find_by_hashid(params[:id])
+
+    if @playlist.public == false and @playlist.user != current_user
+      redirect_to root_path
+    end
+
+    if @playlist.public == true and @playlist.user != current_user
+      @hide_sidebar = true
+    end
 
     if @playlist.catalog == 'full'
-      @tracks =  @playlist.filtered_tracks(current_user).includes(:album, :artist)
+      @tracks =  @playlist.filtered_tracks(@playlist.user).includes(:album, :artist)
     else
-      @tracks =  @playlist.filtered_tracks(current_user).includes(:album, :artist, :follows)
+      @tracks =  @playlist.filtered_tracks(@playlist.user).includes(:album, :artist, :follows)
     end
 
     if @playlist.limit.to_i > 250 or @playlist.limit.to_i === 0
@@ -49,6 +57,21 @@ class PlaylistsController < ApplicationController
       redirect_to playlist_path(@playlist)
     else
       render 'edit'
+    end
+  end
+
+  def duplicate
+    @playlist = Playlist.find_by_hashid(params[:id])
+
+    if @playlist.public == true
+      new_playlist = @playlist.dup
+      new_playlist.user = current_user
+      new_playlist.spotify_id = nil
+      new_playlist.save!
+
+      redirect_to playlist_path(new_playlist)
+    else
+      redirect_to root_path
     end
   end
 
