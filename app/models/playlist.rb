@@ -89,6 +89,11 @@ class Playlist < ApplicationRecord
       end
     end
 
+    # LABEL
+    find_rule(rules, 'label').try do |rule|
+      tracks = tracks.joins(:album).where('label ~* ?', rule['value'])
+    end
+
     # RELEASE DATE
     find_rule(rules, 'release_date').try do |rule|
       if rule['operator'] == 'less'

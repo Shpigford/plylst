@@ -167,6 +167,15 @@ $(document).on("turbolinks:load", function() {
             "Text the artist name contains. Use a pipe to include multiple artists: <code>Taylor Swift|Bob Dylan|Justin Bieber</code>."
         },
         {
+          id: "label",
+          label: "Label",
+          type: "string",
+          operators: ["contains"],
+          unique: true,
+          description:
+            "What label an album was released on. Use a pipe to include multiple labels: <code>Atlantic|Republic|Columbia</code>."
+        },
+        {
           id: "lyrics",
           label: "Lyrics",
           type: "string",
