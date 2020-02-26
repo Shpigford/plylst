@@ -46,7 +46,9 @@
                     <td>
                       <%= format_ms(track.duration) %>
                     </td>
-                    <td><span tabindex="0" data-trigger="focus" data-toggle="popover"data-html="true" data-content="<% if track.artist.genres.present? %><h3 class='popover-header'>Genres</h3><div class='popover-body'><%= track.artist.genres.join(', ') %></div><br><% end %><% if track.key.present? %><h3 class='popover-header'>Audio Features</h3><div class='popover-body'><%= human_readable(track.slice(:key,:mode,:tempo,:energy,:valence,:liveness,:loudness,:speechiness,:acousticness,:danceability,:time_signature,:instrumentalness).as_json) %></div><% end %>"><i class="fas fa-info-circle"></i></span></td>
+                    <td><span tabindex="0" data-trigger="focus" data-toggle="popover"data-html="true" data-content="<% if track.artist.genres.present? %><h3 class='popover-header'>Genres</h3><div class='popover-body'><%= track.artist.genres.join(', ') %></div><br><% end %><% if track.album.label.present? %>
+                    <h3 class='popover-header'>Label</h3><div class='popover-body'><%= track.album.label %></div><br>
+                    <% end %><% if track.key.present? %><h3 class='popover-header'>Audio Features</h3><div class='popover-body'><%= human_readable(track.slice(:key,:mode,:tempo,:energy,:valence,:liveness,:loudness,:speechiness,:acousticness,:danceability,:time_signature,:instrumentalness).as_json) %></div><% end %>"><i class="fas fa-info-circle"></i></span></td>
                   </tr>
                   <% end %>
                   <% end %>
