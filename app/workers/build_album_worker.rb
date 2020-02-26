@@ -35,7 +35,8 @@ class BuildAlbumWorker
       link: spotify_album.external_urls['spotify'], 
       popularity: spotify_album.popularity, 
       album_type: album_type,
-      label: spotify_album.label
+      label: spotify_album.label,
+      last_checked_at: Time.now
     )
   end
 end
