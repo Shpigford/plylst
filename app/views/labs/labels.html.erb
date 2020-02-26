@@ -1,0 +1,54 @@
+<% title "Record Labels" %>
+<div class="container">
+  <div class="row">
+    <div class="col-12 p-5 text-center">
+      <%= link_to image_tag('logo-full.svg', class: 'img-fluid mt-n5 mb-2 pt-5', style: 'max-width:275px'), root_path, class: '' %>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body p-5">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <h1 class="display-1 mb-0 text-center">Record Labels</h1>
+          <h2 class="text-muted text-center">Who knew there were so many record labels?!? These are the <u><%= number_with_delimiter @labels.count %></u> we currently track!</h2>
+
+          <div id="genre_lists" data-toggle="lists">
+            <div class="card-header">
+              <form id="genre_search">
+                <div class="input-group input-group-flush input-group-merge">
+                  <input type="search" class="form-control form-control-prepended search" placeholder="Search">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <span class="fa fa-search"></span>
+                    </div>
+                  </div>
+                </div>
+              </form>
+
+            </div>
+            <table class="table table-sm table-genres">
+              <thead>
+                <tr>
+                  <th scope="col" class="sort" data-sort="name">Name</th>
+                  <th scope="col" class="sort" data-sort="artist_count">Number of Albums</th>
+                </tr>
+              </thead>
+              <tbody class="list">
+              <% @labels.each do |label| %>
+                <tr>
+                  <th scope="row" class="name"><%= label.first %></th>
+                  <td class="artist_count"><%= label.last %></td>
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+            <div class="card-footer text-center">
+              <ul class="pagination mt-3"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
