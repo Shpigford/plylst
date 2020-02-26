@@ -56,7 +56,7 @@ class BuildPlaylistsWorker
           end
         end
 
-        playlist.update_columns(link: existing_playlist.external_urls['spotify'])
+        playlist.update_columns(spotify_id: existing_playlist.id)
       end
     end
   end

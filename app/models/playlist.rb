@@ -9,6 +9,10 @@ class Playlist < ApplicationRecord
 
   include Storext.model()
 
+  def open_spotify_link
+    "spotify://user/#{user.uid}/playlist/#{spotify_id}"
+  end
+
   def find_rule(rules, rule_name)
     rules.find{|r| r['id'] == rule_name} if rules.present?
   end
