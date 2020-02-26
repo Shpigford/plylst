@@ -55,6 +55,8 @@ class BuildPlaylistsWorker
             existing_playlist.add_tracks!(group)
           end
         end
+
+        playlist.update_columns(link: existing_playlist.external_urls['spotify'])
       end
     end
   end
