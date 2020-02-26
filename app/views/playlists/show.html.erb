@@ -41,6 +41,8 @@
             <div class="col-5 text-right">
             <% if @playlist.spotify_id.present? and @playlist.user == current_user %>
               <%= link_to "<i class='fab fa-spotify'></i> Open in Spotify".html_safe, @playlist.open_spotify_link, class: 'btn btn-success font-weight-bolder' %>
+            <% end %>
+            <% if @playlist.user == current_user %>
               <a href="javascript:void(0)" class="btn btn-primary copy-text" data-clipboard-text="<%= playlist_url(@playlist) %>"><i class="far fa-share-alt"></i> <span>Copy shareable link</span></a>
             <% end %>
             
