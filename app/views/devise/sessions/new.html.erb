@@ -1,20 +1,25 @@
+<% content_for :body_class, "d-flex align-items-center bg-auth border-top border-top-4 border-dark landing" %>
 <div class="container">
-  <div class="row justify-content-center">
-    <div class="col-12 col-md-5 col-xl-4 my-5">
-      
-      <!-- Heading -->
-      <h1 class="display-4 text-center mb-3">
-        Get Started
-      </h1>
-      
-      <!-- Subheading -->
-      <p class="text-muted text-center mb-5">
-        Sign up or sign in with Spotify
-      </p>
-      <%- resource_class.omniauth_providers.each do |provider| %>
-        <%= link_to "<i class='fab fa-spotify'></i> Sign in with #{provider.to_s.titleize}".html_safe, omniauth_authorize_path(resource_name, provider), class: 'btn btn-lg btn-block btn-success mb-3' %>
-      <% end %>
-      
+  <div class="row align-items-center">
+    <div class="col-12 order-xl-1 order-1 my-5">
+          
+      <div class="text-center">
+          
+        <h6 class="text-uppercase text-muted mb-4">
+          <%= image_tag('logo-full.svg', class: 'img-fluid mt-1 mb-4', style: 'max-width:350px') %>
+        </h6>
+
+        <h1 class="display-4 mb-3">
+          Create smart playlists for your Spotify library!
+        </h1>
+
+        <p class="text-muted mb-4">
+          Stop relying on fancy pants algorithms to organize your library and instead build up playlists the way <i>you</i> want them.
+        </p>
+
+        <%= link_to "<i class='fab fa-spotify'></i> Sign in with Spotify".html_safe, omniauth_authorize_path('user', 'spotify'), class: 'btn btn-lg btn-success mb-5 font-weight-bolder', style: 'font-size:1.5em;' %>
+      </div>
+
     </div>
-  </div> <!-- / .row -->
+  </div>
 </div>
