@@ -173,9 +173,9 @@ class Playlist < ApplicationRecord
     if catalog == 'songs'
       find_rule(rules, 'last_played_days_ago').try do |rule|
         if rule['operator'] == 'less'
-          tracks = tracks.where('follows.last_played_at < ?', rule['value'].days.ago).order('follows.last_played_at ASC')
+          tracks = tracks.where('follows.last_played_at > ?', rule['value'].days.ago).order('follows.last_played_at ASC')
         else
-          tracks = tracks.where('follows.last_played_at > ?', rule['value'].days.ago).order('follows.last_played_at DESC')
+          tracks = tracks.where('follows.last_played_at < ?', rule['value'].days.ago).order('follows.last_played_at DESC')
         end
       end
     end
