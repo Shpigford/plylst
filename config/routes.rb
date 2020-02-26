@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   resources :labs do
     collection do
       get 'most-listened-tracks'
-      get 'labels'
+      get 'record-labels'
     end
   end
 

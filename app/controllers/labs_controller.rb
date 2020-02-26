@@ -8,7 +8,7 @@ class LabsController < ApplicationController
     @hide_sidebar = true
   end
 
-  def labels
+  def record_labels
     @labels = Album.pluck(:label).flatten.group_by(&:itself).map { |k,v| [k, v.count] }.to_h.sort_by{|k,v| v}.reverse
     @hide_sidebar = true
   end
