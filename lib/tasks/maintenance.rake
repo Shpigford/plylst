@@ -37,6 +37,7 @@ namespace :maintenance do
     end
     
     UpdateArtistDataWorker.set(queue: :slow).perform_async
+    UpdateAlbumDataWorker.set(queue: :slow).perform_async
   end
 
   desc "Transition JSONB to first-class columns"
