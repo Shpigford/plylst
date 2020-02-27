@@ -1,4 +1,6 @@
 <% title @playlist.name %>
+<% description(@playlist.translated_rules) if @playlist.translated_rules.present? %>
+<% meta_image(@playlist.meta_image) if @playlist.meta_image.present? %>
 
 <% if @playlist.public == true and @playlist.user != current_user %>
 <div class="container">

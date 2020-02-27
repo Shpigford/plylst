@@ -449,6 +449,7 @@ class Playlist < ApplicationRecord
 
   def build_spotify_playlist
     BuildPlaylistsWorker.perform_async(self.user.id)
+    CreateMetaImageWorker.perform_async(self.id)
   end
 
   def translated_rules
