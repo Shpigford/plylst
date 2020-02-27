@@ -8,6 +8,7 @@ class SaveTracksWorker
 
     # Check if `tracks_with_date` is actually a multi-dimensional array (meaning it has dates)
     if tracks_with_date.all? { |e| e.kind_of? Array }
+      tracks_with_date = tracks_with_date.delete_if { |elem| elem[0] == nil }
       track_ids = tracks_with_date.map(&:first)
     else
       track_ids = tracks_with_date
