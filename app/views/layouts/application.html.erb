@@ -26,6 +26,18 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <script data-search-pseudo-elements src="https://kit.fontawesome.com/3ebaf2334e.js"></script>
     <%= yield :head %>
+
+    <% if Rails.env.production? %>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23290403-22"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', '<%= ENV['google_analytics'] %>');
+    </script>
+    <% end %>
   </head>
 
   <body class="<%= yield (:body_class) %>">
@@ -136,20 +148,5 @@
     <% end %>
 
     <%= yield %>
-    <% if Rails.env.production? %>
-    <script>
-    (function(f, a, t, h, o, m){
-    a[h]=a[h]||function(){
-    (a[h].q=a[h].q||[]).push(arguments)
-    };
-    o=f.createElement('script'),
-    m=f.getElementsByTagName('script')[0];
-    o.async=1; o.src=t; o.id='fathom-script';
-    m.parentNode.insertBefore(o,m)
-    })(document, window, 'https://cdn.usefathom.com/tracker.js', 'fathom');
-    fathom('set', 'siteId', '<%= ENV['fathom'] %>');
-    fathom('trackPageview');
-    </script>
-    <% end %>
   </body>
 </html>
