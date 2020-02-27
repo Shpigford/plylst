@@ -430,6 +430,10 @@ class Playlist < ApplicationRecord
         tracks = tracks.order("follows.added_at DESC") if catalog == 'songs'
       when 'least_recently_added'
         tracks = tracks.order("follows.added_at ASC") if catalog == 'songs'
+      when 'most_recently_played'
+        tracks = tracks.order("follows.last_played_at DESC NULLS LAST") if catalog == 'songs'
+      when 'least_recently_played'
+        tracks = tracks.order("follows.last_played_at ASC") if catalog == 'songs'
       when 'release_date_desc'
         tracks = tracks.joins(:album).order("albums.release_date DESC")
       when 'release_date_asc'
@@ -467,7 +471,7 @@ class Playlist < ApplicationRecord
     end
 
     # Limt & Sorting
-    [['Random','random'], ['Most Popular', 'most_popular'], ['Least Popular', 'least_popular'], ['Most Played', 'most_often_played'], ['Least Played', 'least_often_played'], ['Most Recently Added', 'most_recently_added'], ['Least Recently Added', 'least_recently_added'], ['Release Date - Ascending', 'release_date_asc'], ['Release Date - Descending', 'release_date_desc']]
+    [['Random','random'], ['Most Popular', 'most_popular'], ['Least Popular', 'least_popular'], ['Most Played', 'most_often_played'], ['Least Played', 'least_often_played'], ['Most Recently Added', 'most_recently_added'], ['Least Recently Added', 'least_recently_added'], ['Most Recently Played', 'most_recently_played'], ['Least Recently Played', 'least_recently_played'], ['Release Date - Ascending', 'release_date_asc'], ['Release Date - Descending', 'release_date_desc']]
 
     sorting = case sort
     when 'random'
@@ -484,6 +488,10 @@ class Playlist < ApplicationRecord
       "by most recently added"
     when 'least_recently_added'
       "by least recently added"
+    when 'most_recently_played'
+      "by most recently played"
+    when 'least_recently_played'
+      "by least recently played"
     when 'release_date_asc'
       "by release date (ascending)"
     when 'release_date_desc'
