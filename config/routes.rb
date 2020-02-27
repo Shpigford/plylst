@@ -3,6 +3,10 @@ require 'sidekiq/cron/web'
 
 Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
+
+  get "/sitemap.xml" => "pages#sitemap", :format => "xml", :as => :sitemap
+  get "/sitemap-pages.xml" => "pages#sitemap_pages", :format => "xml", :as => :sitemap_pages
+  get "/sitemap-playlists.xml" => "pages#sitemap_playlists", :format => "xml", :as => :sitemap_playlists
   
   devise_for :users, :controllers => {
     :omniauth_callbacks => "users/omniauth_callbacks" 
