@@ -29,7 +29,7 @@
 
     <% if Rails.env.production? %>
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23290403-22"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=<%= ENV['google_analytics'] %>"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
