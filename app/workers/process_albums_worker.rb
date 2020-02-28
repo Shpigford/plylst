@@ -1,6 +1,6 @@
 class ProcessAlbumsWorker
   include Sidekiq::Worker
-  sidekiq_options queue: 'critical'
+  sidekiq_options queue: 'slow'
 
   def perform(user_id)
     user = User.find user_id
