@@ -1,7 +1,7 @@
 class BuildAlbumWorker
   include Sidekiq::Worker
 
-  sidekiq_options lock: :while_executing
+  sidekiq_options lock: :while_executing, on_conflict: :reject
 
   def perform(album_id)
     album = Album.find album_id

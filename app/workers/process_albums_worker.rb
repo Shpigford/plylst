@@ -1,7 +1,7 @@
 class ProcessAlbumsWorker
   include Sidekiq::Worker
 
-  sidekiq_options queue: :slow, lock: :while_executing
+  sidekiq_options queue: :slow, lock: :while_executing, on_conflict: :reject
 
   def perform(user_id)
     user = User.find user_id

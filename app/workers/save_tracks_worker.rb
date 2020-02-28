@@ -1,7 +1,7 @@
 class SaveTracksWorker
   include Sidekiq::Worker
 
-  sidekiq_options lock: :while_executing
+  sidekiq_options lock: :while_executing, on_conflict: :reject
 
   def perform(user_id, tracks_with_date, kind = 'added')
     # Find user these tracks are associated with, if a user_id is passed
