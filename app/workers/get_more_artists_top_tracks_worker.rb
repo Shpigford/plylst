@@ -1,7 +1,7 @@
 class GetMoreArtistsTopTracksWorker
   include Sidekiq::Worker
 
-  sidekiq_options :queue => :slow
+  sidekiq_options queue: :slow, lock: :while_executing
 
   def perform(spotify_id)
     tracks = RSpotify::Artist.find(spotify_id).top_tracks('US')

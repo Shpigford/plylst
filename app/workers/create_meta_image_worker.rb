@@ -1,6 +1,8 @@
 class CreateMetaImageWorker
   include Sidekiq::Worker
 
+  sidekiq_options lock: :while_executing
+
   def perform(playlist)
     playlist = Playlist.find_by(id: playlist)
     tracks = playlist.filtered_tracks(playlist.user).pluck(:album_id).uniq.sample(6)

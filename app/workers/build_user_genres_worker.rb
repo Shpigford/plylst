@@ -1,6 +1,8 @@
 class BuildUserGenresWorker
   include Sidekiq::Worker
 
+  sidekiq_options lock: :while_executing
+
   def perform(user_id)
     user = User.find user_id
 

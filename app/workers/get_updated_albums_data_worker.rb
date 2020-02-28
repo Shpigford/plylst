@@ -1,7 +1,7 @@
 class GetUpdatedAlbumsDataWorker
   include Sidekiq::Worker
 
-  sidekiq_options :queue => :slow
+  sidekiq_options queue: :slow, lock: :while_executing
 
   def perform(albums_ids)
     spotify_ids = Album.find(albums_ids).pluck(:spotify_id)

@@ -2,7 +2,7 @@ class BuildPlaylistsWorker
   include Sidekiq::Worker
   include ApplicationHelper
 
-  sidekiq_options :queue => :critical
+  sidekiq_options queue: :critical, lock: :while_executing
 
   def perform(user_id)
     user = User.find user_id

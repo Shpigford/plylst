@@ -1,7 +1,7 @@
 class QueueLyricsWorker
   include Sidekiq::Worker
 
-  sidekiq_options queue: :lyrics
+  sidekiq_options queue: :lyrics, lock: :while_executing
 
   def perform
     Track.where(lyrics: nil).find_each do |track|

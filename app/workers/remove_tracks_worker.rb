@@ -1,6 +1,8 @@
 class RemoveTracksWorker
   include Sidekiq::Worker
 
+  sidekiq_options lock: :while_executing
+
   def perform(user_id, track_ids)
     user = User.find user_id
     connection = user.settings.to_hash

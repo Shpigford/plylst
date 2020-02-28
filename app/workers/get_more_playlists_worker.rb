@@ -1,7 +1,7 @@
 class GetMorePlaylistsWorker
   include Sidekiq::Worker
 
-  sidekiq_options :queue => :slow
+  sidekiq_options queue: :slow, lock: :while_executing
 
   def perform(playlist_owner, playlist_id)
     new_playlist = RSpotify::Playlist.find(playlist_owner, playlist_id)

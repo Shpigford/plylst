@@ -1,7 +1,7 @@
 class AudioFeaturesWorker
   include Sidekiq::Worker
   
-  sidekiq_options queue: :slow
+  sidekiq_options queue: :slow, lock: :while_executing
 
   def perform(track_ids)
     tracks = Track.where(spotify_id: track_ids, key: nil)

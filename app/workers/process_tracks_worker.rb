@@ -1,6 +1,8 @@
 class ProcessTracksWorker
   include Sidekiq::Worker
 
+  sidekiq_options lock: :while_executing
+
   def perform(user_id, offset)
     user = User.find user_id
 

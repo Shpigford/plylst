@@ -1,7 +1,7 @@
 class GetMoreCategoriesWorker
   include Sidekiq::Worker
 
-  sidekiq_options :queue => :slow
+  sidekiq_options queue: :slow, lock: :while_executing
 
   def perform
     # Categories
