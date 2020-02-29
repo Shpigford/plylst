@@ -1,0 +1,94 @@
+<% if current_user and current_user.playlists.count == 0 %>
+  <div class="container">
+    <div class="card m-5">
+      <div class="card-body text-center p-5">
+        <div class="row justify-content-center">
+          <div class="col-12">
+            
+            <div>
+            <%= link_to image_tag('logo.svg', class: 'img-fluid mt-n5 mb-4 pt-5', style: 'max-width:200px'), root_path, class: '' %>
+            </div>
+
+            <h1>
+              You're in! Get started by building your first playlist!
+            </h1>
+            <p><small class="text-muted">(It may take a few minutes for all of your songs to start showing up)</small></p>
+
+            <%= link_to "<i class='fas fa-plus-circle'></i> Create a playlist".html_safe, new_playlist_path, class: 'btn btn-lg btn-primary mb-4' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <div class="main-content">
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-12">
+
+          <div class="header mt-md-5">
+            <div class="row align-items-center">
+              <div class="col">
+                
+                <!-- Pretitle -->
+                <h6 class="header-pretitle">
+                  Music
+                </h6>
+
+                <!-- Title -->
+                <h1 class="header-title">
+                  Latest Streams
+                </h1>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="card">
+            <div class="table-responsive">
+              <table class="table table-sm table-nowrap card-table">
+                <thead>
+                  <tr>
+                    <th colspan="2">Song</th>
+                    <th>Artist</th>
+                    <th>Album</th>
+                    <th><i class="fal fa-calendar-alt"></i></th>
+                    <th><i class="fal fa-clock"></i></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody class="list">
+                  <% cache(['v1', "latest_streams-#{current_user.id}"], expires_in: 2.hours) do %>
+                  <% @latest_streams.each do |stream| %>
+                  <tr>
+                    <td colspan="2">
+                      <div class="avatar avatar-xs mr-2"><%= image_tag stream.track.album.image, class: 'avatar-img rounded-sm' if stream.track.album.image.present? %></div>
+                      <span class="align-middle text-truncate d-inline-block" style="max-width:200px;"><%= stream.track.name %></span>
+                    </td>
+                    <td>
+                      <%= stream.track.artist.name %>
+                    </td>
+                    <td>
+                      <%= stream.track.album.name %>
+                    </td>
+                    <td>
+                      <time><%= time_ago_in_words(stream.played_at).gsub('about','') %> ago</time>
+                    </td>
+                    <td>
+                      <%= format_ms(stream.track.duration) %>
+                    </td>
+                    <td><span tabindex="0" data-trigger="focus" data-toggle="popover"data-html="true" data-content="<% if stream.track.artist.genres.present? %><h3 class='popover-header'>Genres</h3><div class='popover-body'><%= stream.track.artist.genres.join(', ') %></div><br><% end %><% if stream.track.album.label.present? %>
+                    <h3 class='popover-header'>Label</h3><div class='popover-body'><%= stream.track.album.label %></div><br>
+                    <% end %><% if stream.track.key.present? %><h3 class='popover-header'>Audio Features</h3><div class='popover-body'><%= human_readable(stream.track.slice(:key,:mode,:tempo,:energy,:valence,:liveness,:loudness,:speechiness,:acousticness,:danceability,:time_signature,:instrumentalness).as_json) %></div><% end %>"><i class="fas fa-info-circle"></i></span></td>
+                  </tr>
+                  <% end %>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

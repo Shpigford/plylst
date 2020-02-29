@@ -2,7 +2,7 @@ class PlaylistsController < ApplicationController
   before_action :authenticate_user!, except: [:show]
 
   def index
-    redirect_to root_path
+    @latest_streams = current_user.streams.includes(:track, track: [:album, :artist]).limit(50).order('played_at DESC')
   end
   
   def new
