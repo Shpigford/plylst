@@ -1,5 +1,5 @@
-<% title @playlist.name %>
-<% description(@playlist.translated_rules) if @playlist.translated_rules.present? %>
+<% title "#{@playlist.name} Playlist" %>
+<% description("#{@playlist.name} playlist for Spotify on PLYLST. #{@playlist.translated_rules}") if @playlist.translated_rules.present? %>
 <% meta_image(@playlist.meta_image) if @playlist.meta_image.present? %>
 
 <% if @playlist.public == true and @playlist.user != current_user %>
@@ -49,7 +49,11 @@
             <% end %>
             
             <% if @playlist.public == true and @playlist.user != current_user %>
-              <%= link_to "<i class='far fa-clone'></i> Clone this PLYLST".html_safe, duplicate_playlist_path(@playlist), class: 'btn btn-primary font-weight-bolder' %>
+              <% if user_signed_in? %>
+                <%= link_to "<i class='far fa-clone'></i> Clone this PLYLST".html_safe, duplicate_playlist_path(@playlist), class: 'btn btn-primary font-weight-bolder' %>
+              <% else %>
+                <%= link_to "<i class='far fa-clone'></i> Clone this PLYLST".html_safe, omniauth_authorize_path('user', 'spotify'), class: 'btn btn-primary font-weight-bolder' %>
+              <% end %>
             <% end %>
             </div>
             
