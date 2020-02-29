@@ -7,7 +7,7 @@
   --red: #dc3545;
   --orange: #fd7e14;
   --yellow: #ffc107;
-  --green: #28a745;
+  --green: #00d97e;
   --teal: #20c997;
   --cyan: #17a2b8;
   --white: #ffffff;
@@ -15,7 +15,7 @@
   --gray-dark: #384c74;
   --primary: #335eea;
   --secondary: #506690;
-  --success: #42ba96;
+  --success: #00d97e;
   --info: #7c69ef;
   --warning: #fad776;
   --danger: #df4759;
@@ -2539,8 +2539,8 @@ fieldset:disabled a.btn {
 }
 .btn-success {
   color: #fff;
-  background-color: #42ba96;
-  border-color: #42ba96;
+  background-color: #00d97e;
+  border-color: #00d97e;
   box-shadow: none;
 }
 .btn-success:hover {
@@ -12829,7 +12829,7 @@ a.text-secondary:hover {
   color: #35435f !important;
 }
 .text-success {
-  color: #42ba96 !important;
+  color: #00d97e !important;
 }
 a.text-success:focus,
 a.text-success:hover {
@@ -14039,6 +14039,7 @@ a.card:hover {
 .navbar-brand-img {
   max-height: 2.4rem;
   width: auto;
+  height: 200px;
 }
 .navbar-dark .navbar-brand {
   -webkit-filter: brightness(0) invert(1);

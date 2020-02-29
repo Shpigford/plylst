@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 2020_02_27_171850) do
     t.index ["label"], name: "index_albums_on_label"
     t.index ["last_checked_at"], name: "index_albums_on_last_checked_at"
     t.index ["popularity"], name: "index_albums_on_popularity"
-    t.index ["spotify_id"], name: "index_albums_on_spotify_id", unique: true
+    t.index ["spotify_id"], name: "index_albums_on_spotify_id"
   end
 
   create_table "artists", force: :cascade do |t|
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 2020_02_27_171850) do
     t.datetime "last_checked_at"
     t.index ["last_checked_at"], name: "index_artists_on_last_checked_at"
     t.index ["popularity"], name: "index_artists_on_popularity"
-    t.index ["spotify_id"], name: "index_artists_on_spotify_id", unique: true
+    t.index ["spotify_id"], name: "index_artists_on_spotify_id"
   end
 
   create_table "follows", force: :cascade do |t|
@@ -140,7 +140,7 @@ ActiveRecord::Schema.define(version: 2020_02_27_171850) do
     t.index ["mode"], name: "index_tracks_on_mode"
     t.index ["popularity"], name: "index_tracks_on_popularity"
     t.index ["speechiness"], name: "index_tracks_on_speechiness"
-    t.index ["spotify_id"], name: "index_tracks_on_spotify_id", unique: true
+    t.index ["spotify_id"], name: "index_tracks_on_spotify_id"
     t.index ["tempo"], name: "index_tracks_on_tempo"
     t.index ["time_signature"], name: "index_tracks_on_time_signature"
     t.index ["valence"], name: "index_tracks_on_valence"
