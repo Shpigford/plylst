@@ -23,7 +23,7 @@ class SaveTracksWorker
     # If there are no missing IDs, STOP THAT JUNK
     if missing_ids.present?
       # Make the Spotify API call to get all of the tracks
-      spotify_tracks = RSpotify::Track.find(missing_ids)
+      spotify_tracks = RSpotify::Track.find(missing_ids).compact
 
       # Looop through the returned tracks
       spotify_tracks.each do |spotify_track|
