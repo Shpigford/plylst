@@ -1,0 +1,116 @@
+@import "tailwindcss/base";
+
+@import url("//hello.myfonts.net/count/3aeee0");
+
+@font-face {
+  font-family: "Cera Pro";
+  src: url("../fonts/cerapro/3AEEE0_1_0.eot");
+  src: url("../fonts/cerapro/3AEEE0_1_0.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/cerapro/3AEEE0_1_0.woff2") format("woff2"),
+    url("../fonts/cerapro/3AEEE0_1_0.woff") format("woff"),
+    url("../fonts/cerapro/3AEEE0_1_0.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Cera Pro";
+  src: url("../fonts/cerapro/3AEEE0_3_0.eot");
+  src: url("../fonts/cerapro/3AEEE0_3_0.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/cerapro/3AEEE0_3_0.woff2") format("woff2"),
+    url("../fonts/cerapro/3AEEE0_3_0.woff") format("woff"),
+    url("../fonts/cerapro/3AEEE0_3_0.ttf") format("truetype");
+  font-weight: 900;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Cera Pro";
+  src: url("../fonts/cerapro/3AEEE0_4_0.eot");
+  src: url("../fonts/cerapro/3AEEE0_4_0.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/cerapro/3AEEE0_4_0.woff2") format("woff2"),
+    url("../fonts/cerapro/3AEEE0_4_0.woff") format("woff"),
+    url("../fonts/cerapro/3AEEE0_4_0.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Cera Pro";
+  src: url("../fonts/cerapro/3AEEE0_5_0.eot");
+  src: url("../fonts/cerapro/3AEEE0_5_0.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/cerapro/3AEEE0_5_0.woff2") format("woff2"),
+    url("../fonts/cerapro/3AEEE0_5_0.woff") format("woff"),
+    url("../fonts/cerapro/3AEEE0_5_0.ttf") format("truetype");
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Cera Pro";
+  src: url("../fonts/cerapro/3AEEE0_6_0.eot");
+  src: url("../fonts/cerapro/3AEEE0_6_0.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/cerapro/3AEEE0_6_0.woff2") format("woff2"),
+    url("../fonts/cerapro/3AEEE0_6_0.woff") format("woff"),
+    url("../fonts/cerapro/3AEEE0_6_0.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Cera Pro";
+  src: url("../fonts/cerapro/3AEEE0_7_0.eot");
+  src: url("../fonts/cerapro/3AEEE0_7_0.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/cerapro/3AEEE0_7_0.woff2") format("woff2"),
+    url("../fonts/cerapro/3AEEE0_7_0.woff") format("woff"),
+    url("../fonts/cerapro/3AEEE0_7_0.ttf") format("truetype");
+  font-weight: 700;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Cera Pro";
+  src: url("../fonts/cerapro/3AEEE0_8_0.eot");
+  src: url("../fonts/cerapro/3AEEE0_8_0.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/cerapro/3AEEE0_8_0.woff2") format("woff2"),
+    url("../fonts/cerapro/3AEEE0_8_0.woff") format("woff"),
+    url("../fonts/cerapro/3AEEE0_8_0.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Cera Pro";
+  src: url("../fonts/cerapro/3AEEE0_9_0.eot");
+  src: url("../fonts/cerapro/3AEEE0_9_0.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/cerapro/3AEEE0_9_0.woff2") format("woff2"),
+    url("../fonts/cerapro/3AEEE0_9_0.woff") format("woff"),
+    url("../fonts/cerapro/3AEEE0_9_0.ttf") format("truetype");
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Cera Pro";
+  src: url("../fonts/cerapro/3AEEE0_A_0.eot");
+  src: url("../fonts/cerapro/3AEEE0_A_0.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/cerapro/3AEEE0_A_0.woff2") format("woff2"),
+    url("../fonts/cerapro/3AEEE0_A_0.woff") format("woff"),
+    url("../fonts/cerapro/3AEEE0_A_0.ttf") format("truetype");
+  font-weight: 100;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Cera Pro";
+  src: url("../fonts/cerapro/3AEEE0_B_0.eot");
+  src: url("../fonts/cerapro/3AEEE0_B_0.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/cerapro/3AEEE0_B_0.woff2") format("woff2"),
+    url("../fonts/cerapro/3AEEE0_B_0.woff") format("woff"),
+    url("../fonts/cerapro/3AEEE0_B_0.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+}
+
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";

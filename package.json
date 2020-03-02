@@ -1,5 +1,13 @@
 {
   "name": "plylst",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "@rails/webpacker": "4.2.2",
+    "@tailwindcss/ui": "^0.1.3",
+    "resolve-url-loader": "^3.1.1",
+    "tailwindcss": "^1.2.0"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^3.10.3"
+  }
 }

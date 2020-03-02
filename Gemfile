@@ -45,6 +45,7 @@ gem "hashid-rails", "~> 1.0" # Slightly obfuscated playlist IDs
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
+gem 'webpacker'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
