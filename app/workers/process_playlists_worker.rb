@@ -19,8 +19,8 @@ class ProcessPlaylistsWorker
           if !spotify_playlist.name.include?("PLYLST") and spotify_playlist.owner.id == user.uid
             total = spotify_playlist.total
 
-            (0..total).step(100) do |n|
-              spotify_playlist.tracks(limit: 100, offset: n)
+            (0..total).step(50) do |n|
+              spotify_playlist.tracks(limit: 50, offset: n)
               tracks_added_at = spotify_playlist.tracks_added_at.to_a
 
               SaveTracksWorker.perform_async(user.id, tracks_added_at, 'added')
