@@ -13,7 +13,7 @@ class ProcessTracksWorker
 
       begin
         tracks = spotify.saved_tracks(limit: 50, offset: offset)
-      rescue RestClient::Unauthorized => e
+      rescue RestClient::Unauthorized, RestClient::Forbidden => e
         user.increment!(:authorization_fails)
     
         # Deactivate user if we don't have the right permissions and if their authorization has failed a crap ton of times
