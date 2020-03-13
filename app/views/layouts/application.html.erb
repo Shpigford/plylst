@@ -152,7 +152,7 @@
     <div class="feedback">
       <a href="#"><span>👋</span></a>
       <div class="form">
-        <%= form_tag(contact_pages_path, remote: true, method: :post) do %>
+        <%= form_tag(contact_pages_path, remote: true, method: :post, class: 'contact-form') do %>
         <div class="form-group">
           <%= text_area_tag(:message, '', placeholder: "Send us your feedback!", class: "form-control", autofocus: 'autofocus') %>
         </div>

@@ -46,10 +46,13 @@ $(document).on("turbolinks:load", function() {
     e.preventDefault();
   });
 
-  $(".feedback button").on("click", function(e) {
+  $(".contact-form").on("submit", function(e) {
     $(".feedback .thanks").show();
     $(".feedback .form").hide();
-    $(".feedback textarea").val("");
+
+    setTimeout(function() {
+      $(".feedback textarea").val("");
+    }, 100);
   });
 
   $("#genre_search").bind("keypress", function(e) {
