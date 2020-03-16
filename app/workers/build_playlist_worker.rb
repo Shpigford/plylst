@@ -1,0 +1,51 @@
+class BuildPlaylistWorker
+  include Sidekiq::Worker
+  include ApplicationHelper
+
+  sidekiq_options queue: :critical, lock: :while_executing, on_conflict: :reject
+
+  def perform(playlist_id, spotify_playlist_id)
+    playlist = Playlist.find(playlist_id)
+    user = playlist.user
+
+    if user.active?
+      begin
+        spotify_playlist = RSpotify::Playlist.find(user.uid, spotify_playlist_id)
+      rescue RestClient::NotFound => e
+      rescue RestClient::Unauthorized, RestClient::BadRequest => e
+        #user.increment!(:authorization_fails)
+  
+        # Deactivate user if we don't have the right permissions and if their authorization has failed a crap ton of times
+        #user.update_attribute(:active, false) if user.authorization_fails >= 10
+      end
+
+      total = 0
+
+      # Thanks to Spotify API limits, we need to divide the remove_tracks! call in to groups of 100
+      total = spotify_playlist.total
+      times_to_loop = (total.to_f / 100).ceil
+
+      if total <= 0 or playlist.auto_update.present?
+        begin
+          times_to_loop.times { spotify_playlist.remove_tracks!(spotify_playlist.tracks) }
+        rescue RestClient::BadRequest => e
+        end
+      end
+
+      spotify_playlist.change_details!(description: "Created with PLYLST.app! #{playlist.translated_rules}", public: playlist.public)
+
+      tracks = playlist.filtered_tracks(user).pluck(:spotify_id)
+      tracks_formatted = tracks.map{|x| x.prepend('spotify:track:')}
+
+      if total <= 0 or playlist.auto_update.present?
+        # Divide tracks in to groups of 100, due to Spotify API limit
+        tracks_formatted.each_slice(100) do |group|
+          spotify_playlist.add_tracks!(group)
+        end
+      end
+
+      playlist.update_columns(spotify_id: spotify_playlist.id)
+
+    end
+  end
+end
