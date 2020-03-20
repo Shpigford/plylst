@@ -50,7 +50,7 @@ class User < ApplicationRecord
 
     if self.genres.present?
       (JSON.parse(self.genres) + pop_genres).uniq.sort_by(&:downcase)
-    else
+    elsif pop_genres.present?
       pop_genres.uniq.sort_by(&:downcase)
     end
   end
