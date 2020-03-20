@@ -18,8 +18,9 @@ spotify_secret: SECRET
 ```
 
 ### Spotify
-You'll need a free Developer account and create your own app, which is free: https://developer.spotify.com
-go into your dashboard , select your app, clicking on "Edit Settings" and add the Redirect URI to `http://localhost:5000/users/auth/spotify/callback`
+You'll need a free Developer account, which you can creat here: https://developer.spotify.com
+
+Go into your dashboard, create a new app or edit the settings on an existing app and set the Redirect URI to `http://localhost:5000/users/auth/spotify/callback`
 
 These will get you the necessary keys for the app to fully function.
 
