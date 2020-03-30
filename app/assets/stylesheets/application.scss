@@ -141,6 +141,18 @@
   }
 }
 
+.fa-ban {
+  opacity: 0.2;
+  margin-left: 5px;
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.track-actions {
+  width: 50px;
+}
+
 .actions {
   position: relative;
   top: -5px;
