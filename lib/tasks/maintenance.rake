@@ -33,7 +33,7 @@ namespace :maintenance do
     User.active.find_each do |user|
       ProcessAccountWorker.set(queue: :slow).perform_async(user.id)
       BuildPlaylistsWorker.set(queue: :default).perform_async(user.id)
-      CheckTracksWorker.set(queue: :slow).perform_async(user.id)
+      #CheckTracksWorker.set(queue: :slow).perform_async(user.id)
     end
     
     UpdateArtistDataWorker.set(queue: :slow).perform_async
