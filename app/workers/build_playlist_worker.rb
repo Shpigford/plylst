@@ -9,6 +9,10 @@ class BuildPlaylistWorker
     user = playlist.user
 
     if user.active?
+      # Refresh the connection
+      connection = user.settings.to_hash
+      spotify = RSpotify::User.new(connection)
+
       begin
         spotify_playlist = RSpotify::Playlist.find(user.uid, spotify_playlist_id)
       rescue RestClient::NotFound => e
@@ -27,7 +31,10 @@ class BuildPlaylistWorker
 
       if total <= 0 or playlist.auto_update.present?
         begin
-          times_to_loop.times { spotify_playlist.remove_tracks!(spotify_playlist.tracks) }
+          times_to_loop.times { 
+            playlist_tracks = spotify_playlist.tracks
+            spotify_playlist.remove_tracks!(playlist_tracks) if playlist_tracks.present?
+          }
         rescue RestClient::BadRequest => e
         end
       end
