@@ -22,6 +22,8 @@ class Playlist < ApplicationRecord
       tracks = Track.all
     elsif catalog == 'artists'
       tracks = Track.where(artist_id: current_user.artists.group(:id).pluck(:id))
+    elsif catalog == 'notliked'
+      tracks = Track.where.not(id: current_user.tracks.select(:track_id).where('follows.active = ?', true))
     else
       tracks = current_user.tracks.where('follows.active = ?', true)
     end
@@ -464,6 +466,8 @@ class Playlist < ApplicationRecord
     source = case catalog
     when 'songs'
       "only songs I've liked"
+    when 'notliked'
+      "only songs I've not liked"
     when 'artists'
       "any songs from artists I've liked"
     when 'full'
