@@ -19,7 +19,7 @@ class ProcessAccountWorker
         ProcessTracksWorker.perform_async(user.id, n)
       end
       
-      ProcessAlbumsWorker.set(queue: :slow).perform_async(user.id)
+      #ProcessAlbumsWorker.set(queue: :slow).perform_async(user.id)
       ProcessPlaylistsWorker.set(queue: :slow).perform_async(user.id)
       BuildUserGenresWorker.set(queue: :critical).perform_in(30.seconds, user.id)
       UpdatePlayDataWorker.perform_in(60.seconds, user.id)
