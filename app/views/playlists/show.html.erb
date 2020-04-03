@@ -95,7 +95,8 @@
                       <h3 class='popover-header'>Label</h3><div class='popover-body'><%= track.album.label %></div><br>
                       <% end %>
                       <% if track.key.present? %><h3 class='popover-header'>Audio Features</h3><div class='popover-body'><%= human_readable(track.slice(:key,:mode,:tempo,:energy,:valence,:liveness,:loudness,:speechiness,:acousticness,:danceability,:time_signature,:instrumentalness).as_json) %></div><% end %>"><i class="far fa-info-circle"></i></span>
-                      <% if @playlist.catalog == 'songs' %>
+
+                      <% if current_user && @playlist.user == current_user && @playlist.catalog == 'songs' %>
                       <%= link_to '<i class="far fa-ban"></i>'.html_safe, track_path(id: track.id, playlist_id: @playlist), :class => 'text-danger', :method => :delete, :data => {:confirm => 'Are you sure you want to permanently block this track from all playlists?'} %>
                       <% end %>
                       </td>
