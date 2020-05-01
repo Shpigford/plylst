@@ -166,5 +166,9 @@
     <% end %>
 
     <%= yield %>
+
+    <% if Rails.env.production? %>
+    <script src="https://cdn.usefathom.com/3.js" site="<%= ENV['fathom'] %>"></script>
+    <% end %>
   </body>
 </html>
