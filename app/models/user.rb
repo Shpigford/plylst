@@ -43,15 +43,22 @@ class User < ApplicationRecord
     pop_genres = Rails.cache.fetch("pop_genres", expires_in: 24.hours) do
       pop_genres = Artist.pluck(:genres).reject!(&:empty?)
       if pop_genres.present?
-        pop_genres = pop_genres.flatten! 
-        pop_genres.group_by(&:itself).map { |k,v| [k, v.count] }.to_h.sort_by{|k,v| v}.reverse.first(1000).map{|a| a.first}
+        pop_genres_count = Hash.new { |h, k| h[k] = 0 }
+        pop_genres.flatten!
+        pop_genres.each { |genre| pop_genres_count[genre] += 1 }
+        pop_genres_count
+          .sort_by { |k, v| -v }
+          .first(1000)
+          .map(&:first)
+      else
+        []
       end
     end
 
     if self.genres.present?
-      (JSON.parse(self.genres) + pop_genres).uniq.sort_by(&:downcase)
-    elsif pop_genres.present?
-      pop_genres.uniq.sort_by(&:downcase)
-    end
+      JSON.parse(self.genres) + pop_genres
+    else
+      pop_genres
+    end.uniq.sort_by(&:downcase)
   end
 end
