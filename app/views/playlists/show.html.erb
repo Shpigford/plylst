@@ -73,7 +73,7 @@
                 </tr>
               </thead>
               <tbody class="list">
-                <% cache(['v1', @playlist], expires_in: 2.hours) do %>
+                <% cache(['v1', @playlist], expires_in: 24.hours) do %>
                   <% if @tracks.present? %>
                     <% @tracks.each do |track| %>
                     <tr>
