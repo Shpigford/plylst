@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_29_192441) do
+ActiveRecord::Schema.define(version: 2020_06_01_163230) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(version: 2020_02_29_192441) do
     t.string "catalog", default: "songs"
     t.text "spotify_id"
     t.text "meta_image"
+    t.text "track_cache", default: [], array: true
     t.index ["catalog"], name: "index_playlists_on_catalog"
     t.index ["full_catalog"], name: "index_playlists_on_full_catalog"
     t.index ["spotify_id"], name: "index_playlists_on_spotify_id"

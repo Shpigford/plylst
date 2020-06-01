@@ -33,11 +33,12 @@ class PlaylistsController < ApplicationController
       @hide_sidebar = true
     end
 
-    if @playlist.catalog == 'full'
-      @tracks =  @playlist.filtered_tracks(@playlist.user).includes(:album, :artist)
-    else
-      @tracks =  @playlist.filtered_tracks(@playlist.user).includes(:album, :artist, :follows)
+    if @playlist.track_cache.blank?
+      @tracks =  @playlist.filtered_tracks(@playlist.user).pluck(:id)
+      @playlist.update_attributes(track_cache: @tracks)
     end
+
+    @tracks = Track.where(id: @playlist.track_cache)
 
     if @playlist.limit.to_i > 250 or @playlist.limit.to_i === 0
       @tracks = @tracks.limit(250)

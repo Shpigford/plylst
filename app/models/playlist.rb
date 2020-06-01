@@ -454,7 +454,13 @@ class Playlist < ApplicationRecord
   end
 
   def build_spotify_playlist
-    BuildPlaylistsWorker.perform_async(self.user.id)
+    # If we know the Spotify Playlist ID, then only rebuild that playlist, otherwise rebuild all user playlists
+    if self.spotify_id.present?
+      BuildPlaylistWorker.perform_async(self.id, self.spotify_id)
+    else
+      BuildPlaylistsWorker.perform_async(self.user.id)
+    end
+
     CreateMetaImageWorker.perform_async(self.id)
   end
 
