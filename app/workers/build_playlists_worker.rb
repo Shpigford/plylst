@@ -29,7 +29,7 @@ class BuildPlaylistsWorker
             existing_playlist = spotify.create_playlist!("PLYLST: #{playlist.name}", public: playlist.public)
           end
 
-          BuildPlaylistWorker.perform_async(playlist.id, existing_playlist.id)
+          BuildPlaylistWorker.set(queue: :default).perform_async(playlist.id, existing_playlist.id)
         end
       end
     end
