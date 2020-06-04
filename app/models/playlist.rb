@@ -461,7 +461,7 @@ class Playlist < ApplicationRecord
       BuildPlaylistsWorker.perform_async(self.user.id)
     end
 
-    CreateMetaImageWorker.perform_async(self.id)
+    #CreateMetaImageWorker.perform_async(self.id)
   end
 
   def translated_rules
