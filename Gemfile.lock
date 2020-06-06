@@ -79,6 +79,7 @@ GEM
       rake (>= 10.4, < 14.0)
     archive-zip (0.12.0)
       io-like (~> 0.3.0)
+    ast (2.4.0)
     autoprefixer-rails (9.7.6)
       execjs
     axiom-types (0.1.1)
@@ -225,6 +226,8 @@ GEM
     omniauth-spotify (0.0.13)
       omniauth-oauth2 (~> 1.1)
     orm_adapter (0.5.0)
+    parser (2.7.1.3)
+      ast (~> 2.4.0)
     pg (1.2.3)
     popper_js (1.16.0)
     public_suffix (3.1.1)
@@ -300,6 +303,8 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    scout_apm (2.6.7)
+      parser
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
@@ -414,6 +419,7 @@ DEPENDENCIES
   rails (~> 6.0)
   rspotify!
   sass-rails (~> 5.0)
+  scout_apm
   selenium-webdriver
   sentry-raven
   sidekiq
