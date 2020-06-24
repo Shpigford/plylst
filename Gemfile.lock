@@ -234,7 +234,7 @@ GEM
       get_process_mem (~> 0.2)
       puma (>= 2.7, < 5)
     raabro (1.1.6)
-    rack (2.2.2)
+    rack (2.2.3)
     rack-protection (2.0.8.1)
       rack
     rack-test (1.1.0)
