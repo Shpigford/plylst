@@ -34,11 +34,14 @@ class PlaylistsController < ApplicationController
     end
 
     if @playlist.tracks.blank?
+      playlist_tracks = []
       @tracks = @playlist.filtered_tracks(@playlist.user).pluck(:id)
 
       @tracks.each do |track|
-        PlaylistTrack.create(playlist: @playlist, track_id: track)
+        playlist_tracks << PlaylistTrack.new(playlist: @playlist, track_id: track)
       end
+
+      PlaylistTrack.import playlist_tracks, on_duplicate_key_update: {conflict_target: [:playlist_id, :track_id], columns: []}
     end
     
     @tracks = @playlist.tracks

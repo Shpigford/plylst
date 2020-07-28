@@ -46,9 +46,13 @@ class BuildPlaylistWorker
 
         PlaylistTrack.where(playlist: playlist).delete_all
 
+        playlist_tracks = []
+
         tracks.each do |track|
-          PlaylistTrack.create(playlist: playlist, track_id: track)
+          playlist_tracks << PlaylistTrack.new(playlist: playlist, track_id: track)
         end
+
+        PlaylistTrack.import playlist_tracks, on_duplicate_key_update: {conflict_target: [:playlist_id, :track_id], columns: []}
 
         tracks_formatted = Track.where(id: tracks).pluck(:spotify_id)
         tracks_formatted_ids = tracks_formatted.map{|x| x.prepend('spotify:track:')}
