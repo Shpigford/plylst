@@ -41,6 +41,7 @@ gem 'httparty'
 gem "colorize"          # ability to colorize output strings
 gem "skylight"
 gem "hashid-rails", "~> 1.0" # Slightly obfuscated playlist IDs
+gem 'scout_apm'
 
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
