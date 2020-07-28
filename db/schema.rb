@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_01_163230) do
+ActiveRecord::Schema.define(version: 2020_07_28_181803) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 2020_06_01_163230) do
     t.index ["label"], name: "index_albums_on_label"
     t.index ["last_checked_at"], name: "index_albums_on_last_checked_at"
     t.index ["popularity"], name: "index_albums_on_popularity"
+    t.index ["release_date"], name: "index_albums_on_release_date"
     t.index ["spotify_id"], name: "index_albums_on_spotify_id", unique: true
   end
 
