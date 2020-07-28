@@ -43,7 +43,12 @@ class BuildPlaylistWorker
 
       if total <= 0 or playlist.auto_update.present?
         tracks = playlist.filtered_tracks(user).pluck(:id)
-        playlist.update_attributes(track_cache: tracks)
+
+        PlaylistTrack.where(playlist: playlist).delete_all
+
+        tracks.each do |track|
+          PlaylistTrack.create(playlist: playlist, track_id: track)
+        end
 
         tracks_formatted = Track.where(id: tracks).pluck(:spotify_id)
         tracks_formatted_ids = tracks_formatted.map{|x| x.prepend('spotify:track:')}
