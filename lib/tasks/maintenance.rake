@@ -33,7 +33,7 @@ namespace :maintenance do
     # Only process a set % of oldest processed accounts
     total_users = User.active.count
     limit = (0.15 * total_users).ceil
-    users = User.active.order('last_processed_at ASC').limit(limit)
+    users = User.active.order('last_processed_at ASC NULLS FIRST').limit(limit)
 
     users.find_each do |user|
       ProcessAccountWorker.set(queue: :slow).perform_async(user.id)
