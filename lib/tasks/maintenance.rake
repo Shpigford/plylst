@@ -40,6 +40,15 @@ namespace :maintenance do
     UpdateAlbumDataWorker.set(queue: :slow).perform_async
   end
 
+  desc "Purge inactive accounts"
+  task :purge_inactive => :environment do
+    User.active.where('last_sign_in_at < ?', Time.now - 3.months).each do |user|
+      playlists = user.playlists.count
+
+      user.update_attribute(:active, false) if playlists == 0
+    end
+  end
+
   desc "Transition JSONB to first-class columns"
   task :transition_jsonb => :environment do
       Track.where(key: nil).where.not(audio_features: {}).find_each do |track|
