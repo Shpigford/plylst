@@ -24,6 +24,8 @@ class ProcessAccountWorker
       BuildUserGenresWorker.set(queue: :critical).perform_in(30.seconds, user.id)
       UpdatePlayDataWorker.perform_in(60.seconds, user.id)
       RecentlyStreamedWorker.perform_in(60.seconds, user.id)
+
+      user.touch(:last_processed_at)
     end
   end
 end
