@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_29_182918) do
+ActiveRecord::Schema.define(version: 2020_07_30_181724) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -145,7 +145,9 @@ ActiveRecord::Schema.define(version: 2020_07_29_182918) do
     t.index ["energy"], name: "index_tracks_on_energy"
     t.index ["explicit"], name: "index_tracks_on_explicit"
     t.index ["instrumentalness"], name: "index_tracks_on_instrumentalness"
+    t.index ["key", "audio_features_last_checked"], name: "index_tracks_on_key_and_audio_features_last_checked", where: "(key IS NULL)"
     t.index ["key"], name: "index_tracks_on_key"
+    t.index ["key"], name: "tracks_key_is_null", where: "(key IS NULL)"
     t.index ["liveness"], name: "index_tracks_on_liveness"
     t.index ["loudness"], name: "index_tracks_on_loudness"
     t.index ["lyrics_last_checked_at"], name: "index_tracks_on_lyrics_last_checked_at"
