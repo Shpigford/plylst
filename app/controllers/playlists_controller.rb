@@ -44,7 +44,7 @@ class PlaylistsController < ApplicationController
       PlaylistTrack.import playlist_tracks, on_duplicate_key_update: {conflict_target: [:playlist_id, :track_id], columns: []}
     end
     
-    @tracks = @playlist.tracks
+    @tracks = @playlist.tracks.includes(:album, :artist)
 
     if @playlist.limit.to_i > 250 or @playlist.limit.to_i === 0
       @tracks = @tracks.limit(250)
