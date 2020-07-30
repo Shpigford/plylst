@@ -23,13 +23,6 @@ namespace :maintenance do
 
   desc "Update user data every 2 hours: 0 */2 * * *"
   task :update_data_2_hours => :environment do
-    User.active.find_each do |user|
-      RecentlyStreamedWorker.set(queue: :slow).perform_async(user.id)
-    end
-  end
-
-  desc "Update data daily: 0 */2 * * *"
-  task :update_data_daily => :environment do
     # Only process a set % of oldest processed accounts
     total_users = User.active.count
     limit = (0.15 * total_users).ceil
@@ -41,6 +34,13 @@ namespace :maintenance do
       #CheckTracksWorker.set(queue: :slow).perform_async(user.id)
     end
     
+    User.active.find_each do |user|
+      RecentlyStreamedWorker.set(queue: :slow).perform_async(user.id)
+    end
+  end
+
+  desc "Update data daily"
+  task :update_data_daily => :environment do
     UpdateArtistDataWorker.set(queue: :slow).perform_async
     UpdateAlbumDataWorker.set(queue: :slow).perform_async
   end
