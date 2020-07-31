@@ -33,10 +33,6 @@ namespace :maintenance do
       BuildPlaylistsWorker.set(queue: :default).perform_async(user.id)
       #CheckTracksWorker.set(queue: :slow).perform_async(user.id)
     end
-    
-    User.active.find_each do |user|
-      RecentlyStreamedWorker.set(queue: :slow).perform_async(user.id)
-    end
   end
 
   desc "Update data daily"
