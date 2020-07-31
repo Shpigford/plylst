@@ -29,7 +29,7 @@ namespace :maintenance do
     users = User.active.order('last_processed_at ASC NULLS FIRST').limit(limit)
 
     users.find_each do |user|
-      ProcessAccountWorker.set(queue: :slow).perform_async(user.id)
+      ProcessAccountWorker.perform_async(user.id)
       BuildPlaylistsWorker.set(queue: :default).perform_async(user.id)
       #CheckTracksWorker.set(queue: :slow).perform_async(user.id)
     end
