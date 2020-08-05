@@ -50,6 +50,13 @@ namespace :maintenance do
     end
   end
 
+  desc "Process the unprocessed"
+  task :process_unprocessed => :environment do
+    User.active.where(genres: nil).each do |user|
+      ProcessAccountWorker.perform_async(user.id)
+    end
+  end
+
   desc "Transition JSONB to first-class columns"
   task :transition_jsonb => :environment do
       Track.where(key: nil).where.not(audio_features: {}).find_each do |track|
