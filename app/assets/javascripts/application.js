@@ -236,8 +236,30 @@ $(document).on("turbolinks:load", function() {
           id: "genres",
           label: "Genres",
           type: "string",
-          input: "select",
-          operators: ["in"],
+          // input: "select",
+          input: function(rule, name) {
+            var operator = rule.__.operator.type;
+            var form = "";
+            var values = user_genres;
+            // This runs the first time only, so we need to call it again when the operator value changes, using the
+            // "afterUpdateRuleOperator.queryBuilder" event lower in this file.
+
+            // For the life of me I couldn't figure out how to pas the plugin_config values to the selectpicker
+            // So we are using the dom attributes here to configure it based on the instructions here:
+            // https://developer.snapappointments.com/bootstrap-select
+            if(operator == "in"){
+              form = '<select class="selectpicker" multiple data-live-search="true" name="'+name+'">';
+              for(var i = 0; i < values.length; i++){
+                form += '<option value="'+values[i]+'">'+values[i]+'</option>';
+              }
+              form += '</select>';
+            } else {
+              form = '<input class="form-control" name="'+name+'" type="text">';
+            }
+
+            return form;
+          },
+          operators: ["in", "contains"],
           plugin: "selectpicker",
           values: user_genres,
           plugin_config: {
@@ -455,9 +477,60 @@ $(document).on("turbolinks:load", function() {
     });
   }
 
+  // logic to swap genres value from input to search DD and back
+  // this event fires after any of the operators change (in->contains etc)
+  $("#builder").on("afterSetRules.queryBuilder afterUpdateRuleOperator.queryBuilder", function(e, rule) {
+
+    // var name = rule.id;
+    // FIXME: name appears as 'builder_rule_0' because that's the id of the operator DD
+    // We need the name of the value though which is what we have here below so it can be
+    // passed to the backend properly. FIXME: maybe try to find a way to derive this automagically
+    var  name = "builder_rule_0_value_0";
+
+    // only act on genres rule, and 'contains' op
+    if (rule.filter.id == 'genres' && rule.operator.type == 'contains') {
+
+      // use the input method on the filter defined above to get the desired html output
+      var output = rule.filter.input(rule, name)
+
+      // cleanup the prior selectpicker (helps avoid mem leaks)
+      rule.$el.find('.rule-value-container .selectpicker').selectpicker('destroy');
+
+      // render the simple input in the html
+      rule.$el.find('.rule-value-container').html(output)
+
+      // after focus is lost from input, update the rule value so it'll be sent properly to the backend
+      rule.$el.find('.rule-value-container input').one('change', function(e) {
+        rule.value = [this.value]
+      })
+
+      // re-render the fancy multi-select searchable DD
+    } else if (rule.filter.id == 'genres' && rule.operator.type == 'in') {
+
+      // get and render the html
+      var output = rule.filter.input(rule, name)
+      rule.$el.find('.rule-value-container').html(output)
+
+      // force a re-render of the bootstrap-select ui (enhances the <select> with the special features)
+      // https://developer.snapappointments.com/bootstrap-select (<- uses this select DD)
+      rule.$el.find('.rule-value-container select').selectpicker('render');
+
+      // when select DD is hidden / closed, manually assign the selcted values to rule.value
+      // this triggers a model update, which makes the values availible in queryBuilder("getRules")
+      // This is necessary because the automagic 2 way change event binding is missing with our manual setup for genres
+      // https://developer.snapappointments.com/bootstrap-select (<- uses this select DD)
+      rule.$el.find('.rule-value-container select').on('hidden.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+        rule.value = $(this).val()
+      });
+
+    }
+  });
+
   $("#builder").on(
     "afterUpdateRuleValue.queryBuilder afterUpdateRuleFilter.queryBuilder afterUpdateGroupCondition.queryBuilder afterDeleteRule.queryBuilder afterDeleteGroup.queryBuilder afterUpdateRuleOperator.queryBuilder",
     function(e, rule) {
+      // update the playlist_filters hidden input with all the rules
+      // this input is transmitted to the backend for processing
       $("#playlist_filters").val(
         JSON.stringify(
           $("#builder").queryBuilder("getRules", { skip_empty: true })
