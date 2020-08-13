@@ -238,7 +238,7 @@ $(document).on("turbolinks:load", function() {
           type: "string",
           // input: "select",
           input: function(rule, name) {
-            var operator = rule.__.operator.type;
+            var operator = rule.operator.type;
             var form = "";
             var values = user_genres;
             // This runs the first time only, so we need to call it again when the operator value changes, using the
@@ -254,7 +254,7 @@ $(document).on("turbolinks:load", function() {
               }
               form += '</select>';
             } else {
-              form = '<input class="form-control" name="'+name+'" type="text">';
+              form = `<input class="form-control" name="${name}" type="text" value="${rule.value}">`;
             }
 
             return form;
@@ -477,10 +477,36 @@ $(document).on("turbolinks:load", function() {
     });
   }
 
-  // logic to swap genres value from input to search DD and back
-  // this event fires after any of the operators change (in->contains etc)
-  $("#builder").on("afterSetRules.queryBuilder afterUpdateRuleOperator.queryBuilder", function(e, rule) {
 
+  // need to wait short amount  so ui settles
+  setTimeout(checkRulesAndTriggerGenreValueRender, 100);
+
+  // if genre->contains op exists on page, replace the searchable DD with an input on first load
+  // (mostly an issue on the 'edit' page)
+  function checkRulesAndTriggerGenreValueRender() {
+    // if there's no builder on the page, don't even run this code (no rules)
+    if ($("#builder").length === 0 ) return;
+
+    // get the rule from the model so the proper model data bindings will be in place
+    var model = $("#builder").queryBuilder("getModel");
+
+    var genreContainsRule = model && model.rules && model.rules.find(rule=> {
+      if (!rule.filter || !rule.operator) return false;
+      return rule.filter.id === 'genres' && rule.operator.type === 'contains'
+    })
+
+    if (genreContainsRule) toggleGenreValue(null, genreContainsRule);
+  }
+
+
+  // this event fires after any of the operators change (in->contains etc)
+  $("#builder").on("afterUpdateRuleOperator.queryBuilder", toggleGenreValue);
+
+
+  // logic to swap genres value from input to search DD and back
+  // this gets called on page load (if there's a genre rule)
+  // also gets called on genres -> operator change
+  function toggleGenreValue (_e, rule) {
     // var name = rule.id;
     // FIXME: name appears as 'builder_rule_0' because that's the id of the operator DD
     // We need the name of the value though which is what we have here below so it can be
@@ -500,8 +526,8 @@ $(document).on("turbolinks:load", function() {
       rule.$el.find('.rule-value-container').html(output)
 
       // after focus is lost from input, update the rule value so it'll be sent properly to the backend
-      rule.$el.find('.rule-value-container input').one('change', function(e) {
-        rule.value = [this.value]
+      rule.$el.find('.rule-value-container input').on('blur', function(e) {
+        rule.value = [this.value]; // causes input value to be re-rendered as well
       })
 
       // re-render the fancy multi-select searchable DD
@@ -524,7 +550,7 @@ $(document).on("turbolinks:load", function() {
       });
 
     }
-  });
+  }
 
   $("#builder").on(
     "afterUpdateRuleValue.queryBuilder afterUpdateRuleFilter.queryBuilder afterUpdateGroupCondition.queryBuilder afterDeleteRule.queryBuilder afterDeleteGroup.queryBuilder afterUpdateRuleOperator.queryBuilder",
