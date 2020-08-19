@@ -41,7 +41,8 @@ class User < ApplicationRecord
 
   def combined_genres
     pop_genres = Rails.cache.fetch("pop_genres", expires_in: 24.hours) do
-      pop_genres = Artist.pluck(:genres).reject!(&:empty?)
+      pop_genres = Artist.pluck(:genres)
+      pop_genres.reject!(&:empty?)
       if pop_genres.present?
         pop_genres = pop_genres.flatten! 
         pop_genres.group_by(&:itself).map { |k,v| [k, v.count] }.to_h.sort_by{|k,v| v}.reverse.first(1000).map{|a| a.first}
