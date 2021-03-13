@@ -46,14 +46,14 @@ It's still very early days for this so your mileage will vary here and lots of t
 
 But almost any contribution will be beneficial at this point.
 
-If you've got an improvement, just send in a pull request. If you've got feature ideas, simply [open a new issues](https://github.com/Shpigford/plylst/issues/new)!
+If you've got an improvement, just send in a pull request. If you've got feature ideas, simply [open a new issue](https://github.com/Shpigford/plylst/issues/new)!
 
 ### Performance
 One area that can always use some additional perspective is performance.
 
-You can see what the current painpoints are on Skylight.
+You can see what the current pain points are on Skylight.
 
-**Slow web requests: https://oss.skylight.io/app/applications/2JBLsZt07yjO/recent/30m/endpoints**  
+**Slow web requests: https://oss.skylight.io/app/applications/2JBLsZt07yjO/recent/30m/endpoints**
 **Slow worker requests: https://oss.skylight.io/app/applications/x1STSO2QMwrX/recent/30m/endpoints**
 
 ## License & Copyright
