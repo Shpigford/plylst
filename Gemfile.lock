@@ -231,7 +231,7 @@ GEM
     pg (1.2.3)
     popper_js (1.16.0)
     public_suffix (3.1.1)
-    puma (4.3.5)
+    puma (4.3.7)
       nio4r (~> 2.0)
     puma_worker_killer (0.1.1)
       get_process_mem (~> 0.2)
