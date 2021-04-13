@@ -29,4 +29,7 @@
 # Ignore application configuration
 /config/application.yml
 
+# Ignore docker-compose
+docker-compose.yml
+
 .DS_Store
