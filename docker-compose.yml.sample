@@ -1,0 +1,42 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres:12
+    restart: unless-stopped
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: plylst_password
+      POSTGRES_USER: plylst
+      POSTGRES_DB: plylst_production
+  
+  redis:
+    image: redis
+    restart: unless-stopped
+    volumes:
+      - redis-data:/var/lib/redis
+
+  plylst:
+    build: .
+    restart: unless-stopped
+    expose:
+      - 5000
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      # https://developer.spotify.com/dashboard/applications
+      spotify_key:
+      spotify_secret:
+      RAILS_ENV: production
+      RAILS_SERVE_STATIC_FILES: 1
+      # Use `openssl rand -hex 64` to generate a random key
+      SECRET_KEY_BASE:
+      REDIS_URL: redis://redis:6379/1
+      PLYLST_DATABASE_PASSWORD: plylst_password
+      DATABASE_URL: postgres://plylst:plylst_password@postgres/plylst_production
+
+volumes:
+  postgres-data:
+  redis-data:
