@@ -60,7 +60,7 @@ namespace :maintenance do
   desc "Transition JSONB to first-class columns"
   task :transition_jsonb => :environment do
       Track.where(key: nil).where.not(audio_features: {}).find_each do |track|
-        track.update_attributes(
+        track.update(
           key: track.audio_features['key'],
           mode: track.audio_features['mode'],
           tempo: track.audio_features['tempo'],

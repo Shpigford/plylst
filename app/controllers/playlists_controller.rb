@@ -15,7 +15,7 @@ class PlaylistsController < ApplicationController
 
     params[:playlist][:filters] = JSON.parse(params[:playlist][:filters])
   
-    if @playlist.update_attributes(playlist_params)
+    if @playlist.update(playlist_params)
       redirect_to playlist_path(@playlist)
     else
       render 'edit'
@@ -60,7 +60,7 @@ class PlaylistsController < ApplicationController
 
     params[:playlist][:filters] = JSON.parse(params[:playlist][:filters])
 
-    if @playlist.update_attributes(playlist_params)
+    if @playlist.update(playlist_params)
       redirect_to playlist_path(@playlist)
     else
       render 'edit'
