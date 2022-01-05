@@ -28,7 +28,7 @@ class BuildAlbumWorker
       date = nil
     end
 
-    album.update_attributes(
+    album.update(
       name: spotify_album.name,
       image: image, 
       release_date: date, 

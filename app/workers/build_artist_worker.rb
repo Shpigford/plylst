@@ -16,7 +16,7 @@ class BuildArtistWorker
     all_genres = all_genres.merge(spotify_genres)
 
 
-    artist.update_attributes(
+    artist.update(
       name: spotify_artist.name,
       followers: spotify_artist.followers['total'], 
       popularity: spotify_artist.popularity, 

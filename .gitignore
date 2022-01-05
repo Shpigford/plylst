@@ -33,3 +33,5 @@
 docker-compose.yml
 
 .DS_Store
+
+.env
